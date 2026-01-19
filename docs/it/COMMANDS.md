@@ -1,0 +1,173 @@
+# Comandi e Scelte Tecniche
+
+Questo documento descrive i principali comandi utilizzati durante lo sviluppo del progetto
+e le motivazioni tecniche alla base delle scelte effettuate.
+
+L’obiettivo non è fornire un tutorial passo-passo, ma rendere esplicite le decisioni
+che influenzano l’architettura, la manutenibilità e l’evoluzione del progetto.
+
+---
+
+## Inizializzazione del workspace Nx
+
+```bash
+pnpm dlx create-nx-workspace@latest assignment-ftechnology \
+  --preset=apps \
+  --pm=pnpm \
+  --nxCloud=skip
+````
+
+### Descrizione del comando
+
+Il comando viene utilizzato per inizializzare un nuovo workspace **Nx** all’interno
+di una cartella dedicata, configurando il progetto come **monorepo**.
+
+---
+
+### Spiegazione dei parametri
+
+#### `pnpm dlx`
+
+`dlx` è l’equivalente di `npx` per **pnpm**.
+
+Permette di:
+
+* eseguire pacchetti Node senza installarli globalmente
+* garantire l’utilizzo di una versione pulita e isolata dello strumento
+* evitare dipendenze globali non controllate
+
+Questa modalità è particolarmente indicata per comandi di bootstrap e scaffolding.
+
+---
+
+#### `create-nx-workspace@latest`
+
+Avvia il generatore ufficiale di Nx per la creazione di un nuovo workspace.
+
+L’uso del tag `@latest` indica l’ultima **versione stabile** disponibile al momento
+dell’esecuzione del comando, assicurando:
+
+* accesso alle funzionalità più aggiornate
+* allineamento con le best practice consigliate dal framework Nx
+
+---
+
+#### `assignment-ftechnology`
+
+Nome del workspace e della directory principale del progetto.
+
+È stato scelto un nome descrittivo e coerente con il contesto dell’assignment,
+in modo da:
+
+* rendere immediatamente riconoscibile il progetto
+* mantenere allineati nome del repository e nome del workspace Nx
+
+---
+
+#### `--preset=apps`
+
+Il parametro `preset` definisce il tipo di workspace iniziale.
+
+L’opzione `apps` crea un workspace **neutro**, senza generare automaticamente
+applicazioni o librerie, lasciando pieno controllo sulla struttura iniziale.
+
+Questa scelta consente di:
+
+* creare manualmente le applicazioni (`web`, `api`) solo quando necessario
+* evitare codice generato non utilizzato
+* mantenere il monorepo pulito e intenzionale
+
+Altri preset disponibili includono, ad esempio:
+
+* `react-monorepo`
+* `nest`
+* `next`
+* `angular`
+* `node-monorepo`
+
+In questo progetto si è preferito un preset generico per modellare
+l’architettura in modo esplicito e progressivo.
+
+---
+
+#### `--pm=pnpm`
+
+Specifica il **package manager** da utilizzare nel workspace.
+
+È stato scelto `pnpm` per i seguenti motivi:
+
+* migliore gestione delle dipendenze in contesti monorepo
+* installazioni più rapide
+* minore utilizzo di spazio su disco grazie allo store globale
+* supporto nativo e consigliato da Nx
+
+---
+
+#### `--nxCloud=skip`
+
+Disabilita la configurazione di **Nx Cloud**.
+
+Per questo assignment:
+
+* non è richiesta una pipeline CI distribuita
+* non è necessario il caching remoto
+* si preferisce ridurre dipendenze esterne non indispensabili
+
+La scelta mantiene il progetto più semplice e focalizzato sugli aspetti richiesti.
+
+---
+
+## Considerazioni
+
+Questo comando rappresenta il punto di partenza del progetto e definisce le basi
+architetturali su cui verranno costruite le applicazioni frontend, backend
+e le librerie condivise.
+
+Tutte le scelte effettuate in questa fase mirano a:
+
+* mantenere il progetto scalabile
+* evitare configurazioni premature
+* favorire chiarezza e manutenibilità
+
+
+
+## Ambiente di sviluppo locale (PostgreSQL via Docker)
+
+```bash
+docker compose up -d
+````
+
+### Descrizione
+
+Questo comando avvia un'istanza locale di **PostgreSQL** tramite Docker,
+utilizzando il file `docker-compose.yml` presente nella root del progetto.
+
+L’obiettivo è fornire un ambiente di sviluppo **completamente offline**,
+senza dipendenze da servizi cloud esterni.
+
+---
+
+### Perché Docker Compose
+
+L’utilizzo di Docker Compose consente di:
+
+* avviare il database con un singolo comando
+* evitare installazioni manuali di PostgreSQL
+* garantire un ambiente coerente tra diversi sviluppatori o revisori
+* permettere a chi valuta l’assignment di eseguire il progetto localmente senza configurazioni aggiuntive
+
+---
+
+### Relazione con il database cloud (Neon)
+
+Il progetto è configurato per funzionare sia con:
+
+* **PostgreSQL cloud (Neon)** – per demo e sviluppo remoto
+* **PostgreSQL locale (Docker)** – per sviluppo offline e review tecnica
+
+Il passaggio tra i due ambienti avviene semplicemente modificando la variabile
+`DATABASE_URL` nel file `.env`.
+
+Questa scelta garantisce massima flessibilità senza introdurre complessità
+nell’architettura applicativa.
+

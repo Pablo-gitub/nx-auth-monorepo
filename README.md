@@ -1,96 +1,221 @@
-# AssignmentFtechnology
+# Assignment FTechnology – Nx Full Stack Authentication App
+[`README.en.md`](README.en.md) Go to english version.
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+![Nx](https://img.shields.io/badge/Nx-monorepo-143055)
+![TypeScript](https://img.shields.io/badge/TypeScript-strongly%20typed-blue)
+![pnpm](https://img.shields.io/badge/pnpm-package%20manager-orange)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+## Descrizione del progetto
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+Questo repository contiene l’implementazione di un’applicazione web full stack sviluppata come **esercizio di verifica tecnica**, utilizzando **Nx (monorepo)**, **React**, **NestJS** e **Drizzle ORM**.
 
-## Run tasks
+L’obiettivo del progetto è realizzare un **sistema di autenticazione completo**, comprensivo di:
 
-To run tasks with Nx use:
+* registrazione utente
+* login
+* dashboard personale
+* gestione e modifica del profilo
+* cronologia degli accessi
 
-```sh
-npx nx <target> <project-name>
+Il progetto è strutturato come **monorepo Nx**, con separazione chiara tra frontend, backend e librerie condivise, seguendo buone pratiche di architettura e organizzazione del codice.
+
+---
+
+## Stack Tecnologico
+
+* **Nx** – Monorepo e gestione del workspace
+* **React** – Frontend web
+* **NestJS** – Backend API
+* **TypeScript** – Tipizzazione statica obbligatoria
+* **Drizzle ORM** – Accesso ai dati e gestione del database
+* **Database** – PostgreSQL / MariaDB / MongoDB (configurabile)
+* **JWT** – Autenticazione e gestione delle sessioni
+* **pnpm** – Package manager
+* **shadcn/ui** – Componenti UI
+* **daisyUI** – Gestione temi (light/dark)
+
+---
+
+## Requisiti Funzionali
+
+### 1. Registrazione Utente (`/register`)
+
+Pagina di registrazione con form contenente i seguenti campi:
+
+* Nome e Cognome
+* Email (con validazione del formato)
+* Password
+
+  * minimo 8 caratteri
+  * almeno una lettera maiuscola
+  * almeno un numero
+* Conferma Password
+* Data di nascita
+* Avatar (upload immagine opzionale)
+
+Funzionalità richieste:
+
+* Validazione lato client di tutti i campi
+* Feedback visivo degli errori di validazione
+* Gestione del caricamento (loading state)
+* Redirect alla pagina di login in caso di registrazione avvenuta con successo
+
+---
+
+### 2. Login (`/login`)
+
+Pagina di login con:
+
+* Email
+* Password
+
+Funzionalità richieste:
+
+* Gestione degli errori di autenticazione
+* Implementazione del “Remember me”
+* Link per il recupero password (solo UI)
+* Redirect automatico alla dashboard dopo il login
+
+---
+
+### 3. Dashboard Utente (`/dashboard`)
+
+Pagina accessibile solo ad utenti autenticati.
+
+Contenuti:
+
+* Header con logo e menu di navigazione
+* Sidebar con informazioni principali dell’utente
+* Sezione centrale con:
+
+  * riepilogo dei dati del profilo
+  * form di modifica dei dati personali
+  * cronologia degli ultimi 5 accessi
+* Funzionalità di logout
+
+---
+
+## Requisiti Tecnici
+
+### Frontend
+
+#### Struttura del progetto
+
+* Componenti modulari e riutilizzabili
+* Organizzazione chiara di file e cartelle
+* Utilizzo di custom hooks per la logica applicativa
+
+#### State Management
+
+* Uso appropriato degli hook React (`useState`, `useEffect`, `useContext`)
+* Context dedicato per la gestione dell’autenticazione
+
+#### Routing
+
+* Configurazione delle route con React Router
+* Protezione delle route private
+* Gestione corretta dei redirect
+
+#### UI / UX
+
+* Design responsive
+* Feedback visivo per le azioni dell’utente
+* Loading states per operazioni asincrone
+* Gestione user-friendly degli errori
+* Utilizzo dei componenti **shadcn/ui**
+
+---
+
+### Backend (API)
+
+#### Autenticazione
+
+* API per registrazione e login
+* Utilizzo di JWT per la gestione delle sessioni
+* Hashing sicuro delle password
+
+#### Gestione Dati
+
+* Validazione dei dati in ingresso
+* CRUD del profilo utente
+* Gestione strutturata degli errori
+
+#### Storage
+
+* Utilizzo di un database (MariaDB, PostgreSQL o MongoDB)
+* Gestione dell’upload dell’avatar
+* Implementazione di migration e seed del database
+
+---
+
+## Bonus Points (Assignment)
+
+* Test unitari sui componenti principali
+* Animazioni per le transizioni tra le pagine
+* Implementazione della funzionalità “Password dimenticata”
+* Autenticazione social (Google o GitHub)
+* Theme switcher Dark / Light
+
+---
+
+## Bonus Extra (Estensioni Architetturali)
+
+Oltre ai bonus richiesti dall’assignment, il progetto prevede alcune estensioni opzionali orientate alla **qualità architetturale**:
+
+* **Sistema di internazionalizzazione (i18n)**
+  Gestione centralizzata delle stringhe tramite file di traduzione, evitando hard-coding dei testi nell’interfaccia e abilitando il supporto multilingua.
+
+* **String Manager**
+  Struttura dedicata per l’organizzazione delle stringhe applicative, migliorando manutenibilità, leggibilità e coerenza del codice.
+
+* **Gestione del tema (light / dark)**
+  Implementata tramite daisyUI, con persistenza della preferenza utente.
+
+Queste estensioni non sono strettamente richieste, ma mirano a dimostrare attenzione all’architettura, alla scalabilità e alla qualità del codice.
+
+---
+
+## Installazione e Avvio
+
+```bash
+pnpm install
+pnpm nx serve web
+pnpm nx serve api
 ```
 
-For example:
+---
 
-```sh
-npx nx build myproject
-```
+## Documentazione
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+La documentazione di progetto è organizzata nella cartella `docs/`:
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [`docs/it/ROADMAP.md`](docs/it/ROADMAP.md)  
+  Roadmap di sviluppo e checklist dei requisiti dell’assignment.
 
-## Add new projects
+- [`docs/it/COMMANDS.md`](docs/it/COMMANDS.md)  
+  Elenco dei principali comandi utilizzati durante lo sviluppo e motivazioni delle scelte tecniche.
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+- [`docs/it/ARCHITECTURE.md`](docs/it/ARCHITECTURE.md)  
+  Descrizione dell’architettura del monorepo Nx, delle app e delle librerie condivise.
 
-To install a new plugin you can use the `nx add` command. Here's an example of adding the React plugin:
-```sh
-npx nx add @nx/react
-```
+La struttura è predisposta anche per una versione in lingua inglese (`docs/en/`).
 
-Use the plugin's generator to create new projects. For example, to create a new React app or library:
 
-```sh
-# Generate an app
-npx nx g @nx/react:app demo
+---
 
-# Generate a library
-npx nx g @nx/react:lib some-lib
-```
+## Stato del progetto
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+Lo sviluppo segue una roadmap incrementale:
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+* completamento dei requisiti core
+* hardening dell’autenticazione
+* implementazione dei bonus
+* eventuali estensioni architetturali
 
-## Set up CI!
+---
 
-### Step 1
+### Nota finale
 
-To connect to Nx Cloud, run the following command:
+Questo progetto è pensato come **esercizio tecnico**, ma strutturato seguendo pratiche applicabili a contesti reali di sviluppo software.
 
-```sh
-npx nx connect
-```
-
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
-
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-### Step 2
-
-Use the following command to configure a CI workflow for your workspace:
-
-```sh
-npx nx g ci-workflow
-```
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
