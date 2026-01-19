@@ -25,11 +25,11 @@ The goal is to deliver the **core requirements** (fully functional end-to-end) f
 
 **Output:** Initialized Nx workspace and initial documentation ready.
 
-* [ ] README.md (IT) + README.en.md (EN structure)
-* [ ] `docs/en/COMMANDS.md` (commands + reasoning)
+* [x] README.md (IT) + README.en.md (EN structure)
+* [x] `docs/en/COMMANDS.md` (commands + reasoning)
 
-* [ ] `docs/en/ROADMAP.md` (this checklist)
-* [ ] Structure setup for `docs/it/` (placeholder)
+* [x] `docs/en/ROADMAP.md` (this checklist)
+* [x] Structure setup for `docs/it/` (placeholder)
 
 ---
 
@@ -37,11 +37,11 @@ The goal is to deliver the **core requirements** (fully functional end-to-end) f
 
 **Output:** stable quality baseline (format/lint/test), repo ready to scale.
 
-* [ ] Verify base Nx commands (`nx graph`, `nx lint`, `nx format`)
+* [x] Verify base Nx commands (`nx graph`, `nx lint`, `nx format`)
 * [ ] Setup formatter/linter (prettier + eslint already functional)
 * [ ] (Optional) husky + lint-staged + commitlint
-* [ ] Minimal definition of `.nvmrc`
-* [ ] Update README: quick start and main commands
+* [x] Minimal definition of `.nvmrc`
+* [x] Documentation setup enviroment (`COMMANDS.md`, `SETUP.md`)
 
 ---
 

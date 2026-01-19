@@ -34,11 +34,11 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
   
 **Output:** baseline di qualità stabile (format/lint/test), repo pronto a scalare.
 
-- [ ] Verifica comandi Nx base (`nx graph`, `nx lint`, `nx format`)
-- [ ] Setup formatter/linter (prettier + eslint già funzionanti)
+- [~] Verifica comandi Nx base (`nx graph`, `nx lint`, `nx format`)
+- [~] Setup formatter/linter (prettier + eslint già funzionanti)
 - [ ] (Opzionale) husky + lint-staged + commitlint
 - [ ] Definizione minima di `.nvmrc` 
-- [ ] Aggiornamento README: quick start e comandi principali
+- [ ] Documentazione setup ambiente (`COMMANDS.md`, `SETUP.md`)
 
 ---
 

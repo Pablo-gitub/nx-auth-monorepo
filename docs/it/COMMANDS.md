@@ -135,7 +135,7 @@ Tutte le scelte effettuate in questa fase mirano a:
 
 ```bash
 docker compose up -d
-````
+```
 
 ### Descrizione
 
@@ -212,3 +212,21 @@ la qualità del codice sull’intero monorepo con un singolo comando.
 Questo comando diventa il riferimento non appena il workspace contiene
 più progetti ed è facilmente integrabile in una pipeline CI.
 
+---
+
+## Gestione versione Node.js (.nvmrc)
+
+```bash
+node -v
+```
+Il file .nvmrc definisce la versione di Node.js consigliata per il progetto.
+
+### Serve a:
+
+- garantire coerenza dell’ambiente di sviluppo tra diversi sviluppatori
+
+- evitare problemi legati a differenze di versione di Node
+
+- rendere il setup del progetto riproducibile
+
+- Strumenti come nvm o fnm utilizzano automaticamente questo file per selezionare la versione corretta di Node.

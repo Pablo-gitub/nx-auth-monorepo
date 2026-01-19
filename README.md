@@ -190,6 +190,9 @@ pnpm nx serve api
 
 La documentazione di progetto è organizzata nella cartella `docs/`:
 
+- [`docs/it/SETUP.md`](docs/it/SETUP.md)  
+  Questo documento descrive le modalità di configurazione e avvio del progetto in ambiente di sviluppo locale.
+
 - [`docs/it/ROADMAP.md`](docs/it/ROADMAP.md)  
   Roadmap di sviluppo e checklist dei requisiti dell’assignment.
 

@@ -215,3 +215,39 @@ across the entire monorepo with a single command.
 
 This command becomes the reference as soon as the workspace contains
 multiple projects and is easily integrable into a CI pipeline.
+
+## Gestione versione Node.js (.nvmrc)
+
+```bash
+node -v
+```
+Il file .nvmrc definisce la versione di Node.js consigliata per il progetto.
+
+### Serve a:
+
+- garantire coerenza dell’ambiente di sviluppo tra diversi sviluppatori
+
+- evitare problemi legati a differenze di versione di Node
+
+- rendere il setup del progetto riproducibile
+
+- Strumenti come nvm o fnm utilizzano automaticamente questo file per selezionare la versione corretta di Node.
+
+
+---
+
+## Node.js Version Management (.nvmrc)
+
+```bash
+node -v
+```
+
+The `.nvmrc` file defines the recommended Node.js version for the project.
+
+### It serves to:
+
+* ensure development environment consistency across different developers
+* avoid issues related to Node version discrepancies
+* make the project setup reproducible
+
+Tools like `nvm` or `fnm` automatically use this file to select the correct Node version.
