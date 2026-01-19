@@ -258,3 +258,46 @@ pnpm nx test api
 pnpm nx format:check
 pnpm nx graph
 ```
+---
+
+## Creazione libreria database backend
+
+```bash
+pnpm nx g @nx/js:lib libs/api/db --bundler=tsc
+```
+
+**Descrizione**
+
+Questo comando genera una libreria TypeScript dedicata all’accesso al database per il backend API.
+
+La libreria viene posizionata in `libs/api/db`, seguendo una struttura **feature-oriented** e mantenendo il database come **concern isolato** rispetto al resto dell’applicazione.
+
+**Spiegazione dei parametri**
+
+* `@nx/js:lib`
+  Generatore Nx per librerie JavaScript / TypeScript indipendenti dal framework, ideale per logica condivisa o infrastrutturale.
+
+* `libs/api/db`
+  Percorso esplicito della libreria.
+  La struttura riflette il contesto di utilizzo (`api`) e la responsabilità (`db`), evitando librerie generiche e favorendo una chiara separazione dei confini architetturali.
+
+* `--bundler=tsc`
+  Utilizza il compilatore TypeScript (`tsc`) come sistema di build.
+
+  Questa scelta è intenzionale:
+
+  * il codice database non richiede bundling avanzato
+  * mantiene il build semplice, trasparente e veloce
+  * migliora debuggabilità e manutenibilità
+  * si integra perfettamente con Drizzle ORM e ambienti Node.js
+
+**Motivazione architetturale**
+
+Isolare l’accesso al database in una libreria dedicata consente di:
+
+* evitare accoppiamenti diretti tra API e persistence layer
+* facilitare test, refactor e sostituzione del database
+* mantenere il backend modulare e scalabile
+* sfruttare pienamente i vantaggi del monorepo Nx
+
+---

@@ -13,7 +13,10 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "paths": {
+      "@assignment-ftechnology/db": ["libs/api/db/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
