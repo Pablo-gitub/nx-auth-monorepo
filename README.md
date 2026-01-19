@@ -202,6 +202,9 @@ La documentazione di progetto è organizzata nella cartella `docs/`:
 - [`docs/it/ARCHITECTURE.md`](docs/it/ARCHITECTURE.md)  
   Descrizione dell’architettura del monorepo Nx, delle app e delle librerie condivise.
 
+- [`docs/it/DATABASE.md`](docs/it/DATABASE.md)  
+  Descrizione dell’implementazione del database e della configurazione PostgreSQL - Neon - Drizzle.
+
 La struttura è predisposta anche per una versione in lingua inglese (`docs/en/`).
 
 
