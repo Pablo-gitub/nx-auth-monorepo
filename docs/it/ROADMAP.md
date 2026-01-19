@@ -37,8 +37,8 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 - [~] Verifica comandi Nx base (`nx graph`, `nx lint`, `nx format`)
 - [~] Setup formatter/linter (prettier + eslint già funzionanti)
 - [ ] (Opzionale) husky + lint-staged + commitlint
-- [ ] Definizione minima di `.nvmrc` 
-- [ ] Documentazione setup ambiente (`COMMANDS.md`, `SETUP.md`)
+- [x] Definizione minima di `.nvmrc` 
+- [x] Documentazione setup ambiente (`COMMANDS.md`, `SETUP.md`)
 
 ---
 
