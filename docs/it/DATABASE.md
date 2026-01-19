@@ -114,3 +114,8 @@ Nota: Drizzle Studio è attualmente in Beta.
 - Studio operativo
 
 Il database è pronto per l’integrazione con l’API NestJS.
+
+## Integrazione con NestJS 
+
+Ho centralizzato la connessione Postgres e il client Drizzle in una libreria Nx dedicata. L’API Nest consuma il client tramite un provider DI (token-based), così posso riusare la stessa configurazione ovunque, mantenere isolamento delle dipendenze per progetto e rendere la parte DB testabile e sostituibile.
+Il provider è esposto da `DatabaseModule` tramite token `DB`
