@@ -171,3 +171,47 @@ variable in the `.env` file.
 
 This choice ensures maximum flexibility without introducing complexity
 into the application architecture.
+
+
+---
+
+## Formatting (Prettier + Nx)
+
+```bash
+pnpm add -D prettier
+pnpm nx format:check
+pnpm nx format:write
+
+```
+
+### Why
+
+Nx uses Prettier for formatting commands (`nx format:*`).
+Installing Prettier as a `devDependency` makes the toolchain reproducible for anyone cloning the repository.
+
+`format:check` is used to verify that the codebase is formatted correctly,
+while `format:write` automatically applies the changes.
+
+---
+
+## Linting (Nx targets)
+
+In a newly created Nx workspace (without `apps/` or `libs/`), projects with a `lint` target do not exist yet.
+For this reason, `pnpm nx lint` requires a specific `project:target` argument.
+
+Once `apps/web` and `apps/api` are present, the following command will be used:
+
+```bash
+pnpm nx run-many -t lint
+
+```
+
+`run-many` is an Nx command that allows executing the same target
+across multiple workspace projects simultaneously.
+
+It runs the `lint` target (`-t lint`) on all workspace projects
+(applications and libraries) that expose it, allowing for code quality verification
+across the entire monorepo with a single command.
+
+This command becomes the reference as soon as the workspace contains
+multiple projects and is easily integrable into a CI pipeline.

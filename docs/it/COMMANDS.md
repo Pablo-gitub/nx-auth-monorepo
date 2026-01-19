@@ -171,3 +171,44 @@ Il passaggio tra i due ambienti avviene semplicemente modificando la variabile
 Questa scelta garantisce massima flessibilità senza introdurre complessità
 nell’architettura applicativa.
 
+---
+
+## Formatting (Prettier + Nx)
+
+```bash
+pnpm add -D prettier
+pnpm nx format:check
+pnpm nx format:write
+````
+
+### Perché
+
+Nx utilizza Prettier per i comandi di formattazione (`nx format:*`).
+Installare Prettier come devDependency rende la toolchain riproducibile per chi clona il repository.
+
+`format:check` viene usato per verificare che la base codice sia formattata correttamente,
+mentre `format:write` applica automaticamente le modifiche.
+
+---
+
+## Linting (Nx targets)
+
+In un workspace Nx appena creato (senza `apps/` e `libs/`) non esistono ancora progetti con target `lint`.
+Per questo `pnpm nx lint` richiede `project:target`.
+
+Quando saranno presenti `apps/web` e `apps/api`, verrà usato:
+
+```bash
+pnpm nx run-many -t lint
+```
+
+`run-many` è un comando Nx che permette di eseguire lo stesso target
+su più progetti del workspace contemporaneamente.
+
+Esegue il target `lint` (`-t lint`) su tutti i progetti del workspace
+(applicazioni e librerie) che lo espongono, permettendo di verificare
+la qualità del codice sull’intero monorepo con un singolo comando.
+
+Questo comando diventa il riferimento non appena il workspace contiene
+più progetti ed è facilmente integrabile in una pipeline CI.
+
