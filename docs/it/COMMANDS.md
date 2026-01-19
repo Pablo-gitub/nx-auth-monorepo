@@ -230,3 +230,31 @@ Il file .nvmrc definisce la versione di Node.js consigliata per il progetto.
 - rendere il setup del progetto riproducibile
 
 - Strumenti come nvm o fnm utilizzano automaticamente questo file per selezionare la versione corretta di Node.
+
+
+## Generazione app backend (NestJS)
+
+```bash
+pnpm nx g @nx/nest:application apps/api \
+  --name=api \
+  --linter=eslint \
+  --unitTestRunner=jest \
+  --e2eTestRunner=none
+````
+
+Note:
+
+* `apps/api` è il parametro posizionale `[directory]` del generator (root del progetto).
+* `--name=api` è il nome del project in Nx.
+* `--e2eTestRunner=none` evita test e2e per ora (non richiesti nella fase iniziale).
+
+
+## Verifiche workspace (quality gate)
+
+```bash
+pnpm nx show project api
+pnpm nx lint api
+pnpm nx test api
+pnpm nx format:check
+pnpm nx graph
+```

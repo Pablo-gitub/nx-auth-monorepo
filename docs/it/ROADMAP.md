@@ -8,12 +8,14 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 ## Convenzioni di lavoro
 
 ### Git workflow (lightweight)
+
 - Branch per macro-feature (feature complete prima del merge su `main`)
 - PR per ogni macro-feature (2–6 PR totali, descrizione breve e test instructions)
 - Commit con Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`)
 - No `wip` commits
 
 ### Tag (milestone)
+
 - `v0.1.0` → Assignment core completato (tutti i requisiti richiesti)
 - `v0.2.0` → Bonus + Extra completati (se applicabile)
 
@@ -21,7 +23,7 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 
 ## Milestone 0 – Repo & Documentazione (baseline)
 
- **Output:** workspace Nx inizializzato e documentazione iniziale pronta.
+**Output:** workspace Nx inizializzato e documentazione iniziale pronta.
 
 - [x] README.md (IT) + README.en.md (EN structure)
 - [x] `docs/it/COMMANDS.md` (comandi + motivazioni)
@@ -31,13 +33,13 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 ---
 
 ## Milestone 1 – Workspace Setup + Quality Baseline
-  
+
 **Output:** baseline di qualità stabile (format/lint/test), repo pronto a scalare.
 
-- [~] Verifica comandi Nx base (`nx graph`, `nx lint`, `nx format`)
-- [~] Setup formatter/linter (prettier + eslint già funzionanti)
+- [x] Verifica comandi Nx base (`nx graph`, `nx lint`, `nx format`)
+- [x] Setup formatter/linter (prettier + eslint già funzionanti)
 - [ ] (Opzionale) husky + lint-staged + commitlint
-- [x] Definizione minima di `.nvmrc` 
+- [x] Definizione minima di `.nvmrc`
 - [x] Documentazione setup ambiente (`COMMANDS.md`, `SETUP.md`)
 
 ---
@@ -48,6 +50,7 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 **Output:** API funzionante con DB, schema e autenticazione (register/login), gestione errori e validazione.
 
 ### Database & Drizzle
+
 - [ ] Scelta DB PostgreSQL
 - [ ] Setup Drizzle config
 - [ ] Schema tabelle:
@@ -58,6 +61,7 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 - [ ] Seed minimo (opzionale ma consigliato)
 
 ### Auth API
+
 - [ ] `POST /auth/register`
   - [ ] validazione input
   - [ ] hashing password
@@ -98,7 +102,7 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 **Branch:** `feat/web-auth-routing`  
 **Output:** struttura frontend pronta, routing configurato, protezione route.
 
-- [ ] Setup React app `web` 
+- [ ] Setup React app `web`
 - [ ] React Router:
   - [ ] `/register`
   - [ ] `/login`
@@ -157,11 +161,13 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 **Output:** dashboard completa come da requisiti.
 
 ### Backend (se non già presenti)
+
 - [ ] `GET /me` (profilo)
 - [ ] `PATCH /me` (update dati)
 - [ ] `GET /me/access-history?limit=5`
 
 ### Frontend
+
 - [ ] Layout dashboard:
   - [ ] Header (logo + menu)
   - [ ] Sidebar (info utente)
@@ -200,8 +206,8 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 
 - [ ] Test unitari componenti principali (minimo 2–4 test sensati)
 - [ ] Animazioni transizioni tra pagine (se low-effort)
-- [ ] “Password dimenticata” (implementazione completa) *(solo se tempo)*
-- [ ] Social auth (Google/GitHub) *(solo se tempo)*
+- [ ] “Password dimenticata” (implementazione completa) _(solo se tempo)_
+- [ ] Social auth (Google/GitHub) _(solo se tempo)_
 - [ ] Theme switcher dark/light
 
 ---
@@ -228,6 +234,7 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 ---
 
 ## Definition of Done (per ogni milestone)
+
 - [ ] Feature completata e testata manualmente
 - [ ] Lint/format pass
 - [ ] Nessun errore TypeScript

@@ -87,3 +87,9 @@
 - DB provider: Neon (PostgreSQL managed)
 - UI: shadcn/ui + daisyUI (theme)
 - i18n + string manager: extra architetturale (opzionale)
+
+
+## Workspace baseline (Nx + TypeScript)
+
+- `nx.json` include `workspaceLayout` per standardizzare la struttura `apps/` e `libs/`.
+- `tsconfig.base.json` è la configurazione TypeScript condivisa a livello workspace: i singoli progetti (`apps/*`, `libs/*`) estendono questa base.
