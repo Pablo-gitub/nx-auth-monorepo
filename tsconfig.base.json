@@ -15,7 +15,10 @@
     "skipLibCheck": true,
     "strict": true,
     "paths": {
-      "@assignment-ftechnology/db": ["libs/api/db/src/index.ts"]
+      "@assignment-ftechnology/db": ["libs/api/db/src/index.ts"],
+      "@assignment-ftechnology/contracts": [
+        "libs/shared/contracts/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
