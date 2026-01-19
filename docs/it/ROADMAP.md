@@ -51,13 +51,13 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 
 ### Database & Drizzle
 
-- [ ] Scelta DB PostgreSQL
-- [ ] Setup Drizzle config
-- [ ] Schema tabelle:
-  - [ ] `users`
-  - [ ] `access_history`
+- [x] Scelta DB PostgreSQL
+- [x] Setup Drizzle config
+- [x] Schema tabelle:
+  - [x] `users`
+  - [x] `access_logs`
   - [ ] (Se serve per remember me) `refresh_tokens` / `sessions`
-- [ ] Migration generate/run
+- [x] Migration generate/run
 - [ ] Seed minimo (opzionale ma consigliato)
 
 ### Auth API
