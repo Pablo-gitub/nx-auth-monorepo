@@ -3,8 +3,9 @@ import {
   ConflictException,
   Inject,
   Injectable,
+  NotFoundException,
 } from '@nestjs/common';
-import { eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 import * as bcrypt from 'bcrypt';
 
 import { DB } from '../database/database.module';
@@ -143,6 +144,61 @@ export class AuthService {
     return {
       accessToken,
       user: toUserPublicDto(user),
+    };
+  }
+
+  /**
+   * Retrieve the profile of the authenticated user.
+   *
+   * This method is called by JWT-protected routes (e.g. GET /me).
+   * It never exposes sensitive fields such as passwordHash.
+   */
+  async getMe(userId?: string): Promise<{ user: UserPublicDto }> {
+    if (!userId) {
+      throw new UnauthorizedException({ message: 'Invalid token' });
+    }
+
+    const found = await this.db
+      .select()
+      .from(users)
+      .where(eq(users.id, userId))
+      .limit(1);
+
+    const user = found[0];
+
+    if (!user) {
+      throw new NotFoundException({ message: 'User not found' });
+    }
+
+    return { user: toUserPublicDto(user) };
+  }
+
+  /**
+   * Returns the last N access log entries for the authenticated user.
+   * Used by the dashboard to display the most recent logins.
+   */
+  async getAccessHistory(userId: string, limit = 5) {
+    const safeLimit = Math.min(Math.max(limit, 1), 50);
+
+    const rows = await this.db
+      .select({
+        id: accessLogs.id,
+        ipAddress: accessLogs.ipAddress,
+        userAgent: accessLogs.userAgent,
+        createdAt: accessLogs.createdAt,
+      })
+      .from(accessLogs)
+      .where(eq(accessLogs.userId, userId))
+      .orderBy(desc(accessLogs.createdAt))
+      .limit(safeLimit);
+
+    return {
+      items: rows.map((r) => ({
+        id: r.id,
+        ipAddress: r.ipAddress ?? null,
+        userAgent: r.userAgent ?? null,
+        createdAt: r.createdAt.toISOString(),
+      })),
     };
   }
 }
