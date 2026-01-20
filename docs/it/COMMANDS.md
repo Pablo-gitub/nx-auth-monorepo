@@ -301,3 +301,21 @@ Isolare l’accesso al database in una libreria dedicata consente di:
 * sfruttare pienamente i vantaggi del monorepo Nx
 
 ---
+
+## Backend – Auth scaffolding (Nx)
+
+Per la creazione del modulo di autenticazione lato API sono stati utilizzati i generatori Nx per NestJS, in modo da mantenere coerenza strutturale e best practice.
+
+```bash
+pnpm nx g @nx/nest:module apps/api/src/app/auth/auth
+pnpm nx g @nx/nest:service apps/api/src/app/auth/auth
+pnpm nx g @nx/nest:controller apps/api/src/app/auth/auth
+```
+
+I generatori Nx permettono di:
+
+* creare automaticamente file e wiring corretti
+
+* mantenere naming e struttura standard
+
+* integrare correttamente il codice nel graph Nx

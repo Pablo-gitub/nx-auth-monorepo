@@ -93,3 +93,39 @@
 
 - `nx.json` include `workspaceLayout` per standardizzare la struttura `apps/` e `libs/`.
 - `tsconfig.base.json` è la configurazione TypeScript condivisa a livello workspace: i singoli progetti (`apps/*`, `libs/*`) estendono questa base.
+
+## Validazione dei dati (API)
+
+Per la validazione degli input dell’API è stato scelto **Zod** al posto di `class-validator`.
+
+Questa scelta è motivata dalla sua **migliore integrazione con l’architettura Nx monorepo** adottata nell’assignment, che favorisce la condivisione di codice e contratti tra frontend e backend.
+
+### Motivazioni della scelta
+
+- **Single source of truth**  
+  Gli schemi di validazione sono definiti una sola volta e condivisi tra frontend e backend tramite la libreria `libs/shared/contracts`.
+
+- **Type inference nativa**  
+  Zod permette di derivare automaticamente i tipi TypeScript dagli schemi (`z.infer`), evitando duplicazioni e possibili inconsistenze tra DTO e validazione runtime.
+
+- **Validazione runtime esplicita**  
+  La validazione è dichiarativa e immediata, senza dipendere da decorator, reflection o classi dedicate.
+
+- **Maggiore controllo sugli errori**  
+  Gli errori generati da Zod sono facilmente normalizzabili e mappabili verso risposte API coerenti e user-friendly.
+
+La validazione viene applicata tramite una `ZodValidationPipe` custom integrata nei controller NestJS.
+
+Nel contesto di un **monorepo Nx**, questa soluzione consente di mantenere contratti fortemente tipizzati, riutilizzabili e coerenti tra le diverse applicazioni, riducendo il rischio di drift tra frontend e backend.
+
+
+## Autenticazione (JWT)
+
+L’autenticazione è basata su **JSON Web Token (JWT)**, come richiesto dall’assignment.
+
+- Il token viene generato al login
+- Include informazioni minime sull’utente (id, email)
+- La durata del token è configurabile tramite variabili d’ambiente
+- È previsto il supporto a una durata estesa tramite l’opzione "remember me"
+
+La configurazione del modulo JWT avviene in modo asincrono, leggendo le variabili d’ambiente tramite `ConfigModule`.
