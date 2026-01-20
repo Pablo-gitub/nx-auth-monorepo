@@ -1,5 +1,4 @@
 import {
-  ArgumentMetadata,
   BadRequestException,
   Injectable,
   PipeTransform,
@@ -22,7 +21,7 @@ function formatZodError(error: ZodError): ZodValidationError[] {
 export class ZodValidationPipe implements PipeTransform {
   constructor(private readonly schema: ZodTypeAny) {}
 
-  transform(value: unknown, _metadata: ArgumentMetadata) {
+  transform(value: unknown) {
     const result = this.schema.safeParse(value);
 
     if (!result.success) {

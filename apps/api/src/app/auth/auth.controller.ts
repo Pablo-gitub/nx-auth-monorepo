@@ -4,11 +4,14 @@ import {
   type RegisterInput,
 } from '@assignment-ftechnology/contracts';
 import { ZodValidationPipe } from '../common/pipes/zod-validation.pipe';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
+  constructor(private readonly authService: AuthService) {}
+
   @Post('register')
-  register(@Body(new ZodValidationPipe(registerSchema)) _body: RegisterInput) {
-    return { ok: true };
+  register(@Body(new ZodValidationPipe(registerSchema)) body: RegisterInput) {
+    return this.authService.register(body);
   }
 }
