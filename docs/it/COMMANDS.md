@@ -230,3 +230,143 @@ Il file .nvmrc definisce la versione di Node.js consigliata per il progetto.
 - rendere il setup del progetto riproducibile
 
 - Strumenti come nvm o fnm utilizzano automaticamente questo file per selezionare la versione corretta di Node.
+
+
+## Generazione app backend (NestJS)
+
+```bash
+pnpm nx g @nx/nest:application apps/api \
+  --name=api \
+  --linter=eslint \
+  --unitTestRunner=jest \
+  --e2eTestRunner=none
+````
+
+Note:
+
+* `apps/api` è il parametro posizionale `[directory]` del generator (root del progetto).
+* `--name=api` è il nome del project in Nx.
+* `--e2eTestRunner=none` evita test e2e per ora (non richiesti nella fase iniziale).
+
+
+## Verifiche workspace (quality gate)
+
+```bash
+pnpm nx show project api
+pnpm nx lint api
+pnpm nx test api
+pnpm nx format:check
+pnpm nx graph
+```
+---
+
+## Creazione libreria database backend
+
+```bash
+pnpm nx g @nx/js:lib libs/api/db --bundler=tsc
+```
+
+**Descrizione**
+
+Questo comando genera una libreria TypeScript dedicata all’accesso al database per il backend API.
+
+La libreria viene posizionata in `libs/api/db`, seguendo una struttura **feature-oriented** e mantenendo il database come **concern isolato** rispetto al resto dell’applicazione.
+
+**Spiegazione dei parametri**
+
+* `@nx/js:lib`
+  Generatore Nx per librerie JavaScript / TypeScript indipendenti dal framework, ideale per logica condivisa o infrastrutturale.
+
+* `libs/api/db`
+  Percorso esplicito della libreria.
+  La struttura riflette il contesto di utilizzo (`api`) e la responsabilità (`db`), evitando librerie generiche e favorendo una chiara separazione dei confini architetturali.
+
+* `--bundler=tsc`
+  Utilizza il compilatore TypeScript (`tsc`) come sistema di build.
+
+  Questa scelta è intenzionale:
+
+  * il codice database non richiede bundling avanzato
+  * mantiene il build semplice, trasparente e veloce
+  * migliora debuggabilità e manutenibilità
+  * si integra perfettamente con Drizzle ORM e ambienti Node.js
+
+**Motivazione architetturale**
+
+Isolare l’accesso al database in una libreria dedicata consente di:
+
+* evitare accoppiamenti diretti tra API e persistence layer
+* facilitare test, refactor e sostituzione del database
+* mantenere il backend modulare e scalabile
+* sfruttare pienamente i vantaggi del monorepo Nx
+
+---
+
+## Backend – Auth scaffolding (Nx)
+
+Per la creazione del modulo di autenticazione lato API sono stati utilizzati i generatori Nx per NestJS, in modo da mantenere coerenza strutturale e best practice.
+
+```bash
+pnpm nx g @nx/nest:module apps/api/src/app/auth/auth
+pnpm nx g @nx/nest:service apps/api/src/app/auth/auth
+pnpm nx g @nx/nest:controller apps/api/src/app/auth/auth
+```
+
+I generatori Nx permettono di:
+
+* creare automaticamente file e wiring corretti
+
+* mantenere naming e struttura standard
+
+* integrare correttamente il codice nel graph Nx
+
+
+## Backend – Run & Verify (Auth)
+
+Avvio API in modalità sviluppo (watch):
+
+```bash
+pnpm nx serve api --watch
+````
+
+Quality gate:
+
+```bash
+pnpm nx lint api
+pnpm nx test api
+pnpm nx format:check
+```
+
+Reset cache Nx (utile se il watch non rileva cambiamenti o la daemon è in stato inconsistente):
+
+```bash
+pnpm nx reset
+```
+
+### Smoke test (curl)
+
+Login (copia `accessToken`):
+
+```bash
+curl -s -X POST http://localhost:3000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email":"paolo@example.com",
+    "password":"Password1",
+    "rememberMe": false
+  }'
+```
+
+Endpoint protetto `/me`:
+
+```bash
+curl -s http://localhost:3000/api/me \
+  -H "Authorization: Bearer <ACCESS_TOKEN>"
+```
+
+Access history:
+
+```bash
+curl -s "http://localhost:3000/api/me/access-history?limit=5" \
+  -H "Authorization: Bearer <ACCESS_TOKEN>"
+```
