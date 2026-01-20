@@ -53,13 +53,59 @@
 - Logging (Nest Logger / interceptor)
 - Rate limiting (opzionale)
 
+## Stato attuale (Milestone 2)
+
+### Moduli implementati
+
+- `DatabaseModule`
+  Espone un provider DI (`DB`) che fornisce il client Drizzle condiviso (`libs/api/db`).
+
+- `AuthModule`
+  Contiene:
+  - `AuthController` (`POST /auth/register`, `POST /auth/login`)
+  - `MeController` (`GET /me`, `GET /me/access-history?limit=5`)
+  - `AuthService` (logica di registrazione, login, access history)
+  - `JwtAuthGuard` (protezione route con header `Authorization: Bearer <token>`)
+
+### Flusso autenticazione (implementato)
+
+- **Register**
+  - Validazione input via Zod (`libs/shared/contracts`)
+  - Hashing password con bcrypt
+  - Insert su tabella `users`
+  - Gestione email duplicate con `409 Conflict`
+
+- **Login**
+  - Lookup utente per email
+  - Verifica password con `bcrypt.compare`
+  - Errori normalizzati con `401 Unauthorized` per prevenire user enumeration
+  - Generazione JWT access token (expiry breve o lunga con `rememberMe`)
+  - Scrittura access log in tabella `access_logs`
+
+### Route protette (implementato)
+
+- `GET /me` → restituisce il profilo dell’utente autenticato
+- `GET /me/access-history?limit=5` → restituisce gli ultimi accessi (default 5)
+
+### Error handling (stato attuale)
+
+Attualmente l’API usa:
+- Eccezioni NestJS standard (`BadRequest`, `Unauthorized`, `Conflict`)
+- Error shape custom per Zod (`{ message, errors }`)
+
+La normalizzazione completa delle risposte (es. tramite global filter/interceptor) è pianificata come UX polish.
+
 ---
 
 ## Database (PostgreSQL – Neon)
-### Tabelle (planned)
+### Tabelle (stato attuale)
 - `users`
-- `access_history`
+- `access_logs`
+
+### Tabelle future (opzionali)
 - `sessions` / `refresh_tokens` (per remember me)
+
+> Nota: `sessions` / `refresh_tokens` è opzionale e verrà valutato solo se si decide di implementare un refresh token
 
 ### Migrations & Seed
 - Drizzle migrations eseguite su DB cloud
@@ -130,8 +176,8 @@ L’autenticazione è basata su **JSON Web Token (JWT)**, come richiesto dall’
 
 La configurazione del modulo JWT avviene in modo asincrono, leggendo le variabili d’ambiente tramite `ConfigModule`.
 
-### Authentication error handling
+### Error handling in autenticazione
 
-For security reasons, authentication errors are intentionally normalized.
-The API does not distinguish between non-existing users and wrong passwords
-in order to prevent user enumeration attacks.
+Per motivi di sicurezza, gli errori di autenticazione vengono normalizzati.
+L’API non distingue tra “utente inesistente” e “password errata” per evitare attacchi
+di *user enumeration* (un attaccante potrebbe verificare quali email sono registrate).

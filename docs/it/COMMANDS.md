@@ -319,3 +319,54 @@ I generatori Nx permettono di:
 * mantenere naming e struttura standard
 
 * integrare correttamente il codice nel graph Nx
+
+
+## Backend – Run & Verify (Auth)
+
+Avvio API in modalità sviluppo (watch):
+
+```bash
+pnpm nx serve api --watch
+````
+
+Quality gate:
+
+```bash
+pnpm nx lint api
+pnpm nx test api
+pnpm nx format:check
+```
+
+Reset cache Nx (utile se il watch non rileva cambiamenti o la daemon è in stato inconsistente):
+
+```bash
+pnpm nx reset
+```
+
+### Smoke test (curl)
+
+Login (copia `accessToken`):
+
+```bash
+curl -s -X POST http://localhost:3000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email":"paolo@example.com",
+    "password":"Password1",
+    "rememberMe": false
+  }'
+```
+
+Endpoint protetto `/me`:
+
+```bash
+curl -s http://localhost:3000/api/me \
+  -H "Authorization: Bearer <ACCESS_TOKEN>"
+```
+
+Access history:
+
+```bash
+curl -s "http://localhost:3000/api/me/access-history?limit=5" \
+  -H "Authorization: Bearer <ACCESS_TOKEN>"
+```

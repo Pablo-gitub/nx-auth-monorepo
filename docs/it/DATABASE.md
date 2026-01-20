@@ -119,3 +119,18 @@ Il database è pronto per l’integrazione con l’API NestJS.
 
 Ho centralizzato la connessione Postgres e il client Drizzle in una libreria Nx dedicata. L’API Nest consuma il client tramite un provider DI (token-based), così posso riusare la stessa configurazione ovunque, mantenere isolamento delle dipendenze per progetto e rendere la parte DB testabile e sostituibile.
 Il provider è esposto da `DatabaseModule` tramite token `DB`
+
+## Access logs (login audit)
+
+La tabella `access_logs` viene utilizzata per registrare gli accessi utente al login:
+
+- `user_id` (FK su `users`)
+- `ip_address` (se disponibile)
+- `user_agent` (se disponibile)
+- `created_at`
+
+L’API espone un endpoint protetto per recuperare gli ultimi accessi:
+
+- `GET /me/access-history?limit=5`
+
+La query è ordinata per `created_at DESC` e limitata (default 5, max 50) per evitare letture eccessive.

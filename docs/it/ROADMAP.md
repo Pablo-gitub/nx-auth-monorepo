@@ -62,19 +62,22 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 
 ### Auth API
 
-- [ ] `POST /auth/register`
-  - [ ] validazione input
-  - [ ] hashing password
-  - [ ] gestione email duplicate
-- [ ] `POST /auth/login`
-  - [ ] verifica credenziali
-  - [ ] JWT access token
-  - [ ] gestione errori (401)
-- [ ] Remember me
-  - [ ] strategia definita (cookie httpOnly refresh token o alternativa)
-- [ ] Logging accessi
-  - [ ] salva record login in `access_history`
-- [ ] Error handling consistente (shape risposta)
+- [x] `POST /auth/register`
+  - [x] validazione input
+  - [x] hashing password
+  - [x] gestione email duplicate
+- [x] `POST /auth/login`
+  - [x] verifica credenziali
+  - [x] JWT access token
+  - [x] gestione errori (401)
+- [x] Remember me
+  - [x] strategia definita (cookie httpOnly refresh token o alternativa)
+- [x] Logging accessi
+  - [x] salva record login in `access_logs`
+- [x] JWT guard (Bearer token)
+- [x] `GET /me` (profilo)
+- [x] `PATCH /me` (update dati)
+- [x] `GET /me/access-history?limit=5`
 
 **PR:** `feat(api): auth + db foundation`  
 **Merge target:** `main`
@@ -160,12 +163,6 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 **Branch:** `feat/dashboard`  
 **Output:** dashboard completa come da requisiti.
 
-### Backend (se non già presenti)
-
-- [ ] `GET /me` (profilo)
-- [ ] `PATCH /me` (update dati)
-- [ ] `GET /me/access-history?limit=5`
-
 ### Frontend
 
 - [ ] Layout dashboard:
@@ -190,6 +187,7 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 **Branch:** `feat/polish-ux`  
 **Output:** UX più solida e professionale.
 
+- [ ] Error handling consistente (shape risposta)
 - [ ] Toast success/error (login/register/update/logout)
 - [ ] Loading states migliorati (skeleton/spinner)
 - [ ] Error boundaries con fallback UI
