@@ -1,13 +1,22 @@
-import { ConflictException, Inject, Injectable } from '@nestjs/common';
+import {
+  UnauthorizedException,
+  ConflictException,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { eq } from 'drizzle-orm';
 import * as bcrypt from 'bcrypt';
 
 import { DB } from '../database/database.module';
-import { users, type DbClient } from '@assignment-ftechnology/db';
+import { users, accessLogs, type DbClient } from '@assignment-ftechnology/db';
 import type {
   RegisterInput,
   UserPublicDto,
+  LoginInput,
 } from '@assignment-ftechnology/contracts';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import type { StringValue } from 'ms';
 
 /**
  * Map DB user -> public DTO (never expose passwordHash).
@@ -26,9 +35,22 @@ function toUserPublicDto(u: typeof users.$inferSelect): UserPublicDto {
   };
 }
 
+/**
+ * Metadata extracted from the incoming HTTP request.
+ * Used for access logging and audit purposes.
+ */
+type LoginMeta = {
+  ipAddress: string | null;
+  userAgent: string | null;
+};
+
 @Injectable()
 export class AuthService {
-  constructor(@Inject(DB) private readonly db: DbClient) {}
+  constructor(
+    @Inject(DB) private readonly db: DbClient,
+    private readonly jwt: JwtService,
+    private readonly config: ConfigService,
+  ) {}
 
   /**
    * Register a new user:
@@ -67,5 +89,60 @@ export class AuthService {
       .returning();
 
     return { user: toUserPublicDto(created) };
+  }
+
+  /**
+   * Authenticate a user and issue an access token.
+   *
+   * Step 1: lookup user by email
+   * Step 2: verify password with bcrypt.compare
+   */
+  async login(input: LoginInput, _meta: LoginMeta) {
+    const found = await this.db
+      .select()
+      .from(users)
+      .where(eq(users.email, input.email))
+      .limit(1);
+
+    const user = found[0];
+
+    // Do not leak whether the email exists or not.
+    // Always return the same error for invalid credentials.
+    if (!user) {
+      throw new UnauthorizedException({ message: 'Invalid credentials' });
+    }
+
+    const passwordOk = await bcrypt.compare(input.password, user.passwordHash);
+
+    if (!passwordOk) {
+      throw new UnauthorizedException({ message: 'Invalid credentials' });
+    }
+
+    // Step 3: JWT signing.
+    const expiresIn = (
+      input.rememberMe
+        ? (this.config.get<string>('JWT_REMEMBER_EXPIRES_IN') ?? '30d')
+        : (this.config.get<string>('JWT_EXPIRES_IN') ?? '15m')
+    ) as StringValue;
+
+    const accessToken = await this.jwt.signAsync(
+      {
+        sub: user.id,
+        email: user.email,
+      },
+      { expiresIn },
+    );
+
+    // Step 4: persist access log for audit purposes
+    await this.db.insert(accessLogs).values({
+      userId: user.id,
+      ipAddress: _meta.ipAddress,
+      userAgent: _meta.userAgent,
+    });
+
+    return {
+      accessToken,
+      user: toUserPublicDto(user),
+    };
   }
 }
