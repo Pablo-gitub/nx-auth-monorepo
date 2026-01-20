@@ -129,3 +129,9 @@ L’autenticazione è basata su **JSON Web Token (JWT)**, come richiesto dall’
 - È previsto il supporto a una durata estesa tramite l’opzione "remember me"
 
 La configurazione del modulo JWT avviene in modo asincrono, leggendo le variabili d’ambiente tramite `ConfigModule`.
+
+### Authentication error handling
+
+For security reasons, authentication errors are intentionally normalized.
+The API does not distinguish between non-existing users and wrong passwords
+in order to prevent user enumeration attacks.
