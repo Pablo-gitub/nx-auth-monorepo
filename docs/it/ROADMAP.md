@@ -111,7 +111,9 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
   - [x] `/login`
   - [x] `/dashboard` (private)
 - [x] Struttura ordinata (pages / routes / auth)
-- [x] Auth UI riusabile (libs/web/auth-ui)
+- [x] Skeleton Auth UI riusabile (libs/web/auth-ui) 
+- [x] Skeleton Auth logic (context + token)
+- [ ] Auth UI riusabile (libs/web/auth-ui)
 - [ ] Auth logic (context + token)
 - [ ] ProtectedRoute / redirect logic
 - [ ] Error Boundaries (root + route-level se utile)

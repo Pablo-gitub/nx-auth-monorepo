@@ -1,5 +1,5 @@
 // apps/web/src/app/routes/AppRouter.tsx
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import { LoginPage } from '../pages/LoginPage';
 import { RegisterPage } from '../pages/RegisterPage';
@@ -14,7 +14,6 @@ import { ProtectedRoute } from '../auth/ProtectedRoute';
  */
 export function AppRouter() {
   return (
-    <BrowserRouter>
       <Routes>
         {/* Public routes */}
         <Route path="/login" element={<LoginPage />} />
@@ -36,6 +35,5 @@ export function AppRouter() {
         {/* Fallback */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </BrowserRouter>
   );
 }

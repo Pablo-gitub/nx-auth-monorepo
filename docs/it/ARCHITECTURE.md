@@ -181,3 +181,30 @@ La configurazione del modulo JWT avviene in modo asincrono, leggendo le variabil
 Per motivi di sicurezza, gli errori di autenticazione vengono normalizzati.
 L’API non distingue tra “utente inesistente” e “password errata” per evitare attacchi
 di *user enumeration* (un attaccante potrebbe verificare quali email sono registrate).
+
+
+## Frontend – Scelta architetturale: Auth logic vs Auth UI
+
+Per mantenere separazione delle responsabilità e favorire riuso/modularità nel monorepo Nx,
+l'autenticazione lato frontend è stata divisa in due librerie:
+
+- `libs/web/auth`
+  Contiene la logica di autenticazione:
+  - gestione token (storage)
+  - chiamate API (`/auth/login`, `/me`)
+  - stato globale e hook (`AuthProvider`, `useAuth`)
+  - protezione route (ProtectedRoute / redirect logic)
+
+- `libs/web/auth-ui`
+  Contiene componenti UI riusabili e "presentational":
+  - form base di login/register
+  - layout/shell
+  - componenti senza dipendenze dirette dall'API
+
+Questa scelta permette di:
+- sostituire o evolvere l'interfaccia grafica senza impattare la logica auth
+- riusare la logica auth in altre app del monorepo (es. admin dashboard) con UI diverse
+- mantenere test più mirati (logica vs rendering)
+
+Nota: l'assignment richiede una sola app web, quindi il design resta volutamente "light":
+le estensioni/adapter specifici dell'app possono essere introdotti solo se/quando diventano necessari (YAGNI).
