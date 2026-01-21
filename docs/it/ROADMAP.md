@@ -105,12 +105,14 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 **Branch:** `feat/web-auth-routing`  
 **Output:** struttura frontend pronta, routing configurato, protezione route.
 
-- [ ] Setup React app `web`
-- [ ] React Router:
-  - [ ] `/register`
-  - [ ] `/login`
-  - [ ] `/dashboard` (private)
-- [ ] Auth Context + hook `useAuth()`
+- [x] Setup React app `web`
+- [x] React Router:
+  - [x] `/register`
+  - [x] `/login`
+  - [x] `/dashboard` (private)
+- [x] Struttura ordinata (pages / routes / auth)
+- [x] Auth UI riusabile (libs/web/auth-ui)
+- [ ] Auth logic (context + token)
 - [ ] ProtectedRoute / redirect logic
 - [ ] Error Boundaries (root + route-level se utile)
 - [ ] Loading states generici
