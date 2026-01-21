@@ -8,6 +8,7 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { MeController } from './me.controller';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { AvatarController } from './avatar.controller';
 
 /**
  * Authentication module.
@@ -53,7 +54,7 @@ import { JwtAuthGuard } from './jwt-auth.guard';
    * - AuthController: public auth endpoints (register, login)
    * - MeController: JWT-protected endpoints for the authenticated user
    */
-  controllers: [AuthController, MeController],
+  controllers: [AuthController, MeController, AvatarController],
 
   /**
    * Providers registered by this module.
