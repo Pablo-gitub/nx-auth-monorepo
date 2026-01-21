@@ -1,5 +1,5 @@
+import { useAuth } from '@assignment-ftechnology/auth';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../auth/useAuth';
 
 export function DashboardPage() {
   const { user, logout } = useAuth();

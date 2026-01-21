@@ -1,17 +1,20 @@
-import { Navigate } from 'react-router-dom';
 import type { ReactNode } from 'react';
-import { useAuth } from './useAuth';
+import { Navigate, useLocation } from 'react-router-dom';
+import { useAuth } from '@assignment-ftechnology/auth';
 
-type Props = {
-  children: ReactNode;
-};
+export function ProtectedRoute({ children }: { children: ReactNode }) {
+  const { accessToken, status } = useAuth();
+  const isAuthenticated = Boolean(accessToken);
 
-export function ProtectedRoute({ children }: Props) {
-  const { isAuthenticated } = useAuth();
+  const location = useLocation();
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+  if (status === 'loading') {
+    return <div style={{ padding: 24 }}>Loading...</div>;
   }
 
-  return children;
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
+  }
+
+  return <div>{children}</div>;
 }

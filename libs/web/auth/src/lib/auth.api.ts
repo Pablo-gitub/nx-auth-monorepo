@@ -1,7 +1,19 @@
 import type { LoginPayload, LoginResponse, AuthUser } from './auth.types';
 
 const DEFAULT_API_URL = 'http://localhost:3000/api';
-const API_URL = import.meta.env.VITE_API_URL ?? DEFAULT_API_URL;
+
+let API_URL = DEFAULT_API_URL;
+
+/**
+ * Configure the API base URL at runtime (from the host app).
+ * Call this once at app bootstrap.
+ */
+export function setApiBaseUrl(url?: string) {
+  const trimmed = (url ?? '').trim();
+  if (trimmed.length > 0) {
+    API_URL = trimmed;
+  }
+}
 
 async function http<T>(input: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${API_URL}${input}`, {

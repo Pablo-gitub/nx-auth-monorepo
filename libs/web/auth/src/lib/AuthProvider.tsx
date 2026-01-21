@@ -1,7 +1,11 @@
 import React from 'react';
 import type { AuthContextValue, AuthState, LoginPayload } from './auth.types';
 import { apiLogin, apiMe } from './auth.api';
-import { clearAccessToken, readAccessToken, writeAccessToken } from './token.storage';
+import {
+  clearAccessToken,
+  readAccessToken,
+  writeAccessToken,
+} from './token.storage';
 
 const AuthContext = React.createContext<AuthContextValue | null>(null);
 
@@ -17,18 +21,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const refreshMe = React.useCallback(async () => {
     const token = state.accessToken ?? readAccessToken();
     if (!token) {
-      setState({ ...initialState });
+      setState(initialState);
       return;
     }
 
     setState((s) => ({ ...s, status: 'loading', accessToken: token }));
 
-    const me = await apiMe(token);
-    setState({
-      accessToken: token,
-      user: me.user,
-      status: 'authenticated',
-    });
+    try {
+      const me = await apiMe(token);
+      setState({
+        accessToken: token,
+        user: me.user,
+        status: 'authenticated',
+      });
+    } catch {
+      clearAccessToken();
+      setState(initialState);
+    }
   }, [state.accessToken]);
 
   const login = React.useCallback(async (payload: LoginPayload) => {
@@ -68,7 +77,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 export function useAuthContext(): AuthContextValue {
   const ctx = React.useContext(AuthContext);
   if (!ctx) {
-    throw new Error('useAuth must be used within AuthProvider');
+    throw new Error('useAuthContext must be used within AuthProvider');
   }
   return ctx;
 }
+
+export const useAuth = useAuthContext;
