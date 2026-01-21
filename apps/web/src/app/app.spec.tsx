@@ -1,5 +1,4 @@
-import { render } from '@testing-library/react';
-
+import { render, screen } from '@testing-library/react';
 import App from './app';
 
 describe('App', () => {
@@ -8,10 +7,8 @@ describe('App', () => {
     expect(baseElement).toBeTruthy();
   });
 
-  it('should have a greeting as the title', () => {
-    const { getAllByText } = render(<App />);
-    expect(
-      getAllByText(new RegExp('Welcome web', 'gi')).length > 0,
-    ).toBeTruthy();
+  it('should render the login page by default', () => {
+    render(<App />);
+    expect(screen.getByRole('heading', { name: /login/i })).toBeInTheDocument();
   });
 });
