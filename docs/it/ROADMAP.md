@@ -89,11 +89,11 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 **Branch:** `feat/api-avatar-upload`  
 **Output:** upload avatar opzionale funzionante, con persistenza del riferimento nel profilo.
 
-- [ ] Endpoint upload avatar (multer / file handling)
-- [ ] Salvataggio file (es. `/uploads`)
-- [ ] Aggiornamento user `avatarUrl` / `avatarPath`
-- [ ] Servire file statici (config Nest)
-- [ ] Validazioni minime (mime type, size limit)
+- [x] Endpoint upload avatar (multer / file handling)
+- [x] Salvataggio file (es. `/uploads`)
+- [x] Aggiornamento user `avatarUrl` / `avatarPath`
+- [x] Servire file statici (config Nest)
+- [x] Validazioni minime (mime type, size limit)
 
 **PR:** `feat(api): avatar upload`  
 **Merge target:** `main`
