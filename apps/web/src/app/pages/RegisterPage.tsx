@@ -1,4 +1,8 @@
-// apps/web/src/app/pages/RegisterPage.tsx
 export function RegisterPage() {
-  return <h1>Register Page</h1>;
+  return (
+    <div style={{ padding: 24 }}>
+      <h1>Register</h1>
+      <p>TODO: form + API call</p>
+    </div>
+  );
 }
