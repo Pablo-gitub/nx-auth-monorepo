@@ -156,3 +156,36 @@ pnpm nx lint api
 pnpm nx test api
 pnpm nx format:check
 ```
+
+## Upload avatar (locale)
+
+Per testare l’upload avatar:
+
+1. Avvia l’API:
+```bash
+   pnpm nx serve api
+````
+
+2. Effettua login e copia il `accessToken`
+
+3. Usa Postman:
+
+   * Method: POST
+   * URL: `http://localhost:3000/api/me/avatar`
+   * Header:
+
+     ```
+     Authorization: Bearer <ACCESS_TOKEN>
+     ```
+   * Body → form-data:
+
+     * key: `file`
+     * type: File
+     * value: immagine `.jpg` / `.png`
+
+4. L’immagine sarà accessibile da:
+
+   ```
+   http://localhost:3000/uploads/avatars/<filename>
+   ```
+

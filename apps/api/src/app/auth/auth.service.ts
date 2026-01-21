@@ -201,4 +201,21 @@ export class AuthService {
       })),
     };
   }
+
+  async updateAvatar(
+    userId: string,
+    avatarUrl: string,
+  ): Promise<UserPublicDto> {
+    const [updated] = await this.db
+      .update(users)
+      .set({ avatarUrl, updatedAt: new Date() })
+      .where(eq(users.id, userId))
+      .returning();
+
+    if (!updated) {
+      throw new NotFoundException({ message: 'User not found' });
+    }
+
+    return toUserPublicDto(updated);
+  }
 }
