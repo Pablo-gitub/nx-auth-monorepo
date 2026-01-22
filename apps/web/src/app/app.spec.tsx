@@ -1,12 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from './app';
+import { AuthProvider } from '@assignment-ftechnology/auth';
 
 function renderWithRouter(initialEntries: string[] = ['/login']) {
   return render(
-    <MemoryRouter initialEntries={initialEntries}>
-      <App />
-    </MemoryRouter>,
+    <AuthProvider>
+      <MemoryRouter initialEntries={initialEntries}>
+        <App />
+      </MemoryRouter>
+    </AuthProvider>,
   );
 }
 
