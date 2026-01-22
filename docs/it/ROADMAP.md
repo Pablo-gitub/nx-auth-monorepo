@@ -76,7 +76,6 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
   - [x] salva record login in `access_logs`
 - [x] JWT guard (Bearer token)
 - [x] `GET /me` (profilo)
-- [x] `PATCH /me` (update dati)
 - [x] `GET /me/access-history?limit=5`
 
 **PR:** `feat(api): auth + db foundation`  
@@ -166,6 +165,10 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 
 **Branch:** `feat/dashboard`  
 **Output:** dashboard completa come da requisiti.
+
+### Backend
+
+- [x] `PATCH /me` (update dati)
 
 ### Frontend
 

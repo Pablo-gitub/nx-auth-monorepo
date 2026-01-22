@@ -11,7 +11,7 @@ export type AuthState = {
 export type LoginPayload = {
   email: string;
   password: string;
-  rememberMe: boolean;
+  rememberMe?: boolean;
 };
 
 export type LoginResponse = {

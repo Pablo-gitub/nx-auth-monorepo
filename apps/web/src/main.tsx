@@ -6,7 +6,7 @@ import App from './app/app';
 import { AuthProvider, setApiBaseUrl } from '@assignment-ftechnology/auth';
 import { ErrorBoundary } from './app/components/ErrorBoundary';
 
-setApiBaseUrl(import.meta.env.VITE_API_URL);
+setApiBaseUrl('/api');
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 

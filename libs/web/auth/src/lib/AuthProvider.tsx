@@ -9,19 +9,37 @@ import {
 
 const AuthContext = React.createContext<AuthContextValue | null>(null);
 
-const initialState: AuthState = {
-  accessToken: null,
-  user: null,
-  status: 'anonymous',
-};
+/**
+ * Builds the initial auth state synchronously.
+ * This prevents route-guards from redirecting to /login before we had a chance
+ * to restore the session from localStorage.
+ */
+function buildInitialState(): AuthState {
+  const token = readAccessToken();
+
+  return {
+    accessToken: token,
+    user: null,
+    // If we already have a token, we must validate it by calling /me.
+    // During that time the app should show a loading UI, not redirect.
+    status: token ? 'loading' : 'anonymous',
+  };
+}
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [state, setState] = React.useState<AuthState>(initialState);
+  const [state, setState] = React.useState<AuthState>(() =>
+    buildInitialState(),
+  );
 
+  /**
+   * Refreshes the current user ("me") using either the in-memory token
+   * or the one stored in localStorage.
+   */
   const refreshMe = React.useCallback(async () => {
     const token = state.accessToken ?? readAccessToken();
+
     if (!token) {
-      setState(initialState);
+      setState(buildInitialState());
       return;
     }
 
@@ -29,22 +47,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     try {
       const me = await apiMe(token);
+
       setState({
         accessToken: token,
         user: me.user,
         status: 'authenticated',
       });
     } catch {
+      // Token invalid/expired -> clean up and go back to anonymous.
       clearAccessToken();
-      setState(initialState);
+      setState(buildInitialState());
     }
   }, [state.accessToken]);
 
+  /**
+   * Performs login and stores the token.
+   * Note: rememberMe might come as undefined from some UI layers -> default to false.
+   */
   const login = React.useCallback(async (payload: LoginPayload) => {
     setState((s) => ({ ...s, status: 'loading' }));
 
-    const res = await apiLogin(payload);
-    writeAccessToken(res.accessToken);
+    const res = await apiLogin({
+      ...payload,
+      rememberMe: payload.rememberMe ?? false,
+    });
+
+    const rememberMe = payload.rememberMe ?? false;
+
+    writeAccessToken(res.accessToken, rememberMe);
 
     setState({
       accessToken: res.accessToken,
@@ -53,12 +83,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
+  /**
+   * Clears the session locally.
+   */
   const logout = React.useCallback(() => {
     clearAccessToken();
-    setState({ ...initialState });
+    setState(buildInitialState());
   }, []);
 
-  // Bootstrap: prova a ripristinare sessione da localStorage
+  /**
+   * Bootstrap: validate any existing token on app start.
+   */
   React.useEffect(() => {
     void refreshMe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
