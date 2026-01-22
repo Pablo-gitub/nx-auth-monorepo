@@ -76,7 +76,6 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
   - [x] salva record login in `access_logs`
 - [x] JWT guard (Bearer token)
 - [x] `GET /me` (profilo)
-- [x] `PATCH /me` (update dati)
 - [x] `GET /me/access-history?limit=5`
 
 **PR:** `feat(api): auth + db foundation`  
@@ -89,11 +88,11 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 **Branch:** `feat/api-avatar-upload`  
 **Output:** upload avatar opzionale funzionante, con persistenza del riferimento nel profilo.
 
-- [ ] Endpoint upload avatar (multer / file handling)
-- [ ] Salvataggio file (es. `/uploads`)
-- [ ] Aggiornamento user `avatarUrl` / `avatarPath`
-- [ ] Servire file statici (config Nest)
-- [ ] Validazioni minime (mime type, size limit)
+- [x] Endpoint upload avatar (multer / file handling)
+- [x] Salvataggio file (es. `/uploads`)
+- [x] Aggiornamento user `avatarUrl` / `avatarPath`
+- [x] Servire file statici (config Nest)
+- [x] Validazioni minime (mime type, size limit)
 
 **PR:** `feat(api): avatar upload`  
 **Merge target:** `main`
@@ -105,15 +104,18 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 **Branch:** `feat/web-auth-routing`  
 **Output:** struttura frontend pronta, routing configurato, protezione route.
 
-- [ ] Setup React app `web`
-- [ ] React Router:
-  - [ ] `/register`
-  - [ ] `/login`
-  - [ ] `/dashboard` (private)
-- [ ] Auth Context + hook `useAuth()`
-- [ ] ProtectedRoute / redirect logic
-- [ ] Error Boundaries (root + route-level se utile)
-- [ ] Loading states generici
+- [x] Setup React app `web`
+- [x] React Router:
+  - [x] `/register`
+  - [x] `/login`
+  - [x] `/dashboard` (private)
+- [x] Struttura ordinata (pages / routes / auth)
+- [x] Auth UI riusabile (libs/web/auth-ui)
+- [x] Auth logic (context)
+- [x] AuthProvider/token
+- [x] ProtectedRoute / redirect logic
+- [x] Error Boundaries (root + route-level se utile)
+- [x] Loading states generici
 
 **PR:** `feat(web): auth routing + guards`  
 **Merge target:** `main`
@@ -162,6 +164,10 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 
 **Branch:** `feat/dashboard`  
 **Output:** dashboard completa come da requisiti.
+
+### Backend
+
+- [x] `PATCH /me` (update dati)
 
 ### Frontend
 

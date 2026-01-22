@@ -18,7 +18,9 @@
       "@assignment-ftechnology/db": ["libs/api/db/src/index.ts"],
       "@assignment-ftechnology/contracts": [
         "libs/shared/contracts/src/index.ts"
-      ]
+      ],
+      "@assignment-ftechnology/auth-ui": ["libs/web/auth-ui/src/index.ts"],
+      "@assignment-ftechnology/auth": ["libs/web/auth/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
