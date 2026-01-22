@@ -206,5 +206,57 @@ Questa scelta permette di:
 - riusare la logica auth in altre app del monorepo (es. admin dashboard) con UI diverse
 - mantenere test più mirati (logica vs rendering)
 
-Nota: l'assignment richiede una sola app web, quindi il design resta volutamente "light":
+>Nota: l'assignment richiede una sola app web, quindi il design resta volutamente "light":
 le estensioni/adapter specifici dell'app possono essere introdotti solo se/quando diventano necessari (YAGNI).
+
+## Frontend – Routing e Autenticazione
+
+### Routing e controllo accessi
+
+Il frontend utilizza **React Router** per la gestione della navigazione, distinguendo
+chiaramente tra route pubbliche e route protette.
+
+- Route pubbliche:
+  - `/login`
+  - `/register`
+- Route protette:
+  - `/dashboard`
+
+Le route protette sono incapsulate tramite un componente dedicato (`ProtectedRoute`)
+che funge da **boundary architetturale** tra navigazione e autenticazione.
+
+### Architettura dell’autenticazione lato frontend
+
+La gestione dell’autenticazione è centralizzata in una libreria dedicata (`libs/web/auth`)
+ed è basata su un **AuthProvider** globale.
+
+Responsabilità principali dell’AuthProvider:
+
+- mantenere lo stato di autenticazione (`anonymous`, `loading`, `authenticated`)
+- gestire il ciclo di vita della sessione utente
+- esporre API coerenti tramite hook (`useAuth`)
+- effettuare il bootstrap della sessione al refresh dell’applicazione
+
+All’avvio dell’applicazione, l’AuthProvider:
+1. legge l’access token dallo storage
+2. se presente, invoca l’endpoint `GET /me`
+3. aggiorna lo stato globale in base all’esito
+
+### Strategia di persistenza del token
+
+La persistenza dell’access token dipende dalla scelta dell’utente:
+
+- `rememberMe = true` → `localStorage` (persistenza tra restart del browser)
+- `rememberMe = false` → `sessionStorage` (valido solo per la sessione corrente)
+
+Questa strategia consente di mantenere un buon equilibrio tra UX e sicurezza,
+senza introdurre complessità premature (es. refresh token).
+
+### Gestione errori e stabilità dell’applicazione
+
+Un `ErrorBoundary` è montato a livello root dell’applicazione per intercettare
+errori runtime non gestiti e impedire il crash completo dell’interfaccia.
+
+Questo approccio garantisce una maggiore robustezza del frontend e isola
+gli errori critici dal resto dell’esperienza utente.
+

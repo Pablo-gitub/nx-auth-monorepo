@@ -110,13 +110,12 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
   - [x] `/login`
   - [x] `/dashboard` (private)
 - [x] Struttura ordinata (pages / routes / auth)
-- [x] Skeleton Auth UI riusabile (libs/web/auth-ui) 
-- [x] Skeleton Auth logic (context + token)
-- [ ] Auth UI riusabile (libs/web/auth-ui)
-- [ ] Auth logic (context + token)
-- [ ] ProtectedRoute / redirect logic
-- [ ] Error Boundaries (root + route-level se utile)
-- [ ] Loading states generici
+- [x] Auth UI riusabile (libs/web/auth-ui)
+- [x] Auth logic (context)
+- [x] AuthProvider/token
+- [x] ProtectedRoute / redirect logic
+- [x] Error Boundaries (root + route-level se utile)
+- [x] Loading states generici
 
 **PR:** `feat(web): auth routing + guards`  
 **Merge target:** `main`
