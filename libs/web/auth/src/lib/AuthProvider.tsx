@@ -61,27 +61,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [state.accessToken]);
 
   /**
-   * Performs login and stores the token.
-   * Note: rememberMe might come as undefined from some UI layers -> default to false.
+   * Perform login against the API.
+   *
+   * Notes:
+   * - Returns void (as required by AuthContextValue typing).
+   * - Pages can still await it to know when it's done.
    */
-  const login = React.useCallback(async (payload: LoginPayload) => {
-    setState((s) => ({ ...s, status: 'loading' }));
+  const login = React.useCallback(
+    async (payload: LoginPayload): Promise<void> => {
+      setState((s) => ({ ...s, status: 'loading' }));
 
-    const res = await apiLogin({
-      ...payload,
-      rememberMe: payload.rememberMe ?? false,
-    });
+      try {
+        const res = await apiLogin(payload);
 
-    const rememberMe = payload.rememberMe ?? false;
+        writeAccessToken(res.accessToken, Boolean(payload.rememberMe));
 
-    writeAccessToken(res.accessToken, rememberMe);
+        setState({
+          accessToken: res.accessToken,
+          user: res.user,
+          status: 'authenticated',
+        });
 
-    setState({
-      accessToken: res.accessToken,
-      user: res.user,
-      status: 'authenticated',
-    });
-  }, []);
+        // Do NOT return res -> keep the contract Promise<void>
+      } catch (err) {
+        clearAccessToken();
+        setState(buildInitialState());
+        throw err;
+      }
+    },
+    [],
+  );
 
   /**
    * Clears the session locally.
