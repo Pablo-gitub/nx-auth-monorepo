@@ -23,15 +23,14 @@ export const STRINGS = {
   register: {
     title: 'Register',
     subtitle: 'Create your account',
-    firstName: 'First name',
-    lastName: 'Last name',
-    email: 'Email',
-    birthDate: 'Birth date',
-    password: 'Password',
-    confirmPassword: 'Confirm password',
+
     submit: 'Create account',
     submitting: 'Creating...',
+
     loginCtaText: 'Already have an account?',
     loginCtaLink: 'Go to login',
+
+    emailAlreadyExists: 'An account with this email already exists.',
+    genericRegisterError: 'Register failed. Please try again.',
   },
 };
