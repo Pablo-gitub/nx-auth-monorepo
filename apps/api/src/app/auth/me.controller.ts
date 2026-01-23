@@ -1,8 +1,17 @@
-import { Controller, Get, Query, Req, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Patch,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import type { Request } from 'express';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
-
+import { patchMeSchema, type PatchMeInput } from '@assignment-ftechnology/contracts';
 /**
  * Request enriched by JwtAuthGuard.
  * The guard attaches the authenticated user payload to `req.user`.
@@ -28,13 +37,29 @@ export class MeController {
 
   /**
    * Returns the profile of the currently authenticated user.
-   *
-   * The user id is extracted from the JWT payload (`req.user.sub`)
-   * and resolved via the AuthService.
    */
   @Get()
   async me(@Req() req: AuthenticatedRequest) {
     return this.authService.getMe(req.user?.sub);
+  }
+
+  /**
+   * Updates editable profile fields for the current user.
+   * No email/password updates here (assignment scope + security).
+   */
+  @Patch()
+  async patchMe(@Req() req: AuthenticatedRequest, @Body() body: unknown) {
+    // Validate input with shared contract
+    const parsed = patchMeSchema.safeParse(body);
+    if (!parsed.success) {
+      const firstIssue = parsed.error.issues[0]?.message ?? 'Invalid input';
+      throw new BadRequestException({ message: firstIssue });
+    }
+
+    const userId = req.user?.sub;
+    const input: PatchMeInput = parsed.data;
+
+    return this.authService.updateMe(userId, input);
   }
 
   /**

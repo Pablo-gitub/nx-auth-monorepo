@@ -65,3 +65,47 @@ export type UserPublicDto = {
   createdAt: string;
   updatedAt: string;
 };
+
+/**
+ * PATCH /me payload.
+ * All fields are optional because this is a partial update.
+ */
+export const updateMeSchema = z.object({
+  firstName: z.string().min(1).max(100).optional(),
+  lastName: z.string().min(1).max(100).optional(),
+  birthDate: z.string().min(1).optional(), // keep ISO date string for now
+  avatarUrl: z.string().url().optional(),
+});
+
+/**
+ * PATCH /me payload:
+ * - Only editable profile fields (no email, no password, no avatarUrl).
+ * - All fields are optional, but at least one must be provided.
+ */
+export const patchMeSchema = z
+  .object({
+    firstName: z
+      .string()
+      .min(1, 'First name is required')
+      .max(100, 'First name is too long')
+      .optional(),
+
+    lastName: z
+      .string()
+      .min(1, 'Last name is required')
+      .max(100, 'Last name is too long')
+      .optional(),
+
+    birthDate: z
+      .string()
+      .min(1, 'Birth date is required')
+      // ISO date from FE: "YYYY-MM-DD"
+      .regex(/^\d{4}-\d{2}-\d{2}$/, 'Birth date must be in YYYY-MM-DD format')
+      .optional(),
+  })
+  .refine((data) => Object.keys(data).length > 0, {
+    message: 'At least one field must be provided',
+    path: [],
+  });
+
+export type PatchMeInput = z.infer<typeof patchMeSchema>;
