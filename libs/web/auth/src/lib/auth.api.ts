@@ -1,4 +1,11 @@
-import type { LoginPayload, LoginResponse, AuthUser } from './auth.types';
+// libs/web/auth/src/lib/auth.api.ts
+import type {
+  LoginPayload,
+  LoginResponse,
+  AuthUser,
+  RegisterPayload,
+  RegisterResponse,
+} from './auth.types';
 
 const DEFAULT_API_URL = 'http://localhost:3000/api';
 
@@ -60,5 +67,12 @@ export function apiMe(accessToken: string): Promise<{ user: AuthUser }> {
   return http<{ user: AuthUser }>('/me', {
     method: 'GET',
     headers: { Authorization: `Bearer ${accessToken}` },
+  });
+}
+
+export function apiRegister(payload: RegisterPayload): Promise<RegisterResponse> {
+  return http<RegisterResponse>('/auth/register', {
+    method: 'POST',
+    body: JSON.stringify(payload),
   });
 }

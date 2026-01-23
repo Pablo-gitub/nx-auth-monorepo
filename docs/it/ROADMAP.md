@@ -149,11 +149,11 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 **Branch:** `feat/web-login`  
 **Output:** login funzionante con remember me e redirect.
 
-- [ ] Form `/login` (email + password)
-- [ ] Errori autenticazione user-friendly
-- [ ] Remember me checkbox
-- [ ] Link “password dimenticata” (solo UI)
-- [ ] Redirect a `/dashboard` dopo login
+- [x] Form `/login` (email + password)
+- [x] Errori autenticazione user-friendly
+- [x] Remember me checkbox
+- [x] Link “password dimenticata” (solo UI)
+- [x] Redirect a `/dashboard` dopo login
 
 **PR:** `feat(web): login page`  
 **Merge target:** `main`

@@ -1,4 +1,4 @@
-import type { UserPublicDto } from '@assignment-ftechnology/contracts';
+import type { RegisterInput, UserPublicDto } from '@assignment-ftechnology/contracts';
 
 export type AuthUser = UserPublicDto;
 
@@ -16,6 +16,16 @@ export type LoginPayload = {
 
 export type LoginResponse = {
   accessToken: string;
+  user: AuthUser;
+};
+
+/**
+ * Register payload is shared with the backend contract (Zod schema).
+ * We intentionally keep avatarUrl optional and we do NOT send it for now.
+ */
+export type RegisterPayload = RegisterInput;
+
+export type RegisterResponse = {
   user: AuthUser;
 };
 
