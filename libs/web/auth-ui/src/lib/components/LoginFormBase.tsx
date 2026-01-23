@@ -1,12 +1,23 @@
-// libs/web/auth-ui/src/lib/components/LoginFormBase.tsx
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import type { LoginFormValues } from '../types/auth-ui.types';
+
+type LoginField = 'email' | 'password' | 'rememberMe';
 
 type Props = {
   onSubmit: (values: LoginFormValues) => void | Promise<void>;
   submitLabel?: string;
   disabled?: boolean;
+
+  /**
+   * General (form-level) error message (e.g. server says "Invalid credentials").
+   */
   error?: string | null;
+
+  /**
+   * Field-level errors (client validation or mapped server validation).
+   * Keys MUST match the form fields to keep tests stable.
+   */
+  fieldErrors?: Partial<Record<LoginField, string>>;
 
   /**
    * Called whenever the user edits any field.
@@ -26,6 +37,7 @@ export function LoginFormBase({
   submitLabel = 'Login',
   disabled = false,
   error = null,
+  fieldErrors,
   onChange,
   forgotPasswordHref,
   forgotPasswordLabel = 'Forgot password?',
@@ -33,6 +45,13 @@ export function LoginFormBase({
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+
+  // Stable ids for aria-describedby, safe for multiple forms on same page
+  const emailId = useId();
+  const passwordId = useId();
+
+  const emailError = fieldErrors?.email;
+  const passwordError = fieldErrors?.password;
 
   return (
     <form
@@ -46,12 +65,20 @@ export function LoginFormBase({
         <span>Email</span>
         <input
           value={email}
+          disabled={disabled}
           onChange={(e) => {
             setEmail(e.target.value);
             onChange?.();
           }}
-          disabled={disabled}
+          // Accessibility: mark invalid and point to error text
+          aria-invalid={Boolean(emailError)}
+          aria-describedby={emailError ? `${emailId}-error` : undefined}
         />
+        {emailError ? (
+          <p id={`${emailId}-error`} role="alert" style={{ margin: 0 }}>
+            {emailError}
+          </p>
+        ) : null}
       </label>
 
       <label style={{ display: 'grid', gap: 6 }}>
@@ -59,12 +86,19 @@ export function LoginFormBase({
         <input
           type="password"
           value={password}
+          disabled={disabled}
           onChange={(e) => {
             setPassword(e.target.value);
             onChange?.();
           }}
-          disabled={disabled}
+          aria-invalid={Boolean(passwordError)}
+          aria-describedby={passwordError ? `${passwordId}-error` : undefined}
         />
+        {passwordError ? (
+          <p id={`${passwordId}-error`} role="alert" style={{ margin: 0 }}>
+            {passwordError}
+          </p>
+        ) : null}
       </label>
 
       <div
@@ -79,11 +113,11 @@ export function LoginFormBase({
           <input
             type="checkbox"
             checked={rememberMe}
+            disabled={disabled}
             onChange={(e) => {
               setRememberMe(e.target.checked);
               onChange?.();
             }}
-            disabled={disabled}
           />
           <span>Remember me</span>
         </label>
@@ -95,7 +129,12 @@ export function LoginFormBase({
         ) : null}
       </div>
 
-      {error ? <div style={{ color: 'crimson' }}>{error}</div> : null}
+      {/* General error (server/global) */}
+      {error ? (
+        <div role="alert" style={{ color: 'crimson' }}>
+          {error}
+        </div>
+      ) : null}
 
       <button type="submit" disabled={disabled}>
         {submitLabel}

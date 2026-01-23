@@ -20,8 +20,18 @@ export const STRINGS = {
     errorCode: '404',
     goToLogin: 'Go to login',
   },
-  register:{
+  register: {
     title: 'Register',
-    subtitle: 'Create a new account',
+    subtitle: 'Create your account',
+    firstName: 'First name',
+    lastName: 'Last name',
+    email: 'Email',
+    birthDate: 'Birth date',
+    password: 'Password',
+    confirmPassword: 'Confirm password',
+    submit: 'Create account',
+    submitting: 'Creating...',
+    loginCtaText: 'Already have an account?',
+    loginCtaLink: 'Go to login',
   },
 };
