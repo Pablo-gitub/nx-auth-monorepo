@@ -1,3 +1,4 @@
+// libs/web/auth-ui/src/lib/components/LoginFormBase.tsx
 import { useState } from 'react';
 import type { LoginFormValues } from '../types/auth-ui.types';
 
@@ -6,6 +7,18 @@ type Props = {
   submitLabel?: string;
   disabled?: boolean;
   error?: string | null;
+
+  /**
+   * Called whenever the user edits any field.
+   * Useful to clear server errors as soon as the user retries.
+   */
+  onChange?: () => void;
+
+  /**
+   * Optional "Forgot password?" link (UI-only).
+   */
+  forgotPasswordHref?: string;
+  forgotPasswordLabel?: string;
 };
 
 export function LoginFormBase({
@@ -13,6 +26,9 @@ export function LoginFormBase({
   submitLabel = 'Login',
   disabled = false,
   error = null,
+  onChange,
+  forgotPasswordHref,
+  forgotPasswordLabel = 'Forgot password?',
 }: Props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,7 +44,14 @@ export function LoginFormBase({
     >
       <label style={{ display: 'grid', gap: 6 }}>
         <span>Email</span>
-        <input value={email} onChange={(e) => setEmail(e.target.value)} disabled={disabled} />
+        <input
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            onChange?.();
+          }}
+          disabled={disabled}
+        />
       </label>
 
       <label style={{ display: 'grid', gap: 6 }}>
@@ -36,20 +59,41 @@ export function LoginFormBase({
         <input
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            onChange?.();
+          }}
           disabled={disabled}
         />
       </label>
 
-      <label style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-        <input
-          type="checkbox"
-          checked={rememberMe}
-          onChange={(e) => setRememberMe(e.target.checked)}
-          disabled={disabled}
-        />
-        <span>Remember me</span>
-      </label>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          gap: 12,
+          alignItems: 'center',
+        }}
+      >
+        <label style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <input
+            type="checkbox"
+            checked={rememberMe}
+            onChange={(e) => {
+              setRememberMe(e.target.checked);
+              onChange?.();
+            }}
+            disabled={disabled}
+          />
+          <span>Remember me</span>
+        </label>
+
+        {forgotPasswordHref ? (
+          <a href={forgotPasswordHref} style={{ fontSize: 14, opacity: 0.85 }}>
+            {forgotPasswordLabel}
+          </a>
+        ) : null}
+      </div>
 
       {error ? <div style={{ color: 'crimson' }}>{error}</div> : null}
 
