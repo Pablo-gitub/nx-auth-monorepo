@@ -32,7 +32,14 @@ export const STRINGS = {
   common: {
     loading: 'Loading...',
   },
+
+  brand: {
+    name: 'FTechnology Auth',
+  },
   dashboard: {
+    navDashboard: 'Dashboard',
+    navProfile: 'Profile',
+
     title: 'Dashboard',
     logout: 'Logout',
 

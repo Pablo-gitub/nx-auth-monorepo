@@ -127,17 +127,17 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 **Branch:** `feat/web-register`  
 **Output:** form register completo con validazioni client e UX.
 
-- [ ] Form `/register` campi richiesti:
-  - [ ] Nome e Cognome
-  - [ ] Email (format)
-  - [ ] Password (policy)
-  - [ ] Conferma password
-  - [ ] Data di nascita
-  - [ ] Avatar (opzionale)
-- [ ] Validazione client + errori visuali
-- [ ] Submit async + loading state
-- [ ] Gestione errori server user-friendly
-- [ ] Redirect a `/login` dopo successo
+- [x] Form `/register` campi richiesti:
+  - [x] Nome e Cognome
+  - [x] Email (format)
+  - [x] Password (policy)
+  - [x] Conferma password
+  - [x] Data di nascita
+  - [x] Avatar (opzionale)
+- [x] Validazione client + errori visuali
+- [x] Submit async + loading state
+- [x] Gestione errori server user-friendly
+- [x] Redirect a `/login` dopo successo
 
 **PR:** `feat(web): register page`  
 **Merge target:** `main`
@@ -171,15 +171,15 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 
 ### Frontend
 
-- [ ] Layout dashboard:
-  - [ ] Header (logo + menu)
-  - [ ] Sidebar (info utente)
-  - [ ] Centro:
-    - [ ] riepilogo profilo
-    - [ ] form modifica dati
-    - [ ] ultimi 5 accessi
-- [ ] Logout (invalidate session / clear tokens)
-- [ ] Loading + error states
+- [x] Layout dashboard:
+  - [x] Header (logo + menu)
+  - [x] Sidebar (info utente)
+  - [x] Centro:
+    - [x] riepilogo profilo
+    - [x] form modifica dati
+    - [x] ultimi 5 accessi
+- [x] Logout (invalidate session / clear tokens)
+- [x] Loading + error states
 
 **PR:** `feat: user dashboard`  
 **Merge target:** `main`

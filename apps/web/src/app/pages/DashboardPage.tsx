@@ -44,6 +44,15 @@ export function DashboardPage() {
     navigate('/login', { replace: true });
   }, [logout, navigate]);
 
+  const onGoDashboard = React.useCallback(() => {
+    navigate('/dashboard', { replace: false });
+  }, [navigate]);
+
+  const onGoProfile = React.useCallback(() => {
+    // Simple in-page navigation: no extra route needed
+    document.getElementById('profile-edit')?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
   // Keep local form in sync with current user (on first load + refreshMe)
   React.useEffect(() => {
     if (!user) return;
@@ -131,10 +140,72 @@ export function DashboardPage() {
 
   return (
     <div style={{ padding: 24, display: 'grid', gap: 24 }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <h1>{STRINGS.dashboard.title}</h1>
-        <button onClick={onLogout}>{STRINGS.dashboard.logout}</button>
+      {/* Header / Topbar */}
+      <header
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 16,
+          paddingBottom: 12,
+          borderBottom: '1px solid rgba(0,0,0,0.08)',
+        }}
+      >
+        {/* Brand */}
+        <button
+          type="button"
+          onClick={onGoDashboard}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            border: 'none',
+            background: 'transparent',
+            padding: 0,
+            cursor: 'pointer',
+          }}
+          aria-label={STRINGS.brand.name}
+        >
+          {/* Minimal “logo” placeholder (replace later with an SVG or img) */}
+          <div
+            aria-hidden="true"
+            style={{
+              width: 32,
+              height: 32,
+              borderRadius: 8,
+              background: 'rgba(0,0,0,0.08)',
+              display: 'grid',
+              placeItems: 'center',
+              fontWeight: 700,
+            }}
+          >
+            F
+          </div>
+
+          <div style={{ display: 'grid' }}>
+            <strong style={{ lineHeight: 1.1 }}>{STRINGS.brand.name}</strong>
+            <span style={{ fontSize: 12, opacity: 0.75 }}>
+              {user ? `${user.firstName} ${user.lastName}` : ''}
+            </span>
+          </div>
+        </button>
+
+        {/* Menu */}
+        <nav aria-label="Dashboard navigation" style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+          <button type="button" onClick={onGoDashboard}>
+            {STRINGS.dashboard.navDashboard}
+          </button>
+
+          <button type="button" onClick={onGoProfile}>
+            {STRINGS.dashboard.navProfile}
+          </button>
+
+          <button type="button" onClick={onLogout}>
+            {STRINGS.dashboard.logout}
+          </button>
+        </nav>
       </header>
+
 
       {/* Profile summary */}
       <section style={{ display: 'grid', gap: 8 }}>
