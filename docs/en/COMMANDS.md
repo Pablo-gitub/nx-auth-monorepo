@@ -172,7 +172,6 @@ variable in the `.env` file.
 This choice ensures maximum flexibility without introducing complexity
 into the application architecture.
 
-
 ---
 
 ## Formatting (Prettier + Nx)
@@ -216,30 +215,13 @@ across the entire monorepo with a single command.
 This command becomes the reference as soon as the workspace contains
 multiple projects and is easily integrable into a CI pipeline.
 
-## Gestione versione Node.js (.nvmrc)
-
-```bash
-node -v
-```
-Il file .nvmrc definisce la versione di Node.js consigliata per il progetto.
-
-### Serve a:
-
-- garantire coerenza dell’ambiente di sviluppo tra diversi sviluppatori
-
-- evitare problemi legati a differenze di versione di Node
-
-- rendere il setup del progetto riproducibile
-
-- Strumenti come nvm o fnm utilizzano automaticamente questo file per selezionare la versione corretta di Node.
-
-
 ---
 
 ## Node.js Version Management (.nvmrc)
 
 ```bash
 node -v
+
 ```
 
 The `.nvmrc` file defines the recommended Node.js version for the project.
@@ -251,3 +233,153 @@ The `.nvmrc` file defines the recommended Node.js version for the project.
 * make the project setup reproducible
 
 Tools like `nvm` or `fnm` automatically use this file to select the correct Node version.
+
+---
+
+## Backend App Generation (NestJS)
+
+```bash
+pnpm nx g @nx/nest:application apps/api \
+  --name=api \
+  --linter=eslint \
+  --unitTestRunner=jest \
+  --e2eTestRunner=none
+
+```
+
+Notes:
+
+* `apps/api` is the positional parameter `[directory]` of the generator (project root).
+* `--name=api` is the project name within Nx.
+* `--e2eTestRunner=none` skips e2e tests for now (not required in the initial phase).
+
+---
+
+## Workspace Verification (Quality Gate)
+
+```bash
+pnpm nx show project api
+pnpm nx lint api
+pnpm nx test api
+pnpm nx format:check
+pnpm nx graph
+
+```
+
+---
+
+## Backend Database Library Creation
+
+```bash
+pnpm nx g @nx/js:lib libs/api/db --bundler=tsc
+
+```
+
+**Description**
+
+This command generates a TypeScript library dedicated to database access for the Backend API.
+
+The library is placed in `libs/api/db`, following a **feature-oriented** structure and maintaining the database as an **isolated concern** relative to the rest of the application.
+
+**Parameter Explanation**
+
+* `@nx/js:lib`
+Nx generator for framework-independent JavaScript / TypeScript libraries, ideal for shared or infrastructural logic.
+* `libs/api/db`
+Explicit path for the library.
+The structure reflects the usage context (`api`) and responsibility (`db`), avoiding generic libraries and favoring clear separation of architectural boundaries.
+* `--bundler=tsc`
+Uses the TypeScript compiler (`tsc`) as the build system.
+This choice is intentional:
+* database code does not require advanced bundling
+* keeps the build simple, transparent, and fast
+* improves debuggability and maintainability
+* integrates perfectly with Drizzle ORM and Node.js environments
+
+
+
+**Architectural Motivation**
+
+Isolating database access in a dedicated library allows to:
+
+* avoid direct coupling between the API and the persistence layer
+* facilitate testing, refactoring, and database replacement
+* keep the backend modular and scalable
+* fully leverage the advantages of the Nx monorepo
+
+---
+
+## Backend – Auth Scaffolding (Nx)
+
+For the creation of the API authentication module, Nx generators for NestJS were used to maintain structural consistency and best practices.
+
+```bash
+pnpm nx g @nx/nest:module apps/api/src/app/auth/auth
+pnpm nx g @nx/nest:service apps/api/src/app/auth/auth
+pnpm nx g @nx/nest:controller apps/api/src/app/auth/auth
+
+```
+
+Nx generators allow to:
+
+* automatically create files and correct wiring
+* maintain naming and structural standards
+* correctly integrate code into the Nx graph
+
+---
+
+## Backend – Run & Verify (Auth)
+
+Start API in development mode (watch):
+
+```bash
+pnpm nx serve api --watch
+
+```
+
+Quality gate:
+
+```bash
+pnpm nx lint api
+pnpm nx test api
+pnpm nx format:check
+
+```
+
+Nx cache reset (useful if watch doesn't detect changes or the daemon is in an inconsistent state):
+
+```bash
+pnpm nx reset
+
+```
+
+### Smoke Test (curl)
+
+Login (copy `accessToken`):
+
+```bash
+curl -s -X POST http://localhost:3000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email":"paolo@example.com",
+    "password":"Password1",
+    "rememberMe": false
+  }'
+
+```
+
+Protected endpoint `/me`:
+
+```bash
+curl -s http://localhost:3000/api/me \
+  -H "Authorization: Bearer <ACCESS_TOKEN>"
+
+```
+
+Access history:
+
+```bash
+curl -s "http://localhost:3000/api/me/access-history?limit=5" \
+  -H "Authorization: Bearer <ACCESS_TOKEN>"
+
+```

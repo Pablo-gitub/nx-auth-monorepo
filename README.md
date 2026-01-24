@@ -188,25 +188,30 @@ pnpm nx serve api
 
 ## Documentazione
 
-La documentazione di progetto è organizzata nella cartella `docs/`:
+La documentazione di progetto è organizzata in modo modulare nella cartella `docs/`:
 
 - [`docs/it/SETUP.md`](docs/it/SETUP.md)  
-  Questo documento descrive le modalità di configurazione e avvio del progetto in ambiente di sviluppo locale.
+  Guida alla configurazione dell’ambiente e avvio del progetto (locale e Docker).
 
 - [`docs/it/ROADMAP.md`](docs/it/ROADMAP.md)  
-  Roadmap di sviluppo e checklist dei requisiti dell’assignment.
-
-- [`docs/it/COMMANDS.md`](docs/it/COMMANDS.md)  
-  Elenco dei principali comandi utilizzati durante lo sviluppo e motivazioni delle scelte tecniche.
+  Checklist operativa dello sviluppo, milestone e stato di avanzamento.
 
 - [`docs/it/ARCHITECTURE.md`](docs/it/ARCHITECTURE.md)  
-  Descrizione dell’architettura del monorepo Nx, delle app e delle librerie condivise.
+  Panoramica dell’architettura Nx, organizzazione delle librerie e scelte di design.
 
 - [`docs/it/DATABASE.md`](docs/it/DATABASE.md)  
-  Descrizione dell’implementazione del database e della configurazione PostgreSQL - Neon - Drizzle.
+  Dettagli su PostgreSQL (Neon), schema Drizzle ORM e gestione migrazioni.
 
-La struttura è predisposta anche per una versione in lingua inglese (`docs/en/`).
+- [`docs/it/COMMANDS.md`](docs/it/COMMANDS.md)  
+  Log delle decisioni tecniche e comandi principali eseguiti durante lo sviluppo.
 
+- [`docs/it/TESTING.md`](docs/it/TESTING.md)  
+  Strategia di testing, coverage attuale e filosofia adottata.
+
+- [`docs/it/CLOUD_UPLOAD.md`](docs/it/CLOUD_UPLOAD.md)  
+  Approccio all’upload dei file (locale vs cloud) e strategia di migrazione.
+
+La struttura è interamente disponibile anche in lingua inglese (`docs/en/`).
 
 ---
 

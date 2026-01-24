@@ -10,11 +10,11 @@ The goal is to deliver the **core requirements** (fully functional end-to-end) f
 ### Git workflow (lightweight)
 
 * Branch per macro-feature (feature complete before merging to `main`)
-* PR for each macro-feature (2–6 total PRs, short description and test instructions)
+* PR for each macro-feature (2–6 PRs total, short description and test instructions)
 * Commits using Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`)
 * No `wip` commits
 
-### Tags (milestones)
+### Tags (milestone)
 
 * `v0.1.0` → Core assignment completed (all required requirements)
 * `v0.2.0` → Bonus + Extra completed (if applicable)
@@ -27,7 +27,6 @@ The goal is to deliver the **core requirements** (fully functional end-to-end) f
 
 * [x] README.md (IT) + README.en.md (EN structure)
 * [x] `docs/en/COMMANDS.md` (commands + reasoning)
-
 * [x] `docs/en/ROADMAP.md` (this checklist)
 * [x] Structure setup for `docs/it/` (placeholder)
 
@@ -38,10 +37,10 @@ The goal is to deliver the **core requirements** (fully functional end-to-end) f
 **Output:** stable quality baseline (format/lint/test), repo ready to scale.
 
 * [x] Verify base Nx commands (`nx graph`, `nx lint`, `nx format`)
-* [ ] Setup formatter/linter (prettier + eslint already functional)
+* [x] Setup formatter/linter (prettier + eslint already functional)
 * [ ] (Optional) husky + lint-staged + commitlint
 * [x] Minimal definition of `.nvmrc`
-* [x] Documentation setup enviroment (`COMMANDS.md`, `SETUP.md`)
+* [x] Environment setup documentation (`COMMANDS.md`, `SETUP.md`)
 
 ---
 
@@ -53,40 +52,42 @@ The goal is to deliver the **core requirements** (fully functional end-to-end) f
 
 ### Database & Drizzle
 
-* [ ] DB Choice PostgreSQL
-* [ ] Setup Drizzle config
-* [ ] Table schema:
-* [ ] `users`
-* [ ] `access_history`
+* [x] DB Choice PostgreSQL
+* [x] Setup Drizzle config
+* [x] Table schema:
+* [x] `users`
+* [x] `access_logs`
 * [ ] (If needed for remember me) `refresh_tokens` / `sessions`
 
 
-* [ ] Migrations generated/run
+* [x] Migrations generated/run
 * [ ] Minimal seed (optional but recommended)
 
 ### Auth API
 
-* [ ] `POST /auth/register`
-* [ ] input validation
-* [ ] password hashing
-* [ ] duplicate email handling
+* [x] `POST /auth/register`
+* [x] input validation
+* [x] password hashing
+* [x] duplicate email handling
 
 
-* [ ] `POST /auth/login`
-* [ ] credential verification
-* [ ] JWT access token
-* [ ] error handling (401)
+* [x] `POST /auth/login`
+* [x] credential verification
+* [x] JWT access token
+* [x] error handling (401)
 
 
-* [ ] Remember me
-* [ ] defined strategy (httpOnly cookie refresh token or alternative)
+* [x] Remember me
+* [x] defined strategy (httpOnly cookie refresh token or alternative)
 
 
-* [ ] Access logging
-* [ ] save login record in `access_history`
+* [x] Access logging
+* [x] save login record in `access_logs`
 
 
-* [ ] Consistent error handling (response shape)
+* [x] JWT guard (Bearer token)
+* [x] `GET /me` (profile)
+* [x] `GET /me/access-history?limit=5`
 
 **PR:** `feat(api): auth + db foundation`
 
@@ -100,11 +101,11 @@ The goal is to deliver the **core requirements** (fully functional end-to-end) f
 
 **Output:** functional optional avatar upload, with reference persistence in the profile.
 
-* [ ] Avatar upload endpoint (multer / file handling)
-* [ ] File saving (e.g., `/uploads`)
-* [ ] Update user `avatarUrl` / `avatarPath`
-* [ ] Serve static files (Nest config)
-* [ ] Minimal validation (mime type, size limit)
+* [x] Avatar upload endpoint (multer / file handling)
+* [x] File saving (e.g., `/uploads`)
+* [x] Update user `avatarUrl` / `avatarPath`
+* [x] Serve static files (Nest config)
+* [x] Minimal validation (mime type, size limit)
 
 **PR:** `feat(api): avatar upload`
 
@@ -118,17 +119,20 @@ The goal is to deliver the **core requirements** (fully functional end-to-end) f
 
 **Output:** frontend structure ready, routing configured, route protection.
 
-* [ ] Setup React app `web`
-* [ ] React Router:
-* [ ] `/register`
-* [ ] `/login`
-* [ ] `/dashboard` (private)
+* [x] Setup React app `web`
+* [x] React Router:
+* [x] `/register`
+* [x] `/login`
+* [x] `/dashboard` (private)
 
 
-* [ ] Auth Context + hook `useAuth()`
-* [ ] ProtectedRoute / redirect logic
-* [ ] Error Boundaries (root + route-level if useful)
-* [ ] Generic loading states
+* [x] Ordered structure (pages / routes / auth)
+* [x] Reusable Auth UI (libs/web/auth-ui)
+* [x] Auth logic (context)
+* [x] AuthProvider/token
+* [x] ProtectedRoute / redirect logic
+* [x] Error Boundaries (root + route-level if useful)
+* [x] Generic loading states
 
 **PR:** `feat(web): auth routing + guards`
 
@@ -142,19 +146,19 @@ The goal is to deliver the **core requirements** (fully functional end-to-end) f
 
 **Output:** complete register form with client validations and UX.
 
-* [ ] Form `/register` required fields:
-* [ ] First Name and Last Name
-* [ ] Email (format)
-* [ ] Password (policy)
-* [ ] Confirm password
-* [ ] Date of birth
-* [ ] Avatar (optional)
+* [x] Form `/register` required fields:
+* [x] First Name and Last Name
+* [x] Email (format)
+* [x] Password (policy)
+* [x] Confirm password
+* [x] Date of birth
+* [x] Avatar (optional)
 
 
-* [ ] Client validation + visual errors
-* [ ] Async submit + loading state
-* [ ] User-friendly server error handling
-* [ ] Redirect to `/login` after success
+* [x] Client validation + visual errors
+* [x] Async submit + loading state
+* [x] User-friendly server error handling
+* [x] Redirect to `/login` after success
 
 **PR:** `feat(web): register page`
 
@@ -168,11 +172,11 @@ The goal is to deliver the **core requirements** (fully functional end-to-end) f
 
 **Output:** working login with remember me and redirect.
 
-* [ ] Form `/login` (email + password)
-* [ ] User-friendly authentication errors
-* [ ] Remember me checkbox
-* [ ] "Forgot password" link (UI only)
-* [ ] Redirect to `/dashboard` after login
+* [x] Form `/login` (email + password)
+* [x] User-friendly authentication errors
+* [x] Remember me checkbox
+* [x] "Forgot password" link (UI only)
+* [x] Redirect to `/dashboard` after login
 
 **PR:** `feat(web): login page`
 
@@ -186,27 +190,25 @@ The goal is to deliver the **core requirements** (fully functional end-to-end) f
 
 **Output:** complete dashboard as per requirements.
 
-### Backend (if not already present)
+### Backend
 
-* [ ] `GET /me` (profile)
-* [ ] `PATCH /me` (data update)
-* [ ] `GET /me/access-history?limit=5`
+* [x] `PATCH /me` (data update)
 
 ### Frontend
 
-* [ ] Dashboard layout:
-* [ ] Header (logo + menu)
-* [ ] Sidebar (user info)
-* [ ] Center:
-* [ ] profile summary
-* [ ] data edit form
-* [ ] last 5 logins
+* [x] Dashboard layout:
+* [x] Header (logo + menu)
+* [x] Sidebar (user info)
+* [x] Center:
+* [x] profile summary
+* [x] data edit form
+* [x] last 5 logins
 
 
 
 
-* [ ] Logout (invalidate session / clear tokens)
-* [ ] Loading + error states
+* [x] Logout (invalidate session / clear tokens)
+* [x] Loading + error states
 
 **PR:** `feat: user dashboard`
 
@@ -222,6 +224,7 @@ The goal is to deliver the **core requirements** (fully functional end-to-end) f
 
 **Output:** More solid and professional UX.
 
+* [ ] Consistent error handling (response shape)
 * [ ] Toast success/error (login/register/update/logout)
 * [ ] Improved loading states (skeleton/spinner)
 * [ ] Error boundaries with UI fallback

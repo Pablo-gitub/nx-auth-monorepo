@@ -185,16 +185,30 @@ pnpm nx serve api
 
 ## Documentation
 
-The project documentation is organized in the `docs/` folder:
+The project documentation is organized modularly in the `docs/` folder:
 
-* [`docs/en/ROADMAP.md`](https://www.google.com/search?q=docs/en/ROADMAP.md)
-Development roadmap and assignment requirements checklist.
-* [`docs/en/COMMANDS.md`](https://www.google.com/search?q=docs/en/COMMANDS.md)
-List of main commands used during development and reasoning behind technical choices.
-* [`docs/en/ARCHITECTURE.md`](https://www.google.com/search?q=docs/en/ARCHITECTURE.md)
-Description of the Nx monorepo architecture, apps, and shared libraries.
+- [`docs/en/SETUP.md`](docs/en/SETUP.md)  
+  Guide to environment configuration and project startup (local and Docker).
 
-The structure is also prepared for an Italian version (`docs/it/`).
+- [`docs/en/ROADMAP.md`](docs/en/ROADMAP.md)  
+  Operational development checklist, milestones, and progress status.
+
+- [`docs/en/ARCHITECTURE.md`](docs/en/ARCHITECTURE.md)  
+  Overview of Nx architecture, library organization, and design choices.
+
+- [`docs/en/DATABASE.md`](docs/en/DATABASE.md)  
+  Details on PostgreSQL (Neon), Drizzle ORM schema, and migration management.
+
+- [`docs/en/COMMANDS.md`](docs/en/COMMANDS.md)  
+  Log of technical decisions and main commands executed during development.
+
+- [`docs/en/TESTING.md`](docs/en/TESTING.md)  
+  Testing strategy, current coverage, and adopted philosophy.
+
+- [`docs/en/CLOUD_UPLOAD.md`](docs/en/CLOUD_UPLOAD.md)  
+  File upload approach (local vs cloud) and migration strategy.
+
+The structure is fully available in Italian as well (`docs/it/`).
 
 ---
 
