@@ -5,6 +5,8 @@ import type {
   AuthUser,
   RegisterPayload,
   RegisterResponse,
+  AccessHistoryResponse,
+  PatchMePayload,
 } from './auth.types';
 
 const DEFAULT_API_URL = 'http://localhost:3000/api';
@@ -74,5 +76,26 @@ export function apiRegister(payload: RegisterPayload): Promise<RegisterResponse>
   return http<RegisterResponse>('/auth/register', {
     method: 'POST',
     body: JSON.stringify(payload),
+  });
+}
+
+export function apiPatchMe(
+  accessToken: string,
+  payload: PatchMePayload,
+): Promise<{ user: AuthUser }> {
+  return http<{ user: AuthUser }>('/me', {
+    method: 'PATCH',
+    headers: { Authorization: `Bearer ${accessToken}` },
+    body: JSON.stringify(payload),
+  });
+}
+
+export function apiAccessHistory(
+  accessToken: string,
+  limit = 5,
+): Promise<AccessHistoryResponse> {
+  return http<AccessHistoryResponse>(`/me/access-history?limit=${limit}`, {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${accessToken}` },
   });
 }
