@@ -99,3 +99,43 @@ export function apiAccessHistory(
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 }
+
+export function resolveAssetUrl(path?: string | null): string | null {
+  if (!path) return null;
+
+  // Already absolute
+  if (path.startsWith('http://') || path.startsWith('https://')) {
+    return path;
+  }
+
+  // If API_URL is relative ("/api"), assets live on the same origin as the API server
+  if (API_URL.startsWith('/')) {
+    return `${window.location.origin.replace(/:\d+$/, ':3000')}${path}`;
+  }
+
+  // Absolute API URL (e.g. http://localhost:3000/api)
+  const origin = API_URL.replace(/\/api\/?$/, '');
+  return `${origin}${path}`;
+}
+
+
+export async function apiUploadAvatar(accessToken: string, file: File) {
+  const form = new FormData();
+  form.append('file', file);
+
+  const res = await fetch(`${API_URL}/me/avatar`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      // IMPORTANT: do NOT set Content-Type with FormData
+    },
+    body: form,
+  });
+
+  if (!res.ok) {
+    const data = (await res.json().catch(() => null)) as { message?: string } | null;
+    throw new Error(data?.message ?? `HTTP ${res.status}`);
+  }
+
+  return (await res.json()) as { user: AuthUser };
+}

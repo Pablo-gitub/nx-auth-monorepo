@@ -33,7 +33,6 @@ function randomName(bytes = 16): string {
   return randomBytes(bytes).toString('hex');
 }
 
-
 @Controller('me')
 @UseGuards(JwtAuthGuard)
 export class AvatarController {
@@ -49,7 +48,7 @@ export class AvatarController {
       storage: diskStorage({
         destination: 'uploads/avatars',
         filename: (_req, file, cb) => {
-          const ext = extFromMime(file.originalname);
+          const ext = extFromMime(file.mimetype);
           cb(null, `${randomName()}${ext}`);
         },
       }),

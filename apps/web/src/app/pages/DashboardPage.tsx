@@ -1,7 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useAuth } from '@assignment-ftechnology/auth';
+import {
+  apiUploadAvatar,
+  resolveAssetUrl,
+  useAuth,
+} from '@assignment-ftechnology/auth';
 import { apiAccessHistory, apiPatchMe } from '@assignment-ftechnology/auth';
 import type {
   AccessHistoryItem,
@@ -38,6 +42,37 @@ export function DashboardPage() {
   const [history, setHistory] = React.useState<AccessHistoryItem[]>([]);
 
   const isSaving = saveStatus === 'saving';
+  const avatarSrc = (() => {
+    const base = resolveAssetUrl(user?.avatarUrl);
+    if (!base) return null;
+    // bust cache using updatedAt if available, otherwise Date.now()
+    const v = user?.updatedAt
+      ? encodeURIComponent(user.updatedAt)
+      : String(Date.now());
+    return `${base}?v=${v}`;
+  })();
+
+  const [avatarFile, setAvatarFile] = React.useState<File | null>(null);
+  const [avatarStatus, setAvatarStatus] = React.useState<'idle' | 'uploading'>(
+    'idle',
+  );
+  const [avatarError, setAvatarError] = React.useState<string | null>(null);
+
+  const onUploadAvatar = async () => {
+    if (!accessToken || !avatarFile) return;
+
+    setAvatarStatus('uploading');
+    setAvatarError(null);
+
+    try {
+      await apiUploadAvatar(accessToken, avatarFile);
+      await refreshMe();
+    } catch (e) {
+      setAvatarError(e instanceof Error ? e.message : 'Upload failed');
+    } finally {
+      setAvatarStatus('idle');
+    }
+  };
 
   const onLogout = React.useCallback(() => {
     logout();
@@ -50,7 +85,9 @@ export function DashboardPage() {
 
   const onGoProfile = React.useCallback(() => {
     // Simple in-page navigation: no extra route needed
-    document.getElementById('profile-edit')?.scrollIntoView({ behavior: 'smooth' });
+    document
+      .getElementById('profile-edit')
+      ?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
   // Keep local form in sync with current user (on first load + refreshMe)
@@ -191,7 +228,10 @@ export function DashboardPage() {
         </button>
 
         {/* Menu */}
-        <nav aria-label="Dashboard navigation" style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+        <nav
+          aria-label="Dashboard navigation"
+          style={{ display: 'flex', gap: 12, alignItems: 'center' }}
+        >
           <button type="button" onClick={onGoDashboard}>
             {STRINGS.dashboard.navDashboard}
           </button>
@@ -206,18 +246,51 @@ export function DashboardPage() {
         </nav>
       </header>
 
-
       {/* Profile summary */}
       <section style={{ display: 'grid', gap: 8 }}>
         <h2 style={{ margin: 0 }}>{STRINGS.dashboard.profileTitle}</h2>
 
-        {user?.avatarUrl ? (
+        {avatarSrc ? (
           <img
-            src={user.avatarUrl}
+            src={avatarSrc}
             alt={STRINGS.dashboard.avatarAlt}
-            style={{ width: 72, height: 72, borderRadius: 999, objectFit: 'cover' }}
+            style={{
+              width: 72,
+              height: 72,
+              borderRadius: 999,
+              objectFit: 'cover',
+            }}
           />
         ) : null}
+
+        <div style={{ display: 'grid', gap: 8, maxWidth: 360 }}>
+          <input
+            type="file"
+            accept="image/png,image/jpeg,image/webp"
+            onChange={(e) => {
+              const f = e.target.files?.[0] ?? null;
+              setAvatarFile(f);
+              setAvatarError(null);
+            }}
+            disabled={avatarStatus === 'uploading'}
+          />
+
+          <button
+            type="button"
+            onClick={onUploadAvatar}
+            disabled={!avatarFile || avatarStatus === 'uploading'}
+          >
+            {avatarStatus === 'uploading'
+              ? STRINGS.dashboard.avatarUploading
+              : STRINGS.dashboard.avatarUpload}
+          </button>
+
+          {avatarError ? (
+            <div role="alert" style={{ color: 'crimson' }}>
+              {avatarError}
+            </div>
+          ) : null}
+        </div>
 
         <div style={{ display: 'grid', gap: 4 }}>
           <div>
@@ -225,8 +298,7 @@ export function DashboardPage() {
             {user ? `${user.firstName} ${user.lastName}` : '-'}
           </div>
           <div>
-            <strong>{STRINGS.dashboard.emailLabel}</strong>{' '}
-            {user?.email ?? '-'}
+            <strong>{STRINGS.dashboard.emailLabel}</strong> {user?.email ?? '-'}
           </div>
           <div>
             <strong>{STRINGS.dashboard.birthDateLabel}</strong>{' '}

@@ -45,6 +45,8 @@ export const STRINGS = {
 
     profileTitle: 'Profile',
     avatarAlt: 'User avatar',
+    avatarUploading: "Uploading avatar...",
+    avatarUpload: "Upload avatar",
     nameLabel: 'Name:',
     emailLabel: 'Email:',
     birthDateLabel: 'Birth date:',
