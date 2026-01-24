@@ -1,5 +1,8 @@
 import type { AuthShellProps } from '../types/auth-ui.types';
 
+/**
+ * Shared auth page shell (card + branding).
+ */
 export function AuthShell({ title, subtitle, logo, children }: AuthShellProps) {
   return (
     <div className="min-h-screen w-full bg-base-200 text-base-content flex items-center justify-center p-6">

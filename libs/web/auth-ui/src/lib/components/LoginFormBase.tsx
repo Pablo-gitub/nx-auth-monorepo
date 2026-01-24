@@ -32,6 +32,9 @@ type Props = {
   forgotPasswordLabel?: string;
 };
 
+/**
+ * Reusable login form UI.
+ */
 export function LoginFormBase({
   onSubmit,
   submitLabel = 'Login',

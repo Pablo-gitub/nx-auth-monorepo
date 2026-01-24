@@ -17,6 +17,9 @@ function formatZodError(error: ZodError): ZodValidationError[] {
   }));
 }
 
+/**
+ * Validates request payloads with Zod and surfaces readable errors.
+ */
 @Injectable()
 export class ZodValidationPipe implements PipeTransform {
   constructor(private readonly schema: ZodTypeAny) {}

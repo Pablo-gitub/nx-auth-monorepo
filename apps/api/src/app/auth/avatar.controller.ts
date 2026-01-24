@@ -33,13 +33,16 @@ function randomName(bytes = 16): string {
   return randomBytes(bytes).toString('hex');
 }
 
+/**
+ * Avatar upload endpoint for the authenticated user.
+ */
 @Controller('me')
 @UseGuards(JwtAuthGuard)
 export class AvatarController {
   constructor(private readonly auth: AuthService) {}
 
   /**
-   * Upload authenticated user's avatar.
+   * Avatar upload for the authenticated user.
    * Saves the file under /uploads/avatars and updates users.avatarUrl.
    */
   @Post('avatar')

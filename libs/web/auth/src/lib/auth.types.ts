@@ -23,7 +23,7 @@ export type LoginResponse = {
 };
 
 /**
- * PATCH /me payload (frontend side).
+ * Profile update payload (frontend side).
  * Keep aligned with contracts patchMeSchema.
  */
 export type PatchMePayload = Partial<{

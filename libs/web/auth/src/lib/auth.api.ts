@@ -58,6 +58,9 @@ async function http<T>(input: string, init?: RequestInit): Promise<T> {
   return (await res.json()) as T;
 }
 
+/**
+ * Login and receive an access token plus user profile.
+ */
 export function apiLogin(payload: LoginPayload): Promise<LoginResponse> {
   return http<LoginResponse>('/auth/login', {
     method: 'POST',
@@ -65,6 +68,9 @@ export function apiLogin(payload: LoginPayload): Promise<LoginResponse> {
   });
 }
 
+/**
+ * Fetch the current session user via the access token.
+ */
 export function apiMe(accessToken: string): Promise<{ user: AuthUser }> {
   return http<{ user: AuthUser }>('/me', {
     method: 'GET',
@@ -72,6 +78,9 @@ export function apiMe(accessToken: string): Promise<{ user: AuthUser }> {
   });
 }
 
+/**
+ * Register a new user account.
+ */
 export function apiRegister(payload: RegisterPayload): Promise<RegisterResponse> {
   return http<RegisterResponse>('/auth/register', {
     method: 'POST',
@@ -79,6 +88,9 @@ export function apiRegister(payload: RegisterPayload): Promise<RegisterResponse>
   });
 }
 
+/**
+ * Profile update for the current user.
+ */
 export function apiPatchMe(
   accessToken: string,
   payload: PatchMePayload,
@@ -90,6 +102,9 @@ export function apiPatchMe(
   });
 }
 
+/**
+ * Fetch access history entries for the current user.
+ */
 export function apiAccessHistory(
   accessToken: string,
   limit = 5,
@@ -100,6 +115,9 @@ export function apiAccessHistory(
   });
 }
 
+/**
+ * Resolve API-relative asset paths (e.g. avatar URLs) to absolute URLs.
+ */
 export function resolveAssetUrl(path?: string | null): string | null {
   if (!path) return null;
 
@@ -118,7 +136,9 @@ export function resolveAssetUrl(path?: string | null): string | null {
   return `${origin}${path}`;
 }
 
-
+/**
+ * Avatar upload for the current user.
+ */
 export async function apiUploadAvatar(accessToken: string, file: File) {
   const form = new FormData();
   form.append('file', file);

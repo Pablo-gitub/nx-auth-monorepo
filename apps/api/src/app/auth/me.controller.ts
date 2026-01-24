@@ -45,7 +45,7 @@ export class MeController {
 
   /**
    * Updates editable profile fields for the current user.
-   * No email/password updates here (assignment scope + security).
+   * Profile update only; no email/password changes.
    */
   @Patch()
   async patchMe(@Req() req: AuthenticatedRequest, @Body() body: unknown) {
@@ -63,7 +63,7 @@ export class MeController {
   }
 
   /**
-   * Returns the most recent access log entries for the current user.
+   * Returns the most recent access history entries for the current user.
    * Default limit is 5 (as required by the assignment).
    */
   @Get('access-history')

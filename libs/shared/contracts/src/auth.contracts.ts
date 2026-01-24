@@ -67,7 +67,7 @@ export type UserPublicDto = {
 };
 
 /**
- * PATCH /me payload.
+ * Profile update payload (PATCH /me).
  * All fields are optional because this is a partial update.
  */
 export const updateMeSchema = z.object({
@@ -78,7 +78,7 @@ export const updateMeSchema = z.object({
 });
 
 /**
- * PATCH /me payload:
+ * Profile update payload (PATCH /me):
  * - Only editable profile fields (no email, no password, no avatarUrl).
  * - All fields are optional, but at least one must be provided.
  */

@@ -19,8 +19,9 @@ import { toast } from 'react-toastify';
  * Dashboard page:
  * - Protected route (requires auth)
  * - Shows profile summary
- * - Allows editing profile fields via PATCH /me
- * - Shows last 5 access log entries via GET /me/access-history
+ * - Allows profile update via PATCH /me
+ * - Shows last 5 access history entries via GET /me/access-history
+ * - Supports avatar upload
  */
 export function DashboardPage() {
   const { user, accessToken, logout, refreshMe, status } = useAuth();

@@ -47,6 +47,9 @@ type LoginMeta = {
   userAgent: string | null;
 };
 
+/**
+ * Auth domain service for access tokens, profile update, access history, and avatar upload.
+ */
 @Injectable()
 export class AuthService {
   constructor(
@@ -222,8 +225,8 @@ export class AuthService {
   }
 
 
-    /**
-   * Updates editable profile fields (PATCH /me).
+  /**
+   * Profile update (PATCH /me).
    * Security: never allow email/password updates here.
    */
   async updateMe(

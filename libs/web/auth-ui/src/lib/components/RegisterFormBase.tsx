@@ -41,6 +41,9 @@ type Props = {
   onChange?: () => void;
 };
 
+/**
+ * Reusable registration form UI.
+ */
 export function RegisterFormBase({
   onSubmit,
   submitLabel = 'Create account',

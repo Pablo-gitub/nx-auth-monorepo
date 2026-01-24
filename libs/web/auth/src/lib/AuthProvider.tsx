@@ -20,12 +20,15 @@ function buildInitialState(): AuthState {
   return {
     accessToken: token,
     user: null,
-    // If we already have a token, we must validate it by calling /me.
+    // If we already have an access token, validate it by calling /me.
     // During that time the app should show a loading UI, not redirect.
     status: token ? 'loading' : 'anonymous',
   };
 }
 
+/**
+ * Provides auth session state and actions to the app.
+ */
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = React.useState<AuthState>(() =>
     buildInitialState(),
@@ -54,7 +57,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         status: 'authenticated',
       });
     } catch {
-      // Token invalid/expired -> clean up and go back to anonymous.
+      // Access token invalid/expired -> clean up and go back to anonymous.
       clearAccessToken();
       setState(buildInitialState());
     }
@@ -101,7 +104,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   /**
-   * Bootstrap: validate any existing token on app start.
+   * Bootstrap: validate any existing access token on app start.
    */
   React.useEffect(() => {
     void refreshMe();
@@ -118,6 +121,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
+/**
+ * Access the auth session context.
+ */
 export function useAuthContext(): AuthContextValue {
   const ctx = React.useContext(AuthContext);
   if (!ctx) {

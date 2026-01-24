@@ -43,7 +43,9 @@ function mapZodIssuesToFieldErrors(issues: z.ZodIssue[]): RegisterFieldErrors {
   return errors;
 }
 
-
+/**
+ * Registration page for creating a new user account.
+ */
 export function RegisterPage() {
   const navigate = useNavigate();
 

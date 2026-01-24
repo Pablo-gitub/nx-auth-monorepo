@@ -9,6 +9,9 @@ import { ZodValidationPipe } from '../common/pipes/zod-validation.pipe';
 import { AuthService } from './auth.service';
 import type { Request } from 'express';
 
+/**
+ * Auth endpoints for registration and login that issue an access token.
+ */
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

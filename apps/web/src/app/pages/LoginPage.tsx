@@ -12,6 +12,9 @@ type LocationState = { from?: { pathname: string } };
 
 type LoginField = 'email' | 'password';
 
+/**
+ * Login page that creates a session from an access token.
+ */
 export function LoginPage() {
   const { login, status } = useAuth();
   const navigate = useNavigate();
