@@ -59,32 +59,52 @@ export function LoginFormBase({
         e.preventDefault();
         void onSubmit({ email, password, rememberMe });
       }}
-      style={{ display: 'grid', gap: 12 }}
+      className="grid gap-4"
     >
-      <label style={{ display: 'grid', gap: 6 }}>
-        <span>Email</span>
+      <label className="form-control w-full">
+        <div className="label">
+          <span className="label-text">Email</span>
+        </div>
+
         <input
+          id={emailId}
+          name="email"
+          autoComplete="email"
+          className={`input input-bordered w-full ${emailError ? 'input-error' : ''}`}
           value={email}
           disabled={disabled}
           onChange={(e) => {
             setEmail(e.target.value);
             onChange?.();
           }}
-          // Accessibility: mark invalid and point to error text
           aria-invalid={Boolean(emailError)}
           aria-describedby={emailError ? `${emailId}-error` : undefined}
         />
+
         {emailError ? (
-          <p id={`${emailId}-error`} role="alert" style={{ margin: 0 }}>
-            {emailError}
-          </p>
+          <div className="label">
+            <span
+              id={`${emailId}-error`}
+              role="alert"
+              className="label-text-alt text-error"
+            >
+              {emailError}
+            </span>
+          </div>
         ) : null}
       </label>
 
-      <label style={{ display: 'grid', gap: 6 }}>
-        <span>Password</span>
+      <label className="form-control w-full">
+        <div className="label">
+          <span className="label-text">Password</span>
+        </div>
+
         <input
+          id={passwordId}
+          name="password"
+          autoComplete="current-password"
           type="password"
+          className={`input input-bordered w-full ${passwordError ? 'input-error' : ''}`}
           value={password}
           disabled={disabled}
           onChange={(e) => {
@@ -94,24 +114,27 @@ export function LoginFormBase({
           aria-invalid={Boolean(passwordError)}
           aria-describedby={passwordError ? `${passwordId}-error` : undefined}
         />
+
         {passwordError ? (
-          <p id={`${passwordId}-error`} role="alert" style={{ margin: 0 }}>
-            {passwordError}
-          </p>
+          <div className="label">
+            <span
+              id={`${passwordId}-error`}
+              role="alert"
+              className="label-text-alt text-error"
+            >
+              {passwordError}
+            </span>
+          </div>
         ) : null}
       </label>
 
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          gap: 12,
-          alignItems: 'center',
-        }}
-      >
-        <label style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+      <div className="flex items-center justify-between gap-4">
+        <label className="label cursor-pointer gap-2 p-0">
           <input
+            id="rememberMe"
+            name="rememberMe"
             type="checkbox"
+            className="checkbox checkbox-sm"
             checked={rememberMe}
             disabled={disabled}
             onChange={(e) => {
@@ -119,24 +142,28 @@ export function LoginFormBase({
               onChange?.();
             }}
           />
-          <span>Remember me</span>
+
+          <span className="label-text">Remember me</span>
         </label>
 
         {forgotPasswordHref ? (
-          <a href={forgotPasswordHref} style={{ fontSize: 14, opacity: 0.85 }}>
+          <a className="link link-hover text-sm" href={forgotPasswordHref}>
             {forgotPasswordLabel}
           </a>
         ) : null}
       </div>
 
-      {/* General error (server/global) */}
       {error ? (
-        <div role="alert" style={{ color: 'crimson' }}>
-          {error}
+        <div role="alert" className="alert alert-error">
+          <span>{error}</span>
         </div>
       ) : null}
 
-      <button type="submit" disabled={disabled}>
+      <button
+        type="submit"
+        disabled={disabled}
+        className="btn btn-primary w-full"
+      >
         {submitLabel}
       </button>
     </form>

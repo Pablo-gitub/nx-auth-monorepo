@@ -69,7 +69,10 @@ export function LoginPage() {
   const disabled = status === 'loading';
 
   return (
-    <AuthShell title={STRINGS.login.loginTitle} subtitle={STRINGS.login.loginSubtitle}>
+    <AuthShell
+      title={STRINGS.login.loginTitle}
+      subtitle={STRINGS.login.loginSubtitle}
+    >
       <LoginFormBase
         onSubmit={onSubmit}
         disabled={disabled}
@@ -81,9 +84,11 @@ export function LoginPage() {
         forgotPasswordLabel={STRINGS.login.forgotPassword}
       />
 
-      <div style={{ marginTop: 16, display: 'flex', gap: 8, alignItems: 'center' }}>
-        <span style={{ opacity: 0.85 }}>{STRINGS.login.registerCtaText}</span>
-        <Link to="/register">{STRINGS.login.registerCtaLink}</Link>
+      <div className="mt-4 flex items-center justify-center gap-2 text-sm">
+        <span className="opacity-80">{STRINGS.login.registerCtaText}</span>
+        <Link className="link link-primary" to="/register">
+          {STRINGS.login.registerCtaLink}
+        </Link>
       </div>
     </AuthShell>
   );

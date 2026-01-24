@@ -90,6 +90,16 @@ export function DashboardPage() {
       ?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
+  const [theme, setTheme] = React.useState<'light' | 'dark'>(() => 'light');
+
+  React.useEffect(() => {
+    setTheme(
+      document.documentElement.getAttribute('data-theme') === 'dark'
+        ? 'dark'
+        : 'light',
+    );
+  }, []);
+
   // Keep local form in sync with current user (on first load + refreshMe)
   React.useEffect(() => {
     if (!user) return;
@@ -176,234 +186,292 @@ export function DashboardPage() {
   }
 
   return (
-    <div style={{ padding: 24, display: 'grid', gap: 24 }}>
-      {/* Header / Topbar */}
-      <header
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: 16,
-          paddingBottom: 12,
-          borderBottom: '1px solid rgba(0,0,0,0.08)',
-        }}
-      >
-        {/* Brand */}
-        <button
-          type="button"
-          onClick={onGoDashboard}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 10,
-            border: 'none',
-            background: 'transparent',
-            padding: 0,
-            cursor: 'pointer',
-          }}
-          aria-label={STRINGS.brand.name}
-        >
-          {/* Minimal “logo” placeholder (replace later with an SVG or img) */}
-          <div
-            aria-hidden="true"
-            style={{
-              width: 32,
-              height: 32,
-              borderRadius: 8,
-              background: 'rgba(0,0,0,0.08)',
-              display: 'grid',
-              placeItems: 'center',
-              fontWeight: 700,
-            }}
-          >
-            F
-          </div>
-
-          <div style={{ display: 'grid' }}>
-            <strong style={{ lineHeight: 1.1 }}>{STRINGS.brand.name}</strong>
-            <span style={{ fontSize: 12, opacity: 0.75 }}>
-              {user ? `${user.firstName} ${user.lastName}` : ''}
-            </span>
-          </div>
-        </button>
-
-        {/* Menu */}
-        <nav
-          aria-label="Dashboard navigation"
-          style={{ display: 'flex', gap: 12, alignItems: 'center' }}
-        >
-          <button type="button" onClick={onGoDashboard}>
-            {STRINGS.dashboard.navDashboard}
-          </button>
-
-          <button type="button" onClick={onGoProfile}>
-            {STRINGS.dashboard.navProfile}
-          </button>
-
-          <button type="button" onClick={onLogout}>
-            {STRINGS.dashboard.logout}
-          </button>
-        </nav>
-      </header>
-
-      {/* Profile summary */}
-      <section style={{ display: 'grid', gap: 8 }}>
-        <h2 style={{ margin: 0 }}>{STRINGS.dashboard.profileTitle}</h2>
-
-        {avatarSrc ? (
-          <img
-            src={avatarSrc}
-            alt={STRINGS.dashboard.avatarAlt}
-            style={{
-              width: 72,
-              height: 72,
-              borderRadius: 999,
-              objectFit: 'cover',
-            }}
-          />
-        ) : null}
-
-        <div style={{ display: 'grid', gap: 8, maxWidth: 360 }}>
-          <input
-            type="file"
-            accept="image/png,image/jpeg,image/webp"
-            onChange={(e) => {
-              const f = e.target.files?.[0] ?? null;
-              setAvatarFile(f);
-              setAvatarError(null);
-            }}
-            disabled={avatarStatus === 'uploading'}
-          />
-
+    <div className="min-h-screen bg-base-200 text-base-content">
+      {/* Topbar */}
+      <header className="sticky top-0 z-10 border-b border-base-300 bg-base-100/90 backdrop-blur">
+        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
+          {/* Brand */}
           <button
             type="button"
-            onClick={onUploadAvatar}
-            disabled={!avatarFile || avatarStatus === 'uploading'}
+            onClick={onGoDashboard}
+            className="flex items-center gap-3"
+            aria-label={STRINGS.brand.name}
           >
-            {avatarStatus === 'uploading'
-              ? STRINGS.dashboard.avatarUploading
-              : STRINGS.dashboard.avatarUpload}
+            <div className="avatar placeholder">
+              <div className="w-9 rounded-xl bg-primary text-primary-content">
+                <span className="font-bold">F</span>
+              </div>
+            </div>
+
+            <div className="leading-tight text-left">
+              <div className="font-semibold">{STRINGS.brand.name}</div>
+              <div className="text-xs opacity-70">
+                {user ? `${user.firstName} ${user.lastName}` : ''}
+              </div>
+            </div>
           </button>
 
-          {avatarError ? (
-            <div role="alert" style={{ color: 'crimson' }}>
-              {avatarError}
-            </div>
-          ) : null}
+          {/* Menu */}
+          <nav className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={onGoDashboard}
+              className="btn btn-ghost btn-sm"
+            >
+              {STRINGS.dashboard.navDashboard}
+            </button>
+
+            <button
+              type="button"
+              onClick={onGoProfile}
+              className="btn btn-ghost btn-sm"
+            >
+              {STRINGS.dashboard.navProfile}
+            </button>
+
+            <button
+              type="button"
+              onClick={onLogout}
+              className="btn btn-outline btn-sm"
+            >
+              {STRINGS.dashboard.logout}
+            </button>
+
+            <label className="swap swap-rotate btn btn-ghost btn-sm">
+              <input
+                type="checkbox"
+                checked={theme === 'dark'}
+                onChange={() => {
+                  const next = theme === 'dark' ? 'light' : 'dark';
+                  document.documentElement.setAttribute('data-theme', next);
+                  localStorage.setItem('theme', next);
+                  setTheme(next);
+                }}
+                aria-label="Toggle theme"
+              />
+              {/* sun */}
+              <svg
+                className="swap-off h-5 w-5"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12Z" />
+              </svg>
+              {/* moon */}
+              <svg
+                className="swap-on h-5 w-5"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M21 12.8A8.5 8.5 0 0 1 11.2 3 7 7 0 1 0 21 12.8Z" />
+              </svg>
+            </label>
+          </nav>
         </div>
+      </header>
 
-        <div style={{ display: 'grid', gap: 4 }}>
-          <div>
-            <strong>{STRINGS.dashboard.nameLabel}</strong>{' '}
-            {user ? `${user.firstName} ${user.lastName}` : '-'}
-          </div>
-          <div>
-            <strong>{STRINGS.dashboard.emailLabel}</strong> {user?.email ?? '-'}
-          </div>
-          <div>
-            <strong>{STRINGS.dashboard.birthDateLabel}</strong>{' '}
-            {user?.birthDate ?? '-'}
-          </div>
-        </div>
-      </section>
+      {/* Page container */}
+      <main className="mx-auto grid max-w-5xl gap-6 px-4 py-6">
+        {/* Profile summary */}
+        <section className="card bg-base-100 shadow">
+          <div className="card-body gap-4">
+            <h2 className="card-title">{STRINGS.dashboard.profileTitle}</h2>
 
-      {/* Edit profile */}
-      <section style={{ display: 'grid', gap: 12 }}>
-        <h2 style={{ margin: 0 }}>{STRINGS.dashboard.editTitle}</h2>
+            <div className="flex items-start gap-4">
+              {avatarSrc ? (
+                <div className="avatar">
+                  <div className="w-16 rounded-full ring ring-base-300 ring-offset-2 ring-offset-base-100">
+                    <img src={avatarSrc} alt={STRINGS.dashboard.avatarAlt} />
+                  </div>
+                </div>
+              ) : null}
 
-        <form onSubmit={onSaveProfile} style={{ display: 'grid', gap: 12 }}>
-          <label style={{ display: 'grid', gap: 6 }}>
-            <span>{STRINGS.dashboard.firstNameLabel}</span>
-            <input
-              value={firstName}
-              onChange={(e) => {
-                setFirstName(e.target.value);
-                setSaveError(null);
-                setSaveSuccess(null);
-              }}
-              disabled={isSaving}
-            />
-          </label>
-
-          <label style={{ display: 'grid', gap: 6 }}>
-            <span>{STRINGS.dashboard.lastNameLabel}</span>
-            <input
-              value={lastName}
-              onChange={(e) => {
-                setLastName(e.target.value);
-                setSaveError(null);
-                setSaveSuccess(null);
-              }}
-              disabled={isSaving}
-            />
-          </label>
-
-          <label style={{ display: 'grid', gap: 6 }}>
-            <span>{STRINGS.dashboard.birthDateLabel}</span>
-            <input
-              type="date"
-              value={birthDate}
-              onChange={(e) => {
-                setBirthDate(e.target.value);
-                setSaveError(null);
-                setSaveSuccess(null);
-              }}
-              disabled={isSaving}
-            />
-          </label>
-
-          {saveError ? (
-            <div role="alert" style={{ color: 'crimson' }}>
-              {saveError}
-            </div>
-          ) : null}
-
-          {saveSuccess ? (
-            <div role="status" style={{ color: 'green' }}>
-              {saveSuccess}
-            </div>
-          ) : null}
-
-          <button type="submit" disabled={isSaving}>
-            {isSaving ? STRINGS.dashboard.saving : STRINGS.dashboard.save}
-          </button>
-        </form>
-      </section>
-
-      {/* Access history */}
-      <section style={{ display: 'grid', gap: 12 }}>
-        <h2 style={{ margin: 0 }}>{STRINGS.dashboard.historyTitle}</h2>
-
-        {historyStatus === 'loading' ? (
-          <div>{STRINGS.common.loading}</div>
-        ) : null}
-
-        {historyStatus === 'error' && historyError ? (
-          <div role="alert" style={{ color: 'crimson' }}>
-            {STRINGS.dashboard.historyFailed}
-          </div>
-        ) : null}
-
-        {historyStatus !== 'loading' && history.length === 0 ? (
-          <div style={{ opacity: 0.85 }}>{STRINGS.dashboard.historyEmpty}</div>
-        ) : null}
-
-        {history.length > 0 ? (
-          <ul style={{ margin: 0, paddingLeft: 18, display: 'grid', gap: 8 }}>
-            {history.map((h) => (
-              <li key={h.id}>
+              <div className="grid gap-2">
                 <div>
-                  <strong>{new Date(h.createdAt).toLocaleString()}</strong>
+                  <span className="font-semibold">
+                    {STRINGS.dashboard.nameLabel}
+                  </span>{' '}
+                  {user ? `${user.firstName} ${user.lastName}` : '-'}
                 </div>
-                <div style={{ opacity: 0.85 }}>
-                  {h.ipAddress ?? STRINGS.dashboard.historyUnknownIp} ·{' '}
-                  {h.userAgent ?? STRINGS.dashboard.historyUnknownAgent}
+                <div>
+                  <span className="font-semibold">
+                    {STRINGS.dashboard.emailLabel}
+                  </span>{' '}
+                  {user?.email ?? '-'}
                 </div>
-              </li>
-            ))}
-          </ul>
-        ) : null}
-      </section>
+                <div>
+                  <span className="font-semibold">
+                    {STRINGS.dashboard.birthDateLabel}
+                  </span>{' '}
+                  {user?.birthDate ?? '-'}
+                </div>
+              </div>
+            </div>
+
+            <div className="divider my-0" />
+
+            <div className="grid gap-3 max-w-md">
+              <input
+                type="file"
+                accept="image/png,image/jpeg,image/webp"
+                className="file-input file-input-bordered w-full"
+                onChange={(e) => {
+                  const f = e.target.files?.[0] ?? null;
+                  setAvatarFile(f);
+                  setAvatarError(null);
+                }}
+                disabled={avatarStatus === 'uploading'}
+              />
+
+              <button
+                type="button"
+                onClick={onUploadAvatar}
+                disabled={!avatarFile || avatarStatus === 'uploading'}
+                className="btn btn-primary"
+              >
+                {avatarStatus === 'uploading'
+                  ? STRINGS.dashboard.avatarUploading
+                  : STRINGS.dashboard.avatarUpload}
+              </button>
+
+              {avatarError ? (
+                <div role="alert" className="alert alert-error">
+                  <span>{avatarError}</span>
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </section>
+
+        {/* Edit profile */}
+        <section id="profile-edit" className="card bg-base-100 shadow">
+          <div className="card-body gap-4">
+            <h2 className="card-title">{STRINGS.dashboard.editTitle}</h2>
+
+            <form onSubmit={onSaveProfile} className="grid gap-4 max-w-md">
+              <label className="form-control">
+                <div className="label">
+                  <span className="label-text">
+                    {STRINGS.dashboard.firstNameLabel}
+                  </span>
+                </div>
+                <input
+                  className="input input-bordered"
+                  value={firstName}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                    setSaveError(null);
+                    setSaveSuccess(null);
+                  }}
+                  disabled={isSaving}
+                />
+              </label>
+
+              <label className="form-control">
+                <div className="label">
+                  <span className="label-text">
+                    {STRINGS.dashboard.lastNameLabel}
+                  </span>
+                </div>
+                <input
+                  className="input input-bordered"
+                  value={lastName}
+                  onChange={(e) => {
+                    setLastName(e.target.value);
+                    setSaveError(null);
+                    setSaveSuccess(null);
+                  }}
+                  disabled={isSaving}
+                />
+              </label>
+
+              <label className="form-control">
+                <div className="label">
+                  <span className="label-text">
+                    {STRINGS.dashboard.birthDateLabel}
+                  </span>
+                </div>
+                <input
+                  type="date"
+                  className="input input-bordered"
+                  value={birthDate}
+                  onChange={(e) => {
+                    setBirthDate(e.target.value);
+                    setSaveError(null);
+                    setSaveSuccess(null);
+                  }}
+                  disabled={isSaving}
+                />
+              </label>
+
+              {saveError ? (
+                <div role="alert" className="alert alert-error">
+                  <span>{saveError}</span>
+                </div>
+              ) : null}
+
+              {saveSuccess ? (
+                <div role="status" className="alert alert-success">
+                  <span>{saveSuccess}</span>
+                </div>
+              ) : null}
+
+              <button
+                type="submit"
+                disabled={isSaving}
+                className="btn btn-primary"
+              >
+                {isSaving ? STRINGS.dashboard.saving : STRINGS.dashboard.save}
+              </button>
+            </form>
+          </div>
+        </section>
+
+        {/* Access history */}
+        <section className="card bg-base-100 shadow">
+          <div className="card-body gap-4">
+            <h2 className="card-title">{STRINGS.dashboard.historyTitle}</h2>
+
+            {historyStatus === 'loading' ? (
+              <div className="loading loading-spinner" />
+            ) : null}
+
+            {historyStatus === 'error' && historyError ? (
+              <div role="alert" className="alert alert-error">
+                <span>{STRINGS.dashboard.historyFailed}</span>
+              </div>
+            ) : null}
+
+            {historyStatus !== 'loading' && history.length === 0 ? (
+              <div className="opacity-80">{STRINGS.dashboard.historyEmpty}</div>
+            ) : null}
+
+            {history.length > 0 ? (
+              <ul className="timeline timeline-vertical">
+                {history.map((h) => (
+                  <li key={h.id}>
+                    <div className="timeline-start text-xs opacity-70">
+                      {new Date(h.createdAt).toLocaleString()}
+                    </div>
+                    <div className="timeline-middle">
+                      <div className="badge badge-neutral badge-sm" />
+                    </div>
+                    <div className="timeline-end">
+                      <div className="text-sm">
+                        {h.ipAddress ?? STRINGS.dashboard.historyUnknownIp} ·{' '}
+                        {h.userAgent ?? STRINGS.dashboard.historyUnknownAgent}
+                      </div>
+                    </div>
+                    <hr />
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </div>
+        </section>
+      </main>
     </div>
   );
 }

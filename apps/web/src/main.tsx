@@ -1,10 +1,14 @@
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import './styles.css';
 
 import App from './app/app';
 import { AuthProvider, setApiBaseUrl } from '@assignment-ftechnology/auth';
 import { ErrorBoundary } from './app/components/ErrorBoundary';
+import { applyTheme, getTheme } from './app/theme/theme';
+
+applyTheme(getTheme());
 
 setApiBaseUrl('/api');
 
