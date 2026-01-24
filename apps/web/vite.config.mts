@@ -11,13 +11,19 @@ export default defineConfig(() => ({
     port: 4200,
     host: 'localhost',
     proxy: {
-    '/api': {
-      target: 'http://localhost:3000',
-      changeOrigin: true,
-      secure: false,
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+      },
+      '/uploads': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+      },
     },
   },
-  },
+
   preview: {
     port: 4200,
     host: 'localhost',

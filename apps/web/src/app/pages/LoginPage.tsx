@@ -6,6 +6,7 @@ import type { LoginFormValues } from '@assignment-ftechnology/auth-ui';
 import { loginSchema } from '@assignment-ftechnology/contracts';
 import { STRINGS } from '../ui-tokens/strings';
 import { zodToFieldErrors } from '../shared/zod-field-errors';
+import { toast } from 'react-toastify';
 
 type LocationState = { from?: { pathname: string } };
 
@@ -50,7 +51,7 @@ export function LoginPage() {
         password: parsed.data.password,
         rememberMe: Boolean(parsed.data.rememberMe),
       });
-
+      toast.success('Login successful');
       navigate(redirectTo, { replace: true });
     } catch (e) {
       const rawMessage = e instanceof Error ? e.message : '';
@@ -63,6 +64,7 @@ export function LoginPage() {
           : STRINGS.login.genericLoginError;
 
       setError(friendly);
+      toast.error(friendly);
     }
   };
 

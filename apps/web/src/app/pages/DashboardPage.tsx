@@ -13,6 +13,7 @@ import type {
 } from '@assignment-ftechnology/auth';
 
 import { STRINGS } from '../ui-tokens/strings';
+import { toast } from 'react-toastify';
 
 /**
  * Dashboard page:
@@ -67,7 +68,9 @@ export function DashboardPage() {
     try {
       await apiUploadAvatar(accessToken, avatarFile);
       await refreshMe();
+      toast.success('Avatar uploaded successfully');
     } catch (e) {
+      toast.error('Failed to upload avatar');
       setAvatarError(e instanceof Error ? e.message : 'Upload failed');
     } finally {
       setAvatarStatus('idle');
@@ -163,7 +166,7 @@ export function DashboardPage() {
 
       // Optionally refresh history too (not required, but nice)
       await loadHistory();
-
+      toast.success('Profile updated successfully');
       setSaveSuccess(STRINGS.dashboard.profileUpdated);
     } catch (err) {
       const raw = err instanceof Error ? err.message : '';
@@ -174,7 +177,7 @@ export function DashboardPage() {
         raw.toLowerCase().includes('no changes')
           ? STRINGS.dashboard.noChanges
           : STRINGS.dashboard.updateFailed;
-
+      toast.error('Failed to update profile');
       setSaveError(friendly);
     } finally {
       setSaveStatus('idle');

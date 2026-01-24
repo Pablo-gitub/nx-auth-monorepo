@@ -10,6 +10,7 @@ import { registerSchema } from '@assignment-ftechnology/contracts';
 
 import { STRINGS } from '../ui-tokens/strings';
 import { z } from 'zod';
+import { toast } from 'react-toastify';
 
 /**
  * Utility: maps Zod issues to fieldErrors for the form.
@@ -80,7 +81,7 @@ export function RegisterPage() {
 
     try {
       await apiRegister(parsed.data);
-
+      toast.success('Account created successfully. You can now login.');
       // Register completed -> redirect to login
       navigate('/login', { replace: true, state: { registered: true } });
     } catch (err) {
@@ -92,7 +93,7 @@ export function RegisterPage() {
         message.toLowerCase().includes('conflict')
           ? STRINGS.register.emailAlreadyExists
           : STRINGS.register.genericRegisterError;
-
+      toast.error('Registration failed. Some error has occurred, please try again.');
       setError(friendly);
     } finally {
       setStatus('idle');

@@ -7,6 +7,7 @@ import App from './app/app';
 import { AuthProvider, setApiBaseUrl } from '@assignment-ftechnology/auth';
 import { ErrorBoundary } from './app/components/ErrorBoundary';
 import { applyTheme, getTheme } from './app/theme/theme';
+import 'react-toastify/dist/ReactToastify.css';
 
 applyTheme(getTheme());
 
