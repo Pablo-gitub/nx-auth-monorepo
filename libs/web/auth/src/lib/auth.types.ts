@@ -1,4 +1,7 @@
-import type { RegisterInput, UserPublicDto } from '@assignment-ftechnology/contracts';
+import type {
+  RegisterInput,
+  UserPublicDto,
+} from '@assignment-ftechnology/contracts';
 
 export type AuthUser = UserPublicDto;
 
@@ -17,6 +20,30 @@ export type LoginPayload = {
 export type LoginResponse = {
   accessToken: string;
   user: AuthUser;
+};
+
+/**
+ * PATCH /me payload (frontend side).
+ * Keep aligned with contracts patchMeSchema.
+ */
+export type PatchMePayload = Partial<{
+  firstName: string;
+  lastName: string;
+  birthDate: string; // YYYY-MM-DD
+}>;
+
+/**
+ * Access history item returned by GET /me/access-history.
+ */
+export type AccessHistoryItem = {
+  id: string;
+  ipAddress: string | null;
+  userAgent: string | null;
+  createdAt: string; // ISO datetime
+};
+
+export type AccessHistoryResponse = {
+  items: AccessHistoryItem[];
 };
 
 /**

@@ -14,7 +14,9 @@ import type {
   RegisterInput,
   UserPublicDto,
   LoginInput,
+  PatchMeInput,
 } from '@assignment-ftechnology/contracts';
+
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import type { StringValue } from 'ms';
@@ -218,4 +220,46 @@ export class AuthService {
 
     return toUserPublicDto(updated);
   }
+
+
+    /**
+   * Updates editable profile fields (PATCH /me).
+   * Security: never allow email/password updates here.
+   */
+  async updateMe(
+    userId?: string,
+    input?: PatchMeInput,
+  ): Promise<{ user: UserPublicDto }> {
+    if (!userId) {
+      throw new UnauthorizedException({ message: 'Invalid token' });
+    }
+
+    // Build a minimal update patch (only allowed fields)
+    const patch: Partial<typeof users.$inferInsert> = {
+      updatedAt: new Date(),
+    };
+
+    if (input?.firstName !== undefined) patch.firstName = input.firstName;
+    if (input?.lastName !== undefined) patch.lastName = input.lastName;
+    if (input?.birthDate !== undefined) patch.birthDate = input.birthDate;
+
+    // If only updatedAt would be applied, treat it as invalid input
+    const onlyUpdatedAt = Object.keys(patch).length === 1;
+    if (onlyUpdatedAt) {
+      throw new ConflictException({ message: 'No changes provided' });
+    }
+
+    const [updated] = await this.db
+      .update(users)
+      .set(patch)
+      .where(eq(users.id, userId))
+      .returning();
+
+    if (!updated) {
+      throw new NotFoundException({ message: 'User not found' });
+    }
+
+    return { user: toUserPublicDto(updated) };
+  }
+
 }

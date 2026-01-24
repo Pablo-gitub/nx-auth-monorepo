@@ -1,4 +1,9 @@
-import { ConflictException, UnauthorizedException } from '@nestjs/common';
+import {
+  NotFoundException,
+  UnauthorizedException,
+  ConflictException,
+} from '@nestjs/common';
+import type { PatchMeInput } from '@assignment-ftechnology/contracts';
 import * as bcrypt from 'bcrypt';
 import type { DbClient } from '@assignment-ftechnology/db';
 import type { JwtService } from '@nestjs/jwt';
@@ -19,6 +24,8 @@ type DbMock = {
   insert: jest.Mock;
   values: jest.Mock;
   returning: jest.Mock;
+  update: jest.Mock;
+  set: jest.Mock;
 };
 
 function createDbMock(): DbMock {
@@ -34,6 +41,10 @@ function createDbMock(): DbMock {
   db.insert = jest.fn(() => db);
   db.values = jest.fn(() => db);
   db.returning = jest.fn();
+
+  // chain for update().set().where().returning()
+  db.update = jest.fn(() => db);
+  db.set = jest.fn(() => db);
 
   return db as DbMock;
 }
@@ -265,5 +276,105 @@ describe('AuthService.login', () => {
     // minimal interaction checks (optional but useful)
     expect(jwtMock.signAsync).toHaveBeenCalled();
     expect(db.insert).toHaveBeenCalled(); // access log write happens
+  });
+
+  describe('AuthService.updateMe', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    test('throws UnauthorizedException when userId is missing', async () => {
+      const db = createDbMock();
+
+      const service = new AuthService(
+        db as unknown as DbClient,
+        jwtMock as unknown as JwtService,
+        configMock as unknown as ConfigService,
+      );
+
+      await expect(
+        service.updateMe(undefined, {
+          firstName: 'Paolo',
+        } satisfies PatchMeInput),
+      ).rejects.toBeInstanceOf(UnauthorizedException);
+    });
+
+    test('throws ConflictException when no changes are provided', async () => {
+      const db = createDbMock();
+
+      const service = new AuthService(
+        db as unknown as DbClient,
+        jwtMock as unknown as JwtService,
+        configMock as unknown as ConfigService,
+      );
+
+      await expect(service.updateMe('user-1', {})).rejects.toBeInstanceOf(
+        ConflictException,
+      );
+    });
+
+    test('throws NotFoundException when user does not exist', async () => {
+      const db = createDbMock();
+
+      // update().set().where().returning() -> no rows updated
+      db.returning.mockResolvedValueOnce([]);
+
+      const service = new AuthService(
+        db as unknown as DbClient,
+        jwtMock as unknown as JwtService,
+        configMock as unknown as ConfigService,
+      );
+
+      await expect(
+        service.updateMe('missing-user', { firstName: 'Paolo' }),
+      ).rejects.toBeInstanceOf(NotFoundException);
+    });
+
+    test('updates user fields and returns public dto', async () => {
+      const db = createDbMock();
+
+      const createdAt = new Date('2026-01-20T02:09:33.732Z');
+      const updatedAt = new Date('2026-01-21T02:09:33.732Z');
+
+      db.returning.mockResolvedValueOnce([
+        {
+          id: 'user-1',
+          firstName: 'Paolo',
+          lastName: 'Pietrelli',
+          email: 'paolo@example.com',
+          passwordHash: 'HASHED',
+          birthDate: '1997-01-02',
+          avatarUrl: null,
+          createdAt,
+          updatedAt,
+        },
+      ]);
+
+      const service = new AuthService(
+        db as unknown as DbClient,
+        jwtMock as unknown as JwtService,
+        configMock as unknown as ConfigService,
+      );
+
+      const res = await service.updateMe('user-1', {
+        firstName: 'Paolo',
+        birthDate: '1997-01-02',
+      });
+
+      expect(res).toEqual({
+        user: {
+          id: 'user-1',
+          firstName: 'Paolo',
+          lastName: 'Pietrelli',
+          email: 'paolo@example.com',
+          birthDate: '1997-01-02',
+          avatarUrl: null,
+          createdAt: createdAt.toISOString(),
+          updatedAt: updatedAt.toISOString(),
+        },
+      });
+
+      expect(db.update).toHaveBeenCalled();
+    });
   });
 });
