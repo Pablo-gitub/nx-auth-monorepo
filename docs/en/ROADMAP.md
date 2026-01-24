@@ -224,8 +224,8 @@ The goal is to deliver the **core requirements** (fully functional end-to-end) f
 
 **Output:** More solid and professional UX.
 
-* [ ] Consistent error handling (response shape)
-* [ ] Toast success/error (login/register/update/logout)
+* [x] Consistent error handling (response shape)
+* [x] Toast success/error (login/register/update/logout)
 * [ ] Improved loading states (skeleton/spinner)
 * [ ] Error boundaries with UI fallback
 * [ ] Error mapping (consistent FE/BE messages)
@@ -240,11 +240,11 @@ The goal is to deliver the **core requirements** (fully functional end-to-end) f
 
 **Branch:** `feat/bonus` (or dedicated branches if separated)
 
-* [ ] Unit tests on main components (minimum 2–4 meaningful tests)
+* [x] Unit tests on main components (minimum 2–4 meaningful tests)
 * [ ] Page transition animations (if low-effort)
 * [ ] "Forgot password" (full implementation) *(only if time permits)*
 * [ ] Social auth (Google/GitHub) *(only if time permits)*
-* [ ] Dark/light theme switcher
+* [x] Dark/light theme switcher
 
 ---
 
@@ -252,9 +252,9 @@ The goal is to deliver the **core requirements** (fully functional end-to-end) f
 
 **Branch:** `feat/i18n-theme` (recommended to unify if quick)
 
-* [ ] i18n (IT/EN) + language switch
-* [ ] String Manager / centralized string structure
-* [ ] Theme switcher (daisyUI) + preference persistence
+* [≈] i18n (IT/EN) + language switch
+* [x] String Manager / centralized string structure
+* [x] Theme switcher (daisyUI) + preference persistence
 
 ✅ **Tag (if completed):** `v0.2.0`
 
@@ -272,7 +272,7 @@ The goal is to deliver the **core requirements** (fully functional end-to-end) f
 ## Definition of Done (for each milestone)
 
 * [ ] Feature completed and manually tested
-* [ ] Lint/format pass
-* [ ] No TypeScript errors
-* [ ] README/docs updated (if the milestone introduces new choices)
-* [ ] Descriptive PR (scope + how to test)
+* [x] Lint/format pass
+* [x] No TypeScript errors
+* [x] README/docs updated (if the milestone introduces new choices)
+* [x] Descriptive PR (scope + how to test)

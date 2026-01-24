@@ -193,8 +193,8 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 **Branch:** `feat/polish-ux`  
 **Output:** UX più solida e professionale.
 
-- [ ] Error handling consistente (shape risposta)
-- [ ] Toast success/error (login/register/update/logout)
+- [x] Error handling consistente (shape risposta)
+- [x] Toast success/error (login/register/update/logout)
 - [ ] Loading states migliorati (skeleton/spinner)
 - [ ] Error boundaries con fallback UI
 - [ ] Error mapping (messaggi coerenti FE/BE)
@@ -208,11 +208,11 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 
 **Branch:** `feat/bonus` (o branch dedicati se separati)
 
-- [ ] Test unitari componenti principali (minimo 2–4 test sensati)
+- [x] Test unitari componenti principali (minimo 2–4 test sensati)
 - [ ] Animazioni transizioni tra pagine (se low-effort)
 - [ ] “Password dimenticata” (implementazione completa) _(solo se tempo)_
 - [ ] Social auth (Google/GitHub) _(solo se tempo)_
-- [ ] Theme switcher dark/light
+- [x] Theme switcher dark/light
 
 ---
 
@@ -220,9 +220,9 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 
 **Branch:** `feat/i18n-theme` (consigliato unificare i due se rapidi)
 
-- [ ] i18n (IT/EN) + language switch
-- [ ] String Manager / struttura centralizzata delle stringhe
-- [ ] Theme switcher (daisyUI) + persistenza preferenza
+- [≈] i18n (IT/EN) + language switch
+- [x] String Manager / struttura centralizzata delle stringhe
+- [x] Theme switcher (daisyUI) + persistenza preferenza
 
 ✅ **Tag (se completato):** `v0.2.0`
 
@@ -240,7 +240,7 @@ L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end),
 ## Definition of Done (per ogni milestone)
 
 - [ ] Feature completata e testata manualmente
-- [ ] Lint/format pass
-- [ ] Nessun errore TypeScript
-- [ ] README/docs aggiornati (se la milestone introduce nuove scelte)
-- [ ] PR descrittiva (scope + how to test)
+- [x] Lint/format pass
+- [x] Nessun errore TypeScript
+- [x] README/docs aggiornati (se la milestone introduce nuove scelte)
+- [x] PR descrittiva (scope + how to test)
