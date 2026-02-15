@@ -1,185 +1,106 @@
-# Assignment FTechnology – Nx Full Stack Authentication App
+# Nx Full Stack Authentication – Monorepo Starter
 
-[`README.md`](README.md) Go to Italian version.
+![Nx](https://img.shields.io/badge/Nx-monorepo-143055)
+![TypeScript](https://img.shields.io/badge/TypeScript-strongly%20typed-blue)
+![NestJS](https://img.shields.io/badge/NestJS-backend-red)
+![React](https://img.shields.io/badge/React-frontend-61DAFB)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-## Project Description
+## 📌 Overview
 
-This repository contains the implementation of a full stack web application developed as a **technical assessment**, using **Nx (monorepo)**, **React**, **NestJS**, and **Drizzle ORM**.
+This project is a **full-stack authentication system** built using an **Nx monorepo architecture**, designed with enterprise-grade structure and scalability in mind.
 
-The goal of the project is to build a **complete authentication system**, including:
+The goal is not just to implement login and registration, but to provide a **clean, modular and reusable architecture** for real-world applications.
 
-* User registration
-* Login
-* Personal dashboard
-* Profile management and editing
-* Access history (Login logs)
+It demonstrates:
 
-The project is structured as an **Nx monorepo**, with a clear separation between frontend, backend, and shared libraries, following architecture and code organization best practices.
-
----
-
-## Tech Stack
-
-* **Nx** – Monorepo and workspace management
-* **React** – Web Frontend
-* **NestJS** – Backend API
-* **TypeScript** – Mandatory static typing
-* **Drizzle ORM** – Data access and database management
-* **Database** – PostgreSQL / MariaDB / MongoDB (configurable)
-* **JWT** – Authentication and session management
-* **pnpm** – Package manager
-* **shadcn/ui** – UI Components
-* **daisyUI** – Theme management (light/dark)
+- Proper monorepo organization
+- Clear frontend/backend separation
+- Shared type-safe contracts
+- Database schema management with Drizzle ORM
+- JWT-based authentication
+- Structured technical documentation
 
 ---
 
-## Functional Requirements
+## 🏗 Architecture
 
-### 1. User Registration (`/register`)
+Organized as an Nx monorepo:
 
-Registration page with a form containing the following fields:
+- `apps/web` → React frontend
+- `apps/api` → NestJS backend
+- `libs/api/db` → Database schema and configuration (Drizzle)
+- `libs/shared/contracts` → Shared contracts between frontend and backend
+- `libs/web/auth` → Authentication logic
+- `libs/web/auth-ui` → Reusable UI components
 
-* First Name and Last Name
-* Email (with format validation)
-* Password
-* Minimum 8 characters
-* At least one uppercase letter
-* At least one number
+Design principles:
 
-
-* Confirm Password
-* Date of birth
-* Avatar (optional image upload)
-
-Required functionality:
-
-* Client-side validation for all fields
-* Visual feedback for validation errors
-* Loading state management
-* Redirect to the login page upon successful registration
+- Modularity
+- Separation of concerns
+- Shared typed contracts
+- Future scalability
 
 ---
 
-### 2. Login (`/login`)
+## ⚙️ Tech Stack
 
-Login page with:
-
-* Email
-* Password
-
-Required functionality:
-
-* Authentication error management
-* "Remember me" implementation
-* Password recovery link (UI only)
-* Automatic redirect to the dashboard after login
+- **Nx** – Monorepo orchestration
+- **React** – Frontend
+- **NestJS** – Backend
+- **TypeScript** – Static typing
+- **Drizzle ORM** – Database access
+- **PostgreSQL** – Database
+- **JWT** – Authentication
+- **pnpm** – Package manager
+- **shadcn/ui + daisyUI** – UI system
 
 ---
 
-### 3. User Dashboard (`/dashboard`)
+## 🚀 Implemented Features
 
-Page accessible only to authenticated users.
+### Authentication
 
-Contents:
+- User registration with validation
+- JWT-based login
+- Remember me
+- Protected routes
+- Logout
+- Password recovery (UI)
 
-* Header with logo and navigation menu
-* Sidebar with main user information
-* Central section with:
-* Profile data summary
-* Personal data editing form
-* History of the last 5 logins
+### Dashboard
 
+- Authenticated user area
+- Profile editing
+- Access logs (last 5 logins)
+- Avatar upload
 
-* Logout functionality
+### Backend
 
----
-
-## Technical Requirements
-
-### Frontend
-
-#### Project Structure
-
-* Modular and reusable components
-* Clear organization of files and folders
-* Use of custom hooks for application logic
-
-#### State Management
-
-* Appropriate use of React hooks (`useState`, `useEffect`, `useContext`)
-* Dedicated Context for authentication management
-
-#### Routing
-
-* Route configuration with React Router
-* Protection of private routes
-* Correct handling of redirects
-
-#### UI / UX
-
-* Responsive design
-* Visual feedback for user actions
-* Loading states for asynchronous operations
-* User-friendly error handling
-* Usage of **shadcn/ui** components
+- Input validation
+- Secure password hashing
+- JWT middleware
+- Database migrations with Drizzle
 
 ---
 
-### Backend (API)
+## 🔐 Security & Future Improvements
 
-#### Authentication
-
-* API for registration and login
-* Use of JWT for session management
-* Secure password hashing
-
-#### Data Management
-
-* Input data validation
-* User profile CRUD
-* Structured error handling
-
-#### Storage
-
-* Use of a database (MariaDB, PostgreSQL, or MongoDB)
-* Avatar upload management
-* Implementation of database migrations and seeds
+- Brute-force protection
+- Image metadata stripping (GDPR compliance)
+- Extended backend test coverage
+- Social authentication
+- Full password recovery flow
 
 ---
 
-## Bonus Points (Assignment)
-
-* Unit tests on main components
-* Animations for page transitions
-* Implementation of "Forgot Password" functionality
-* Social authentication (Google or GitHub)
-* Dark / Light Theme switcher
-
----
-
-## Bonus Extra (Architectural Extensions)
-
-In addition to the bonuses required by the assignment, the project includes some optional extensions focused on **architectural quality**:
-
-* **Internationalization System (i18n)**
-Centralized string management via translation files, avoiding hard-coded text in the interface and enabling multi-language support.
-* **String Manager**
-Dedicated structure for organizing application strings, improving maintainability, readability, and code consistency.
-* **Theme Management (light / dark)**
-Implemented via daisyUI, with user preference persistence.
-
-These extensions are not strictly required but aim to demonstrate attention to architecture, scalability, and code quality.
-
----
-
-## Installation and Startup
+## 🛠 Installation
 
 ```bash
 pnpm install
 pnpm nx serve web
 pnpm nx serve api
-
-```
+````
 
 ---
 
@@ -212,18 +133,10 @@ The structure is fully available in Italian as well (`docs/it/`).
 
 ---
 
-## Project Status
+## 🎯 Project Purpose
 
-Development follows an incremental roadmap:
+This repository serves as:
 
-* Completion of core requirements
-* Authentication hardening
-* Implementation of bonuses
-* Potential architectural extensions
-
----
-
-### Final Note
-
-This project is designed as a **technical exercise**, but structured following practices applicable to real-world software development contexts.
-
+* Nx full-stack architecture showcase
+* Authentication starter template
+* Enterprise-ready structural example

@@ -1,188 +1,106 @@
-# Assignment FTechnology – Nx Full Stack Authentication App
-[`README.en.md`](README.en.md) Go to english version.
+# Nx Full Stack Authentication – Monorepo Starter
 
 ![Nx](https://img.shields.io/badge/Nx-monorepo-143055)
 ![TypeScript](https://img.shields.io/badge/TypeScript-strongly%20typed-blue)
-![pnpm](https://img.shields.io/badge/pnpm-package%20manager-orange)
+![NestJS](https://img.shields.io/badge/NestJS-backend-red)
+![React](https://img.shields.io/badge/React-frontend-61DAFB)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-## Descrizione del progetto
+## 📌 Descrizione
 
-Questo repository contiene l’implementazione di un’applicazione web full stack sviluppata come **esercizio di verifica tecnica**, utilizzando **Nx (monorepo)**, **React**, **NestJS** e **Drizzle ORM**.
+Questo progetto rappresenta un **sistema di autenticazione full stack** sviluppato con **Nx monorepo**, progettato con un approccio orientato all’architettura enterprise.
 
-L’obiettivo del progetto è realizzare un **sistema di autenticazione completo**, comprensivo di:
+L’obiettivo non è solo implementare login e registrazione, ma costruire una **base scalabile, riutilizzabile e ben strutturata** per applicazioni reali.
 
-* registrazione utente
-* login
-* dashboard personale
-* gestione e modifica del profilo
-* cronologia degli accessi
+Il progetto dimostra:
 
-Il progetto è strutturato come **monorepo Nx**, con separazione chiara tra frontend, backend e librerie condivise, seguendo buone pratiche di architettura e organizzazione del codice.
-
----
-
-## Stack Tecnologico
-
-* **Nx** – Monorepo e gestione del workspace
-* **React** – Frontend web
-* **NestJS** – Backend API
-* **TypeScript** – Tipizzazione statica obbligatoria
-* **Drizzle ORM** – Accesso ai dati e gestione del database
-* **Database** – PostgreSQL / MariaDB / MongoDB (configurabile)
-* **JWT** – Autenticazione e gestione delle sessioni
-* **pnpm** – Package manager
-* **shadcn/ui** – Componenti UI
-* **daisyUI** – Gestione temi (light/dark)
+- organizzazione modulare in monorepo
+- separazione chiara tra frontend, backend e librerie condivise
+- tipizzazione completa TypeScript
+- gestione database con Drizzle ORM
+- autenticazione JWT
+- documentazione tecnica strutturata
 
 ---
 
-## Requisiti Funzionali
+## 🏗 Architettura
 
-### 1. Registrazione Utente (`/register`)
+Il progetto è organizzato come **Nx monorepo** con separazione in:
 
-Pagina di registrazione con form contenente i seguenti campi:
+- `apps/web` → Frontend React
+- `apps/api` → Backend NestJS
+- `libs/api/db` → Schema e configurazione database (Drizzle)
+- `libs/shared/contracts` → Contratti condivisi tra frontend e backend
+- `libs/web/auth` → Logica di autenticazione lato frontend
+- `libs/web/auth-ui` → Componenti UI riutilizzabili
 
-* Nome e Cognome
-* Email (con validazione del formato)
-* Password
+Principi adottati:
 
-  * minimo 8 caratteri
-  * almeno una lettera maiuscola
-  * almeno un numero
-* Conferma Password
-* Data di nascita
-* Avatar (upload immagine opzionale)
-
-Funzionalità richieste:
-
-* Validazione lato client di tutti i campi
-* Feedback visivo degli errori di validazione
-* Gestione del caricamento (loading state)
-* Redirect alla pagina di login in caso di registrazione avvenuta con successo
+- Modularità
+- Separazione delle responsabilità
+- Condivisione tipizzata tra frontend e backend
+- Scalabilità futura
 
 ---
 
-### 2. Login (`/login`)
+## ⚙️ Stack Tecnologico
 
-Pagina di login con:
-
-* Email
-* Password
-
-Funzionalità richieste:
-
-* Gestione degli errori di autenticazione
-* Implementazione del “Remember me”
-* Link per il recupero password (solo UI)
-* Redirect automatico alla dashboard dopo il login
+- **Nx** – Monorepo orchestration
+- **React** – Frontend
+- **NestJS** – Backend API
+- **TypeScript** – Strong typing
+- **Drizzle ORM** – Database access layer
+- **PostgreSQL** – Database
+- **JWT** – Authentication
+- **pnpm** – Package manager
+- **shadcn/ui + daisyUI** – UI system
 
 ---
 
-### 3. Dashboard Utente (`/dashboard`)
+## 🚀 Funzionalità Implementate
 
-Pagina accessibile solo ad utenti autenticati.
+### Autenticazione
 
-Contenuti:
+- Registrazione utente con validazione completa
+- Login con JWT
+- Remember me
+- Protezione delle route
+- Logout
+- Recupero password (UI)
 
-* Header con logo e menu di navigazione
-* Sidebar con informazioni principali dell’utente
-* Sezione centrale con:
+### Dashboard
 
-  * riepilogo dei dati del profilo
-  * form di modifica dei dati personali
-  * cronologia degli ultimi 5 accessi
-* Funzionalità di logout
+- Accesso riservato ad utenti autenticati
+- Modifica dati profilo
+- Cronologia ultimi accessi
+- Upload avatar
 
----
+### Backend
 
-## Requisiti Tecnici
-
-### Frontend
-
-#### Struttura del progetto
-
-* Componenti modulari e riutilizzabili
-* Organizzazione chiara di file e cartelle
-* Utilizzo di custom hooks per la logica applicativa
-
-#### State Management
-
-* Uso appropriato degli hook React (`useState`, `useEffect`, `useContext`)
-* Context dedicato per la gestione dell’autenticazione
-
-#### Routing
-
-* Configurazione delle route con React Router
-* Protezione delle route private
-* Gestione corretta dei redirect
-
-#### UI / UX
-
-* Design responsive
-* Feedback visivo per le azioni dell’utente
-* Loading states per operazioni asincrone
-* Gestione user-friendly degli errori
-* Utilizzo dei componenti **shadcn/ui**
+- Validazione robusta dei dati
+- Hashing password sicuro
+- Middleware di autenticazione JWT
+- Schema database con migrazioni Drizzle
 
 ---
 
-### Backend (API)
+## 🔐 Hardening e Miglioramenti Futuri
 
-#### Autenticazione
-
-* API per registrazione e login
-* Utilizzo di JWT per la gestione delle sessioni
-* Hashing sicuro delle password
-
-#### Gestione Dati
-
-* Validazione dei dati in ingresso
-* CRUD del profilo utente
-* Gestione strutturata degli errori
-
-#### Storage
-
-* Utilizzo di un database (MariaDB, PostgreSQL o MongoDB)
-* Gestione dell’upload dell’avatar
-* Implementazione di migration e seed del database
+- Protezione brute-force
+- Sanitizzazione metadata immagini (GDPR)
+- Incremento coverage test backend
+- Social login (Google / GitHub)
+- Password recovery completa
 
 ---
 
-## Bonus Points (Assignment)
-
-* Test unitari sui componenti principali
-* Animazioni per le transizioni tra le pagine
-* Implementazione della funzionalità “Password dimenticata”
-* Autenticazione social (Google o GitHub)
-* Theme switcher Dark / Light
-
----
-
-## Bonus Extra (Estensioni Architetturali)
-
-Oltre ai bonus richiesti dall’assignment, il progetto prevede alcune estensioni opzionali orientate alla **qualità architetturale**:
-
-* **Sistema di internazionalizzazione (i18n)**
-  Gestione centralizzata delle stringhe tramite file di traduzione, evitando hard-coding dei testi nell’interfaccia e abilitando il supporto multilingua.
-
-* **String Manager**
-  Struttura dedicata per l’organizzazione delle stringhe applicative, migliorando manutenibilità, leggibilità e coerenza del codice.
-
-* **Gestione del tema (light / dark)**
-  Implementata tramite daisyUI, con persistenza della preferenza utente.
-
-Queste estensioni non sono strettamente richieste, ma mirano a dimostrare attenzione all’architettura, alla scalabilità e alla qualità del codice.
-
----
-
-## Installazione e Avvio
+## 🛠 Installazione
 
 ```bash
 pnpm install
 pnpm nx serve web
 pnpm nx serve api
-```
+````
 
 ---
 
@@ -215,18 +133,10 @@ La struttura è interamente disponibile anche in lingua inglese (`docs/en/`).
 
 ---
 
-## Stato del progetto
+## 🎯 Obiettivo del Progetto
 
-Lo sviluppo segue una roadmap incrementale:
+Questo repository è pensato come:
 
-* completamento dei requisiti core
-* hardening dell’autenticazione
-* implementazione dei bonus
-* eventuali estensioni architetturali
-
----
-
-### Nota finale
-
-Questo progetto è pensato come **esercizio tecnico**, ma strutturato seguendo pratiche applicabili a contesti reali di sviluppo software.
-
+* dimostrazione di architettura Nx full stack
+* base riutilizzabile per sistemi autenticazione
+* starter enterprise per applicazioni scalabili
