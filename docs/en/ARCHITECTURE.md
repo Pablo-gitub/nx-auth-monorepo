@@ -277,3 +277,19 @@ unhandled runtime errors and prevent the interface from crashing completely.
 
 This approach ensures greater frontend robustness and isolates critical errors
 from the rest of the user experience.
+
+## Architecture Overview
+
+The project follows a clear separation between applications and reusable libraries.
+
+![High-level monorepo architecture](../assets/images/nx-architecture-overview.png)
+
+This separation allows applications to act as thin entry points, while the core logic lives in reusable libraries.
+
+## Dependency Graph
+
+To verify that the architecture is correctly enforced, Nx provides a dependency graph.
+
+![Nx dependency graph](../assets/images/nx-dependency-graph.png)
+
+The graph shows that applications depend only on libraries, and shared contracts are reused across frontend and backend.

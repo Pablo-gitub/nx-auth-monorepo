@@ -260,3 +260,18 @@ errori runtime non gestiti e impedire il crash completo dell’interfaccia.
 Questo approccio garantisce una maggiore robustezza del frontend e isola
 gli errori critici dal resto dell’esperienza utente.
 
+## Panoramica dell’architettura
+
+Il progetto segue una chiara separazione tra applicazioni e librerie riutilizzabili.
+
+![Architettura monorepo ad alto livello](../assets/images/nx-architecture-overview.png)
+
+Questa separazione permette alle applicazioni di agire come semplici punti di ingresso, mentre la logica principale risiede all’interno delle librerie riutilizzabili.
+
+## Grafo delle dipendenze
+
+Per verificare che l’architettura sia correttamente rispettata, Nx mette a disposizione un grafo delle dipendenze.
+
+![Grafo delle dipendenze Nx](../assets/images/nx-dependency-graph.png)
+
+Il grafo mostra come le applicazioni dipendano esclusivamente dalle librerie e come i contratti condivisi vengano riutilizzati sia dal frontend che dal backend.

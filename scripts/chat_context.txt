@@ -1,0 +1,4499 @@
+===== PROJECT CONTEXT =====
+Generated on: Tue Jan 27 08:47:21 CET 2026
+
+
+===== DOCUMENTATION =====
+
+
+===== ASSIGNMENT =====
+
+--- README.md ---
+    # Assignment FTechnology – Nx Full Stack Authentication App
+    [`README.en.md`](README.en.md) Go to english version.
+    
+    ![Nx](https://img.shields.io/badge/Nx-monorepo-143055)
+    ![TypeScript](https://img.shields.io/badge/TypeScript-strongly%20typed-blue)
+    ![pnpm](https://img.shields.io/badge/pnpm-package%20manager-orange)
+    ![License](https://img.shields.io/badge/license-MIT-green)
+    
+    ## Descrizione del progetto
+    
+    Questo repository contiene l’implementazione di un’applicazione web full stack sviluppata come **esercizio di verifica tecnica**, utilizzando **Nx (monorepo)**, **React**, **NestJS** e **Drizzle ORM**.
+    
+    L’obiettivo del progetto è realizzare un **sistema di autenticazione completo**, comprensivo di:
+    
+    * registrazione utente
+    * login
+    * dashboard personale
+    * gestione e modifica del profilo
+    * cronologia degli accessi
+    
+    Il progetto è strutturato come **monorepo Nx**, con separazione chiara tra frontend, backend e librerie condivise, seguendo buone pratiche di architettura e organizzazione del codice.
+    
+    ---
+    
+    ## Stack Tecnologico
+    
+    * **Nx** – Monorepo e gestione del workspace
+    * **React** – Frontend web
+    * **NestJS** – Backend API
+    * **TypeScript** – Tipizzazione statica obbligatoria
+    * **Drizzle ORM** – Accesso ai dati e gestione del database
+    * **Database** – PostgreSQL / MariaDB / MongoDB (configurabile)
+    * **JWT** – Autenticazione e gestione delle sessioni
+    * **pnpm** – Package manager
+    * **shadcn/ui** – Componenti UI
+    * **daisyUI** – Gestione temi (light/dark)
+    
+    ---
+    
+    ## Requisiti Funzionali
+    
+    ### 1. Registrazione Utente (`/register`)
+    
+    Pagina di registrazione con form contenente i seguenti campi:
+    
+    * Nome e Cognome
+    * Email (con validazione del formato)
+    * Password
+    
+      * minimo 8 caratteri
+      * almeno una lettera maiuscola
+      * almeno un numero
+    * Conferma Password
+    * Data di nascita
+    * Avatar (upload immagine opzionale)
+    
+    Funzionalità richieste:
+    
+    * Validazione lato client di tutti i campi
+    * Feedback visivo degli errori di validazione
+    * Gestione del caricamento (loading state)
+    * Redirect alla pagina di login in caso di registrazione avvenuta con successo
+    
+    ---
+    
+    ### 2. Login (`/login`)
+    
+    Pagina di login con:
+    
+    * Email
+    * Password
+    
+    Funzionalità richieste:
+    
+    * Gestione degli errori di autenticazione
+    * Implementazione del “Remember me”
+    * Link per il recupero password (solo UI)
+    * Redirect automatico alla dashboard dopo il login
+    
+    ---
+    
+    ### 3. Dashboard Utente (`/dashboard`)
+    
+    Pagina accessibile solo ad utenti autenticati.
+    
+    Contenuti:
+    
+    * Header con logo e menu di navigazione
+    * Sidebar con informazioni principali dell’utente
+    * Sezione centrale con:
+    
+      * riepilogo dei dati del profilo
+      * form di modifica dei dati personali
+      * cronologia degli ultimi 5 accessi
+    * Funzionalità di logout
+    
+    ---
+    
+    ## Requisiti Tecnici
+    
+    ### Frontend
+    
+    #### Struttura del progetto
+    
+    * Componenti modulari e riutilizzabili
+    * Organizzazione chiara di file e cartelle
+    * Utilizzo di custom hooks per la logica applicativa
+    
+    #### State Management
+    
+    * Uso appropriato degli hook React (`useState`, `useEffect`, `useContext`)
+    * Context dedicato per la gestione dell’autenticazione
+    
+    #### Routing
+    
+    * Configurazione delle route con React Router
+    * Protezione delle route private
+    * Gestione corretta dei redirect
+    
+    #### UI / UX
+    
+    * Design responsive
+    * Feedback visivo per le azioni dell’utente
+    * Loading states per operazioni asincrone
+    * Gestione user-friendly degli errori
+    * Utilizzo dei componenti **shadcn/ui**
+    
+    ---
+    
+    ### Backend (API)
+    
+    #### Autenticazione
+    
+    * API per registrazione e login
+    * Utilizzo di JWT per la gestione delle sessioni
+    * Hashing sicuro delle password
+    
+    #### Gestione Dati
+    
+    * Validazione dei dati in ingresso
+    * CRUD del profilo utente
+    * Gestione strutturata degli errori
+    
+    #### Storage
+    
+    * Utilizzo di un database (MariaDB, PostgreSQL o MongoDB)
+    * Gestione dell’upload dell’avatar
+    * Implementazione di migration e seed del database
+    
+    ---
+    
+    ## Bonus Points (Assignment)
+    
+    * Test unitari sui componenti principali
+    * Animazioni per le transizioni tra le pagine
+    * Implementazione della funzionalità “Password dimenticata”
+    * Autenticazione social (Google o GitHub)
+    * Theme switcher Dark / Light
+    
+    ---
+    
+    ## Bonus Extra (Estensioni Architetturali)
+    
+    Oltre ai bonus richiesti dall’assignment, il progetto prevede alcune estensioni opzionali orientate alla **qualità architetturale**:
+    
+    * **Sistema di internazionalizzazione (i18n)**
+      Gestione centralizzata delle stringhe tramite file di traduzione, evitando hard-coding dei testi nell’interfaccia e abilitando il supporto multilingua.
+    
+    * **String Manager**
+      Struttura dedicata per l’organizzazione delle stringhe applicative, migliorando manutenibilità, leggibilità e coerenza del codice.
+    
+    * **Gestione del tema (light / dark)**
+      Implementata tramite daisyUI, con persistenza della preferenza utente.
+    
+    Queste estensioni non sono strettamente richieste, ma mirano a dimostrare attenzione all’architettura, alla scalabilità e alla qualità del codice.
+    
+    ---
+    
+    ## Installazione e Avvio
+    
+    ```bash
+    pnpm install
+    pnpm nx serve web
+    pnpm nx serve api
+    ```
+    
+    ---
+    
+    ## Documentazione
+    
+    La documentazione di progetto è organizzata in modo modulare nella cartella `docs/`:
+    
+    - [`docs/it/SETUP.md`](docs/it/SETUP.md)  
+      Guida alla configurazione dell’ambiente e avvio del progetto (locale e Docker).
+    
+    - [`docs/it/ROADMAP.md`](docs/it/ROADMAP.md)  
+      Checklist operativa dello sviluppo, milestone e stato di avanzamento.
+    
+    - [`docs/it/ARCHITECTURE.md`](docs/it/ARCHITECTURE.md)  
+      Panoramica dell’architettura Nx, organizzazione delle librerie e scelte di design.
+    
+    - [`docs/it/DATABASE.md`](docs/it/DATABASE.md)  
+      Dettagli su PostgreSQL (Neon), schema Drizzle ORM e gestione migrazioni.
+    
+    - [`docs/it/COMMANDS.md`](docs/it/COMMANDS.md)  
+      Log delle decisioni tecniche e comandi principali eseguiti durante lo sviluppo.
+    
+    - [`docs/it/TESTING.md`](docs/it/TESTING.md)  
+      Strategia di testing, coverage attuale e filosofia adottata.
+    
+    - [`docs/it/CLOUD_UPLOAD.md`](docs/it/CLOUD_UPLOAD.md)  
+      Approccio all’upload dei file (locale vs cloud) e strategia di migrazione.
+    
+    La struttura è interamente disponibile anche in lingua inglese (`docs/en/`).
+    
+    ---
+    
+    ## Stato del progetto
+    
+    Lo sviluppo segue una roadmap incrementale:
+    
+    * completamento dei requisiti core
+    * hardening dell’autenticazione
+    * implementazione dei bonus
+    * eventuali estensioni architetturali
+    
+    ---
+    
+    ### Nota finale
+    
+    Questo progetto è pensato come **esercizio tecnico**, ma strutturato seguendo pratiche applicabili a contesti reali di sviluppo software.
+    
+
+
+===== ROADMAP =====
+
+--- docs/it/ROADMAP.md ---
+    # Roadmap – Assignment FTechnology (Nx + React + Nest + Drizzle)
+    
+    Questa roadmap è una checklist operativa per completare l’assignment in modo incrementale e verificabile.
+    L’obiettivo è consegnare prima i **requisiti core** (funzionanti end-to-end), poi hardening e bonus.
+    
+    ---
+    
+    ## Convenzioni di lavoro
+    
+    ### Git workflow (lightweight)
+    
+    - Branch per macro-feature (feature complete prima del merge su `main`)
+    - PR per ogni macro-feature (2–6 PR totali, descrizione breve e test instructions)
+    - Commit con Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`)
+    - No `wip` commits
+    
+    ### Tag (milestone)
+    
+    - `v0.1.0` → Assignment core completato (tutti i requisiti richiesti)
+    - `v0.2.0` → Bonus + Extra completati (se applicabile)
+    
+    ---
+    
+    ## Milestone 0 – Repo & Documentazione (baseline)
+    
+    **Output:** workspace Nx inizializzato e documentazione iniziale pronta.
+    
+    - [x] README.md (IT) + README.en.md (EN structure)
+    - [x] `docs/it/COMMANDS.md` (comandi + motivazioni)
+    - [x] `docs/it/ROADMAP.md` (questa checklist)
+    - [x] Predisposizione struttura `docs/en/` (placeholder)
+    
+    ---
+    
+    ## Milestone 1 – Workspace Setup + Quality Baseline
+    
+    **Output:** baseline di qualità stabile (format/lint/test), repo pronto a scalare.
+    
+    - [x] Verifica comandi Nx base (`nx graph`, `nx lint`, `nx format`)
+    - [x] Setup formatter/linter (prettier + eslint già funzionanti)
+    - [ ] (Opzionale) husky + lint-staged + commitlint
+    - [x] Definizione minima di `.nvmrc`
+    - [x] Documentazione setup ambiente (`COMMANDS.md`, `SETUP.md`)
+    
+    ---
+    
+    ## Milestone 2 – Backend Foundation (DB + Drizzle + Auth Core)
+    
+    **Branch:** `feat/api-auth`  
+    **Output:** API funzionante con DB, schema e autenticazione (register/login), gestione errori e validazione.
+    
+    ### Database & Drizzle
+    
+    - [x] Scelta DB PostgreSQL
+    - [x] Setup Drizzle config
+    - [x] Schema tabelle:
+      - [x] `users`
+      - [x] `access_logs`
+      - [ ] (Se serve per remember me) `refresh_tokens` / `sessions`
+    - [x] Migration generate/run
+    - [ ] Seed minimo (opzionale ma consigliato)
+    
+    ### Auth API
+    
+    - [x] `POST /auth/register`
+      - [x] validazione input
+      - [x] hashing password
+      - [x] gestione email duplicate
+    - [x] `POST /auth/login`
+      - [x] verifica credenziali
+      - [x] JWT access token
+      - [x] gestione errori (401)
+    - [x] Remember me
+      - [x] strategia definita (cookie httpOnly refresh token o alternativa)
+    - [x] Logging accessi
+      - [x] salva record login in `access_logs`
+    - [x] JWT guard (Bearer token)
+    - [x] `GET /me` (profilo)
+    - [x] `GET /me/access-history?limit=5`
+    
+    **PR:** `feat(api): auth + db foundation`  
+    **Merge target:** `main`
+    
+    ---
+    
+    ## Milestone 3 – Upload Avatar (Backend)
+    
+    **Branch:** `feat/api-avatar-upload`  
+    **Output:** upload avatar opzionale funzionante, con persistenza del riferimento nel profilo.
+    
+    - [x] Endpoint upload avatar (multer / file handling)
+    - [x] Salvataggio file (es. `/uploads`)
+    - [x] Aggiornamento user `avatarUrl` / `avatarPath`
+    - [x] Servire file statici (config Nest)
+    - [x] Validazioni minime (mime type, size limit)
+    
+    **PR:** `feat(api): avatar upload`  
+    **Merge target:** `main`
+    
+    ---
+    
+    ## Milestone 4 – Frontend Foundation (Routing + Auth Context + Guards)
+    
+    **Branch:** `feat/web-auth-routing`  
+    **Output:** struttura frontend pronta, routing configurato, protezione route.
+    
+    - [x] Setup React app `web`
+    - [x] React Router:
+      - [x] `/register`
+      - [x] `/login`
+      - [x] `/dashboard` (private)
+    - [x] Struttura ordinata (pages / routes / auth)
+    - [x] Auth UI riusabile (libs/web/auth-ui)
+    - [x] Auth logic (context)
+    - [x] AuthProvider/token
+    - [x] ProtectedRoute / redirect logic
+    - [x] Error Boundaries (root + route-level se utile)
+    - [x] Loading states generici
+    
+    **PR:** `feat(web): auth routing + guards`  
+    **Merge target:** `main`
+    
+    ---
+    
+    ## Milestone 5 – Register Page (Frontend)
+    
+    **Branch:** `feat/web-register`  
+    **Output:** form register completo con validazioni client e UX.
+    
+    - [x] Form `/register` campi richiesti:
+      - [x] Nome e Cognome
+      - [x] Email (format)
+      - [x] Password (policy)
+      - [x] Conferma password
+      - [x] Data di nascita
+      - [x] Avatar (opzionale)
+    - [x] Validazione client + errori visuali
+    - [x] Submit async + loading state
+    - [x] Gestione errori server user-friendly
+    - [x] Redirect a `/login` dopo successo
+    
+    **PR:** `feat(web): register page`  
+    **Merge target:** `main`
+    
+    ---
+    
+    ## Milestone 6 – Login Page (Frontend)
+    
+    **Branch:** `feat/web-login`  
+    **Output:** login funzionante con remember me e redirect.
+    
+    - [x] Form `/login` (email + password)
+    - [x] Errori autenticazione user-friendly
+    - [x] Remember me checkbox
+    - [x] Link “password dimenticata” (solo UI)
+    - [x] Redirect a `/dashboard` dopo login
+    
+    **PR:** `feat(web): login page`  
+    **Merge target:** `main`
+    
+    ---
+    
+    ## Milestone 7 – Dashboard (Frontend + Backend endpoints)
+    
+    **Branch:** `feat/dashboard`  
+    **Output:** dashboard completa come da requisiti.
+    
+    ### Backend
+    
+    - [x] `PATCH /me` (update dati)
+    
+    ### Frontend
+    
+    - [x] Layout dashboard:
+      - [x] Header (logo + menu)
+      - [x] Sidebar (info utente)
+      - [x] Centro:
+        - [x] riepilogo profilo
+        - [x] form modifica dati
+        - [x] ultimi 5 accessi
+    - [x] Logout (invalidate session / clear tokens)
+    - [x] Loading + error states
+    
+    **PR:** `feat: user dashboard`  
+    **Merge target:** `main`
+    
+    ✅ **Tag:** `v0.1.0` (assignment core completato)
+    
+    ---
+    
+    ## Milestone 8 – UX Polish (Toast + Loading + Error Handling)
+    
+    **Branch:** `feat/polish-ux`  
+    **Output:** UX più solida e professionale.
+    
+    - [x] Error handling consistente (shape risposta)
+    - [x] Toast success/error (login/register/update/logout)
+    - [ ] Loading states migliorati (skeleton/spinner)
+    - [ ] Error boundaries con fallback UI
+    - [ ] Error mapping (messaggi coerenti FE/BE)
+    
+    **PR:** `feat: polish ux`  
+    **Merge target:** `main`
+    
+    ---
+    
+    ## Bonus Points (Assignment)
+    
+    **Branch:** `feat/bonus` (o branch dedicati se separati)
+    
+    - [x] Test unitari componenti principali (minimo 2–4 test sensati)
+    - [ ] Animazioni transizioni tra pagine (se low-effort)
+    - [ ] “Password dimenticata” (implementazione completa) _(solo se tempo)_
+    - [ ] Social auth (Google/GitHub) _(solo se tempo)_
+    - [x] Theme switcher dark/light
+    
+    ---
+    
+    ## Extra Architetturali (non richiesti, ma utili)
+    
+    **Branch:** `feat/i18n-theme` (consigliato unificare i due se rapidi)
+    
+    - [≈] i18n (IT/EN) + language switch
+    - [x] String Manager / struttura centralizzata delle stringhe
+    - [x] Theme switcher (daisyUI) + persistenza preferenza
+    
+    ✅ **Tag (se completato):** `v0.2.0`
+    
+    ---
+    
+    ## CI / Deploy (WOW opzionale)
+    
+    **Branch:** `ci/pipeline`
+    
+    - [ ] GitHub Actions (lint + test + build)
+    - [ ] (Opzionale) deploy demo (solo se davvero veloce e stabile)
+    
+    ---
+    
+    ## Definition of Done (per ogni milestone)
+    
+    - [ ] Feature completata e testata manualmente
+    - [x] Lint/format pass
+    - [x] Nessun errore TypeScript
+    - [x] README/docs aggiornati (se la milestone introduce nuove scelte)
+    - [x] PR descrittiva (scope + how to test)
+
+
+===== COMMANDS =====
+
+--- docs/it/COMMANDS.md ---
+    # Comandi e Scelte Tecniche
+    
+    Questo documento descrive i principali comandi utilizzati durante lo sviluppo del progetto
+    e le motivazioni tecniche alla base delle scelte effettuate.
+    
+    L’obiettivo non è fornire un tutorial passo-passo, ma rendere esplicite le decisioni
+    che influenzano l’architettura, la manutenibilità e l’evoluzione del progetto.
+    
+    ---
+    
+    ## Inizializzazione del workspace Nx
+    
+    ```bash
+    pnpm dlx create-nx-workspace@latest assignment-ftechnology \
+      --preset=apps \
+      --pm=pnpm \
+      --nxCloud=skip
+    ````
+    
+    ### Descrizione del comando
+    
+    Il comando viene utilizzato per inizializzare un nuovo workspace **Nx** all’interno
+    di una cartella dedicata, configurando il progetto come **monorepo**.
+    
+    ---
+    
+    ### Spiegazione dei parametri
+    
+    #### `pnpm dlx`
+    
+    `dlx` è l’equivalente di `npx` per **pnpm**.
+    
+    Permette di:
+    
+    * eseguire pacchetti Node senza installarli globalmente
+    * garantire l’utilizzo di una versione pulita e isolata dello strumento
+    * evitare dipendenze globali non controllate
+    
+    Questa modalità è particolarmente indicata per comandi di bootstrap e scaffolding.
+    
+    ---
+    
+    #### `create-nx-workspace@latest`
+    
+    Avvia il generatore ufficiale di Nx per la creazione di un nuovo workspace.
+    
+    L’uso del tag `@latest` indica l’ultima **versione stabile** disponibile al momento
+    dell’esecuzione del comando, assicurando:
+    
+    * accesso alle funzionalità più aggiornate
+    * allineamento con le best practice consigliate dal framework Nx
+    
+    ---
+    
+    #### `assignment-ftechnology`
+    
+    Nome del workspace e della directory principale del progetto.
+    
+    È stato scelto un nome descrittivo e coerente con il contesto dell’assignment,
+    in modo da:
+    
+    * rendere immediatamente riconoscibile il progetto
+    * mantenere allineati nome del repository e nome del workspace Nx
+    
+    ---
+    
+    #### `--preset=apps`
+    
+    Il parametro `preset` definisce il tipo di workspace iniziale.
+    
+    L’opzione `apps` crea un workspace **neutro**, senza generare automaticamente
+    applicazioni o librerie, lasciando pieno controllo sulla struttura iniziale.
+    
+    Questa scelta consente di:
+    
+    * creare manualmente le applicazioni (`web`, `api`) solo quando necessario
+    * evitare codice generato non utilizzato
+    * mantenere il monorepo pulito e intenzionale
+    
+    Altri preset disponibili includono, ad esempio:
+    
+    * `react-monorepo`
+    * `nest`
+    * `next`
+    * `angular`
+    * `node-monorepo`
+    
+    In questo progetto si è preferito un preset generico per modellare
+    l’architettura in modo esplicito e progressivo.
+    
+    ---
+    
+    #### `--pm=pnpm`
+    
+    Specifica il **package manager** da utilizzare nel workspace.
+    
+    È stato scelto `pnpm` per i seguenti motivi:
+    
+    * migliore gestione delle dipendenze in contesti monorepo
+    * installazioni più rapide
+    * minore utilizzo di spazio su disco grazie allo store globale
+    * supporto nativo e consigliato da Nx
+    
+    ---
+    
+    #### `--nxCloud=skip`
+    
+    Disabilita la configurazione di **Nx Cloud**.
+    
+    Per questo assignment:
+    
+    * non è richiesta una pipeline CI distribuita
+    * non è necessario il caching remoto
+    * si preferisce ridurre dipendenze esterne non indispensabili
+    
+    La scelta mantiene il progetto più semplice e focalizzato sugli aspetti richiesti.
+    
+    ---
+    
+    ## Considerazioni
+    
+    Questo comando rappresenta il punto di partenza del progetto e definisce le basi
+    architetturali su cui verranno costruite le applicazioni frontend, backend
+    e le librerie condivise.
+    
+    Tutte le scelte effettuate in questa fase mirano a:
+    
+    * mantenere il progetto scalabile
+    * evitare configurazioni premature
+    * favorire chiarezza e manutenibilità
+    
+    
+    
+    ## Ambiente di sviluppo locale (PostgreSQL via Docker)
+    
+    ```bash
+    docker compose up -d
+    ```
+    
+    ### Descrizione
+    
+    Questo comando avvia un'istanza locale di **PostgreSQL** tramite Docker,
+    utilizzando il file `docker-compose.yml` presente nella root del progetto.
+    
+    L’obiettivo è fornire un ambiente di sviluppo **completamente offline**,
+    senza dipendenze da servizi cloud esterni.
+    
+    ---
+    
+    ### Perché Docker Compose
+    
+    L’utilizzo di Docker Compose consente di:
+    
+    * avviare il database con un singolo comando
+    * evitare installazioni manuali di PostgreSQL
+    * garantire un ambiente coerente tra diversi sviluppatori o revisori
+    * permettere a chi valuta l’assignment di eseguire il progetto localmente senza configurazioni aggiuntive
+    
+    ---
+    
+    ### Relazione con il database cloud (Neon)
+    
+    Il progetto è configurato per funzionare sia con:
+    
+    * **PostgreSQL cloud (Neon)** – per demo e sviluppo remoto
+    * **PostgreSQL locale (Docker)** – per sviluppo offline e review tecnica
+    
+    Il passaggio tra i due ambienti avviene semplicemente modificando la variabile
+    `DATABASE_URL` nel file `.env`.
+    
+    Questa scelta garantisce massima flessibilità senza introdurre complessità
+    nell’architettura applicativa.
+    
+    ---
+    
+    ## Formatting (Prettier + Nx)
+    
+    ```bash
+    pnpm add -D prettier
+    pnpm nx format:check
+    pnpm nx format:write
+    ````
+    
+    ### Perché
+    
+    Nx utilizza Prettier per i comandi di formattazione (`nx format:*`).
+    Installare Prettier come devDependency rende la toolchain riproducibile per chi clona il repository.
+    
+    `format:check` viene usato per verificare che la base codice sia formattata correttamente,
+    mentre `format:write` applica automaticamente le modifiche.
+    
+    ---
+    
+    ## Linting (Nx targets)
+    
+    In un workspace Nx appena creato (senza `apps/` e `libs/`) non esistono ancora progetti con target `lint`.
+    Per questo `pnpm nx lint` richiede `project:target`.
+    
+    Quando saranno presenti `apps/web` e `apps/api`, verrà usato:
+    
+    ```bash
+    pnpm nx run-many -t lint
+    ```
+    
+    `run-many` è un comando Nx che permette di eseguire lo stesso target
+    su più progetti del workspace contemporaneamente.
+    
+    Esegue il target `lint` (`-t lint`) su tutti i progetti del workspace
+    (applicazioni e librerie) che lo espongono, permettendo di verificare
+    la qualità del codice sull’intero monorepo con un singolo comando.
+    
+    Questo comando diventa il riferimento non appena il workspace contiene
+    più progetti ed è facilmente integrabile in una pipeline CI.
+    
+    ---
+    
+    ## Gestione versione Node.js (.nvmrc)
+    
+    ```bash
+    node -v
+    ```
+    Il file .nvmrc definisce la versione di Node.js consigliata per il progetto.
+    
+    ### Serve a:
+    
+    - garantire coerenza dell’ambiente di sviluppo tra diversi sviluppatori
+    
+    - evitare problemi legati a differenze di versione di Node
+    
+    - rendere il setup del progetto riproducibile
+    
+    - Strumenti come nvm o fnm utilizzano automaticamente questo file per selezionare la versione corretta di Node.
+    
+    
+    ## Generazione app backend (NestJS)
+    
+    ```bash
+    pnpm nx g @nx/nest:application apps/api \
+      --name=api \
+      --linter=eslint \
+      --unitTestRunner=jest \
+      --e2eTestRunner=none
+    ````
+    
+    Note:
+    
+    * `apps/api` è il parametro posizionale `[directory]` del generator (root del progetto).
+    * `--name=api` è il nome del project in Nx.
+    * `--e2eTestRunner=none` evita test e2e per ora (non richiesti nella fase iniziale).
+    
+    
+    ## Verifiche workspace (quality gate)
+    
+    ```bash
+    pnpm nx show project api
+    pnpm nx lint api
+    pnpm nx test api
+    pnpm nx format:check
+    pnpm nx graph
+    ```
+    ---
+    
+    ## Creazione libreria database backend
+    
+    ```bash
+    pnpm nx g @nx/js:lib libs/api/db --bundler=tsc
+    ```
+    
+    **Descrizione**
+    
+    Questo comando genera una libreria TypeScript dedicata all’accesso al database per il backend API.
+    
+    La libreria viene posizionata in `libs/api/db`, seguendo una struttura **feature-oriented** e mantenendo il database come **concern isolato** rispetto al resto dell’applicazione.
+    
+    **Spiegazione dei parametri**
+    
+    * `@nx/js:lib`
+      Generatore Nx per librerie JavaScript / TypeScript indipendenti dal framework, ideale per logica condivisa o infrastrutturale.
+    
+    * `libs/api/db`
+      Percorso esplicito della libreria.
+      La struttura riflette il contesto di utilizzo (`api`) e la responsabilità (`db`), evitando librerie generiche e favorendo una chiara separazione dei confini architetturali.
+    
+    * `--bundler=tsc`
+      Utilizza il compilatore TypeScript (`tsc`) come sistema di build.
+    
+      Questa scelta è intenzionale:
+    
+      * il codice database non richiede bundling avanzato
+      * mantiene il build semplice, trasparente e veloce
+      * migliora debuggabilità e manutenibilità
+      * si integra perfettamente con Drizzle ORM e ambienti Node.js
+    
+    **Motivazione architetturale**
+    
+    Isolare l’accesso al database in una libreria dedicata consente di:
+    
+    * evitare accoppiamenti diretti tra API e persistence layer
+    * facilitare test, refactor e sostituzione del database
+    * mantenere il backend modulare e scalabile
+    * sfruttare pienamente i vantaggi del monorepo Nx
+    
+    ---
+    
+    ## Backend – Auth scaffolding (Nx)
+    
+    Per la creazione del modulo di autenticazione lato API sono stati utilizzati i generatori Nx per NestJS, in modo da mantenere coerenza strutturale e best practice.
+    
+    ```bash
+    pnpm nx g @nx/nest:module apps/api/src/app/auth/auth
+    pnpm nx g @nx/nest:service apps/api/src/app/auth/auth
+    pnpm nx g @nx/nest:controller apps/api/src/app/auth/auth
+    ```
+    
+    I generatori Nx permettono di:
+    
+    * creare automaticamente file e wiring corretti
+    
+    * mantenere naming e struttura standard
+    
+    * integrare correttamente il codice nel graph Nx
+    
+    
+    ## Backend – Run & Verify (Auth)
+    
+    Avvio API in modalità sviluppo (watch):
+    
+    ```bash
+    pnpm nx serve api --watch
+    ````
+    
+    Quality gate:
+    
+    ```bash
+    pnpm nx lint api
+    pnpm nx test api
+    pnpm nx format:check
+    ```
+    
+    Reset cache Nx (utile se il watch non rileva cambiamenti o la daemon è in stato inconsistente):
+    
+    ```bash
+    pnpm nx reset
+    ```
+    
+    ### Smoke test (curl)
+    
+    Login (copia `accessToken`):
+    
+    ```bash
+    curl -s -X POST http://localhost:3000/api/auth/login \
+      -H "Content-Type: application/json" \
+      -d '{
+        "email":"paolo@example.com",
+        "password":"Password1",
+        "rememberMe": false
+      }'
+    ```
+    
+    Endpoint protetto `/me`:
+    
+    ```bash
+    curl -s http://localhost:3000/api/me \
+      -H "Authorization: Bearer <ACCESS_TOKEN>"
+    ```
+    
+    Access history:
+    
+    ```bash
+    curl -s "http://localhost:3000/api/me/access-history?limit=5" \
+      -H "Authorization: Bearer <ACCESS_TOKEN>"
+    ```
+
+
+===== SETUP =====
+
+--- docs/it/SETUP.md ---
+    
+    # Setup del progetto (locale)
+    
+    Questo documento descrive come configurare e avviare il progetto in locale (backend + database).
+    Il frontend verrà documentato quando verrà completata la Milestone dedicata.
+    
+    ---
+    
+    ## Prerequisiti
+    
+    - Node.js (vedi `.nvmrc`)
+    - pnpm
+    - Docker (solo se vuoi usare PostgreSQL locale)
+    - Un database PostgreSQL (Neon o Docker)
+    
+    ---
+    
+    ## Installazione dipendenze
+    
+    Dalla root del repository:
+    
+    ```bash
+    pnpm install
+    ````
+    
+    ---
+    
+    ## Configurazione environment
+    
+    Crea un file `.env` nella root copiando `.env.example` e compilando i valori:
+    
+    ```bash
+    cp .env.example .env
+    ```
+    
+    Variabili principali:
+    
+    * `PORT` (default `3000`)
+    * `DATABASE_URL` (PostgreSQL connection string)
+    * `WEB_ORIGIN` (origin del frontend in dev, es. `http://localhost:4200`)
+    * `JWT_SECRET` (segreto per firmare/verificare i token)
+    * `JWT_EXPIRES_IN` (es. `15m`)
+    * `JWT_REMEMBER_EXPIRES_IN` (es. `30d`)
+    
+    > Nota: il file `.env` non è versionato per motivi di sicurezza.
+    
+    ---
+    
+    ## Database
+    
+    Hai due opzioni:
+    
+    ### Opzione A — PostgreSQL locale via Docker (consigliato per sviluppo offline)
+    
+    Avvia il DB:
+    
+    ```bash
+    docker compose up -d
+    ```
+    
+    Imposta `DATABASE_URL` nel tuo `.env` puntando al container locale.
+    
+    ### Opzione B — Neon (PostgreSQL cloud)
+    
+    Crea un database su Neon e copia la connection string in `DATABASE_URL`.
+    
+    ---
+    
+    ## Migrations (Drizzle)
+    
+    Genera la migration (se hai modificato lo schema):
+    
+    ```bash
+    pnpm db:generate
+    ```
+    
+    Applica le migrations:
+    
+    ```bash
+    pnpm db:migrate
+    ```
+    
+    Apri Drizzle Studio per ispezionare i dati:
+    
+    ```bash
+    pnpm db:studio
+    ```
+    
+    ---
+    
+    ## Avvio Backend (NestJS)
+    
+    Avvia l’API in modalità sviluppo:
+    
+    ```bash
+    pnpm nx serve api --watch
+    ```
+    
+    L’API sarà disponibile su:
+    
+    * `http://localhost:3000/api`
+    
+    ---
+    
+    ## Smoke test rapido (API)
+    
+    ### 1) Register
+    
+    ```bash
+    curl -s -X POST http://localhost:3000/api/auth/register \
+      -H "Content-Type: application/json" \
+      -d '{
+        "firstName":"Paolo",
+        "lastName":"Pietrelli",
+        "email":"paolo@example.com",
+        "password":"Password1",
+        "confirmPassword":"Password1",
+        "birthDate":"1997-01-01"
+      }'
+    ```
+    
+    ### 2) Login (copia `accessToken` dalla risposta)
+    
+    ```bash
+    curl -s -X POST http://localhost:3000/api/auth/login \
+      -H "Content-Type: application/json" \
+      -d '{
+        "email":"paolo@example.com",
+        "password":"Password1",
+        "rememberMe": false
+      }'
+    ```
+    
+    ### 3) GET /me (protetto)
+    
+    ```bash
+    curl -s http://localhost:3000/api/me \
+      -H "Authorization: Bearer <ACCESS_TOKEN>"
+    ```
+    
+    ### 4) Access history (ultimi accessi)
+    
+    ```bash
+    curl -s "http://localhost:3000/api/me/access-history?limit=5" \
+      -H "Authorization: Bearer <ACCESS_TOKEN>"
+    ```
+    
+    ---
+    
+    ## Quality gate
+    
+    Prima di una PR o merge:
+    
+    ```bash
+    pnpm nx lint api
+    pnpm nx test api
+    pnpm nx format:check
+    ```
+    
+    ## Upload avatar (locale)
+    
+    Per testare l’upload avatar:
+    
+    1. Avvia l’API:
+    ```bash
+       pnpm nx serve api
+    ````
+    
+    2. Effettua login e copia il `accessToken`
+    
+    3. Usa Postman:
+    
+       * Method: POST
+       * URL: `http://localhost:3000/api/me/avatar`
+       * Header:
+    
+         ```
+         Authorization: Bearer <ACCESS_TOKEN>
+         ```
+       * Body → form-data:
+    
+         * key: `file`
+         * type: File
+         * value: immagine `.jpg` / `.png`
+    
+    4. L’immagine sarà accessibile da:
+    
+       ```
+       http://localhost:3000/uploads/avatars/<filename>
+       ```
+    
+
+
+===== ARCHITECTURE =====
+
+--- docs/it/ARCHITECTURE.md ---
+    # Architettura – Nx Full Stack Auth App
+    
+    ## Obiettivi
+    - Monorepo Nx con separazione chiara tra frontend (React) e backend (NestJS)
+    - Riuso tramite librerie condivise (types/contracts, ui, server modules)
+    - Tipizzazione TypeScript end-to-end
+    - Evoluzione incrementale guidata dalla roadmap
+    
+    ---
+    
+    ## Struttura Nx (high-level)
+    
+    ### Apps
+    - `apps/web`  
+      Frontend React (React Router, shadcn/ui, daisyUI)
+    - `apps/api`  
+      Backend NestJS (Auth, Users, Upload, Drizzle)
+    
+    ### Libs (planned)
+    - `libs/shared/contracts`  
+      DTO/types condivisi 
+    - `libs/shared/utils`  
+      Utility comuni (es. formatting, helpers)
+    - `libs/web/ui`  
+      Componenti UI riusabili (layout, form fields, ecc.)
+    - `libs/web/auth`  
+      Auth context, hooks, API client wrapper
+    - `libs/api/db`  
+      Drizzle config, schema, migrations
+    - `libs/api/auth`  
+      JWT, guards, strategies, session handling
+    - `libs/api/users`  
+      CRUD profilo e access history
+    - `libs/api/files`  
+      Avatar upload e static serving
+    
+    > Nota: le libs verranno create solo quando necessarie (YAGNI).
+    
+    ---
+    
+    ## Backend (NestJS)
+    
+    ### Moduli principali (planned)
+    - AuthModule
+    - UsersModule
+    - FilesModule
+    - Common (filters/interceptors/guards)
+    
+    ### Cross-cutting concerns
+    - CORS
+    - Global ValidationPipe
+    - Error handling consistente (HTTP exceptions / filter)
+    - Logging (Nest Logger / interceptor)
+    - Rate limiting (opzionale)
+    
+    ## Stato attuale (Milestone 2)
+    
+    ### Moduli implementati
+    
+    - `DatabaseModule`
+      Espone un provider DI (`DB`) che fornisce il client Drizzle condiviso (`libs/api/db`).
+    
+    - `AuthModule`
+      Contiene:
+      - `AuthController` (`POST /auth/register`, `POST /auth/login`)
+      - `MeController` (`GET /me`, `GET /me/access-history?limit=5`)
+      - `AuthService` (logica di registrazione, login, access history)
+      - `JwtAuthGuard` (protezione route con header `Authorization: Bearer <token>`)
+    
+    ### Flusso autenticazione (implementato)
+    
+    - **Register**
+      - Validazione input via Zod (`libs/shared/contracts`)
+      - Hashing password con bcrypt
+      - Insert su tabella `users`
+      - Gestione email duplicate con `409 Conflict`
+    
+    - **Login**
+      - Lookup utente per email
+      - Verifica password con `bcrypt.compare`
+      - Errori normalizzati con `401 Unauthorized` per prevenire user enumeration
+      - Generazione JWT access token (expiry breve o lunga con `rememberMe`)
+      - Scrittura access log in tabella `access_logs`
+    
+    ### Route protette (implementato)
+    
+    - `GET /me` → restituisce il profilo dell’utente autenticato
+    - `GET /me/access-history?limit=5` → restituisce gli ultimi accessi (default 5)
+    
+    ### Error handling (stato attuale)
+    
+    Attualmente l’API usa:
+    - Eccezioni NestJS standard (`BadRequest`, `Unauthorized`, `Conflict`)
+    - Error shape custom per Zod (`{ message, errors }`)
+    
+    La normalizzazione completa delle risposte (es. tramite global filter/interceptor) è pianificata come UX polish.
+    
+    ---
+    
+    ## Database (PostgreSQL – Neon)
+    ### Tabelle (stato attuale)
+    - `users`
+    - `access_logs`
+    
+    ### Tabelle future (opzionali)
+    - `sessions` / `refresh_tokens` (per remember me)
+    
+    > Nota: `sessions` / `refresh_tokens` è opzionale e verrà valutato solo se si decide di implementare un refresh token
+    
+    ### Migrations & Seed
+    - Drizzle migrations eseguite su DB cloud
+    - Seed minimo (opzionale)
+    
+    ---
+    
+    ## Frontend (React)
+    - Routing: `/register`, `/login`, `/dashboard` (private)
+    - Auth context + protected routes
+    - Error boundaries + loading states
+    - Toast notifications (UX polish)
+    
+    ---
+    
+    ## Autenticazione (overview)
+    - Register → crea utente, hashing password, avatar opzionale
+    - Login → JWT access token, remember me (session/refresh)
+    - Dashboard → endpoints protetti + logout
+    
+    ---
+    
+    ## Decisioni chiave
+    - Package manager: pnpm
+    - DB provider: Neon (PostgreSQL managed)
+    - UI: shadcn/ui + daisyUI (theme)
+    - i18n + string manager: extra architetturale (opzionale)
+    
+    
+    ## Workspace baseline (Nx + TypeScript)
+    
+    - `nx.json` include `workspaceLayout` per standardizzare la struttura `apps/` e `libs/`.
+    - `tsconfig.base.json` è la configurazione TypeScript condivisa a livello workspace: i singoli progetti (`apps/*`, `libs/*`) estendono questa base.
+    
+    ## Validazione dei dati (API)
+    
+    Per la validazione degli input dell’API è stato scelto **Zod** al posto di `class-validator`.
+    
+    Questa scelta è motivata dalla sua **migliore integrazione con l’architettura Nx monorepo** adottata nell’assignment, che favorisce la condivisione di codice e contratti tra frontend e backend.
+    
+    ### Motivazioni della scelta
+    
+    - **Single source of truth**  
+      Gli schemi di validazione sono definiti una sola volta e condivisi tra frontend e backend tramite la libreria `libs/shared/contracts`.
+    
+    - **Type inference nativa**  
+      Zod permette di derivare automaticamente i tipi TypeScript dagli schemi (`z.infer`), evitando duplicazioni e possibili inconsistenze tra DTO e validazione runtime.
+    
+    - **Validazione runtime esplicita**  
+      La validazione è dichiarativa e immediata, senza dipendere da decorator, reflection o classi dedicate.
+    
+    - **Maggiore controllo sugli errori**  
+      Gli errori generati da Zod sono facilmente normalizzabili e mappabili verso risposte API coerenti e user-friendly.
+    
+    La validazione viene applicata tramite una `ZodValidationPipe` custom integrata nei controller NestJS.
+    
+    Nel contesto di un **monorepo Nx**, questa soluzione consente di mantenere contratti fortemente tipizzati, riutilizzabili e coerenti tra le diverse applicazioni, riducendo il rischio di drift tra frontend e backend.
+    
+    
+    ## Autenticazione (JWT)
+    
+    L’autenticazione è basata su **JSON Web Token (JWT)**, come richiesto dall’assignment.
+    
+    - Il token viene generato al login
+    - Include informazioni minime sull’utente (id, email)
+    - La durata del token è configurabile tramite variabili d’ambiente
+    - È previsto il supporto a una durata estesa tramite l’opzione "remember me"
+    
+    La configurazione del modulo JWT avviene in modo asincrono, leggendo le variabili d’ambiente tramite `ConfigModule`.
+    
+    ### Error handling in autenticazione
+    
+    Per motivi di sicurezza, gli errori di autenticazione vengono normalizzati.
+    L’API non distingue tra “utente inesistente” e “password errata” per evitare attacchi
+    di *user enumeration* (un attaccante potrebbe verificare quali email sono registrate).
+    
+    
+    ## Frontend – Scelta architetturale: Auth logic vs Auth UI
+    
+    Per mantenere separazione delle responsabilità e favorire riuso/modularità nel monorepo Nx,
+    l'autenticazione lato frontend è stata divisa in due librerie:
+    
+    - `libs/web/auth`
+      Contiene la logica di autenticazione:
+      - gestione token (storage)
+      - chiamate API (`/auth/login`, `/me`)
+      - stato globale e hook (`AuthProvider`, `useAuth`)
+      - protezione route (ProtectedRoute / redirect logic)
+    
+    - `libs/web/auth-ui`
+      Contiene componenti UI riusabili e "presentational":
+      - form base di login/register
+      - layout/shell
+      - componenti senza dipendenze dirette dall'API
+    
+    Questa scelta permette di:
+    - sostituire o evolvere l'interfaccia grafica senza impattare la logica auth
+    - riusare la logica auth in altre app del monorepo (es. admin dashboard) con UI diverse
+    - mantenere test più mirati (logica vs rendering)
+    
+    >Nota: l'assignment richiede una sola app web, quindi il design resta volutamente "light":
+    le estensioni/adapter specifici dell'app possono essere introdotti solo se/quando diventano necessari (YAGNI).
+    
+    ## Frontend – Routing e Autenticazione
+    
+    ### Routing e controllo accessi
+    
+    Il frontend utilizza **React Router** per la gestione della navigazione, distinguendo
+    chiaramente tra route pubbliche e route protette.
+    
+    - Route pubbliche:
+      - `/login`
+      - `/register`
+    - Route protette:
+      - `/dashboard`
+    
+    Le route protette sono incapsulate tramite un componente dedicato (`ProtectedRoute`)
+    che funge da **boundary architetturale** tra navigazione e autenticazione.
+    
+    ### Architettura dell’autenticazione lato frontend
+    
+    La gestione dell’autenticazione è centralizzata in una libreria dedicata (`libs/web/auth`)
+    ed è basata su un **AuthProvider** globale.
+    
+    Responsabilità principali dell’AuthProvider:
+    
+    - mantenere lo stato di autenticazione (`anonymous`, `loading`, `authenticated`)
+    - gestire il ciclo di vita della sessione utente
+    - esporre API coerenti tramite hook (`useAuth`)
+    - effettuare il bootstrap della sessione al refresh dell’applicazione
+    
+    All’avvio dell’applicazione, l’AuthProvider:
+    1. legge l’access token dallo storage
+    2. se presente, invoca l’endpoint `GET /me`
+    3. aggiorna lo stato globale in base all’esito
+    
+    ### Strategia di persistenza del token
+    
+    La persistenza dell’access token dipende dalla scelta dell’utente:
+    
+    - `rememberMe = true` → `localStorage` (persistenza tra restart del browser)
+    - `rememberMe = false` → `sessionStorage` (valido solo per la sessione corrente)
+    
+    Questa strategia consente di mantenere un buon equilibrio tra UX e sicurezza,
+    senza introdurre complessità premature (es. refresh token).
+    
+    ### Gestione errori e stabilità dell’applicazione
+    
+    Un `ErrorBoundary` è montato a livello root dell’applicazione per intercettare
+    errori runtime non gestiti e impedire il crash completo dell’interfaccia.
+    
+    Questo approccio garantisce una maggiore robustezza del frontend e isola
+    gli errori critici dal resto dell’esperienza utente.
+    
+
+
+===== CLOUD =====
+
+--- docs/it/CLOUD_UPLOAD.md ---
+    # Upload Avatar – Local vs Cloud Storage
+    
+    In questo progetto l’upload degli avatar è implementato **in locale**
+    tramite filesystem, in modo semplice e coerente con i requisiti
+    dell’assignment.
+    
+    L’architettura è però progettata per permettere una migrazione
+    verso uno storage cloud **senza refactor invasivi**.
+    
+    ---
+    
+    ## Implementazione attuale (Locale)
+    
+    - Upload gestito tramite `multer` (`diskStorage`)
+    - File salvati in:
+      
+    ```
+    
+    uploads/avatars/
+    
+    ```
+    
+    - File serviti staticamente tramite `ServeStaticModule`:
+    
+    ```
+    
+    GET /uploads/avatars/<filename>
+    
+    ```
+    
+    - Nel database viene salvato **solo il riferimento** (`avatarUrl`)
+    
+    ### Vantaggi
+    - Nessuna dipendenza esterna
+    - Setup immediato
+    - Ideale per demo e review tecnica
+    - Facilmente testabile localmente
+    
+    ---
+    
+    ## Migrazione a Object Storage (S3 / Cloudflare R2)
+    
+    ### Strategia consigliata
+    
+    1. Sostituire `diskStorage` con uno storage custom
+    2. Delegare l’upload a un service dedicato (es. `FileStorageService`)
+    3. Salvare nel DB solo l’URL pubblico restituito dallo storage
+    
+    ### Vantaggi
+    - Scalabilità
+    - Persistenza indipendente dall’API
+    - Standard industriale
+    
+    ### Impatto sull’architettura
+    Minimo.  
+    Il controller rimane invariato, cambia solo l’implementazione dello storage.
+    
+    ---
+    
+    ## Alternativa: Firebase Storage (Bonus)
+    
+    Firebase Storage può essere usato **solo come file storage**,
+    senza Firebase Authentication.
+    
+    ### Possibile setup
+    
+    - API NestJS deployata (Render / Fly.io / Railway)
+    - Firebase Storage per asset statici
+    - Regole di sicurezza basate su:
+    - token JWT custom
+    - signed URLs
+    - oppure bucket pubblico (solo avatar)
+    
+    ### Perché è interessante
+    - Mostra integrazione con BaaS
+    - Facile deploy demo
+    - Abilitabile come extra senza toccare il core
+    
+    ---
+    
+    ## Nota architetturale
+    
+    L’upload è volutamente **isolato**:
+    - controller → valida e riceve file
+    - service → aggiorna riferimento
+    - storage → intercambiabile
+    
+    Questo consente di cambiare backend di storage
+    senza modificare il dominio applicativo.
+
+
+===== DATABASE_DOCS =====
+
+--- docs/it/DATABASE.md ---
+    # Database Setup – Neon + Drizzle ORM
+    
+    Questo progetto utilizza **PostgreSQL serverless tramite Neon** e **Drizzle ORM**
+    per la gestione type-safe dello schema e delle migrazioni.
+    
+    L’obiettivo è avere:
+    - database cloud pronto all’uso (Neon)
+    - schema dichiarativo in TypeScript
+    - migrazioni versionate e riproducibili
+    - supporto completo a sviluppo locale e CI
+    
+    ## Perché Neon
+    
+    È stato scelto Neon perché:
+    - fornisce PostgreSQL serverless gestito
+    - non richiede container o setup locali complessi
+    - è adatto a demo, assignment e ambienti CI
+    - espone una connection string standard PostgreSQL
+    
+    Per lo sviluppo locale è comunque previsto l’uso di `docker-compose`
+    con PostgreSQL, mantenendo la stessa interfaccia applicativa.
+    
+    ## Environment Variables
+    
+    La connessione al database avviene tramite variabile d’ambiente:
+    
+    DATABASE_URL=postgresql://...
+    
+    Il file `.env` **non è versionato** ed è escluso dal repository.
+    È invece fornito un file `.env.example` come riferimento.
+    
+    Questo approccio garantisce:
+    - sicurezza delle credenziali
+    - chiarezza per chi clona il repository
+    - compatibilità con ambienti cloud e CI
+    
+    ## Perché Drizzle ORM
+    
+    Drizzle è stato scelto al posto di ORM più “magici” perché:
+    
+    - E' una richiesta esplicita dell'assignment
+    - è **type-safe** senza runtime overhead
+    - lo schema è scritto in TypeScript (single source of truth)
+    - le migrazioni sono SQL esplicite e versionate
+    - non nasconde il funzionamento del database
+    - si integra bene con monorepo Nx
+    
+    Drizzle non genera codice runtime: il database rimane centrale
+    e trasparente.
+    
+    
+    ## Schema del Database
+    
+    Lo schema è definito in:
+    
+    libs/api/db/src/schema.ts
+    
+    Contiene attualmente:
+    - tabella `users`
+    - tabella `access_logs`
+    
+    Le tabelle sono modellate direttamente tramite Drizzle,
+    includendo:
+    - tipi
+    - vincoli
+    - indici
+    - relazioni
+    
+    ### Note su indici e configurazione
+    
+    La funzione:
+    
+    (t) => ({
+      userIdIdx: index(...).on(t.userId)
+    })
+    
+    serve a definire:
+    - indici
+    - vincoli aggiuntivi
+    - configurazioni extra della tabella
+    
+    ## Migrazioni
+    
+    Le migrazioni sono generate automaticamente da Drizzle:
+    
+    pnpm db:generate
+    
+    Questo comando:
+    - confronta lo schema TypeScript con lo stato del database
+    - genera una migration SQL versionata
+    
+    Le migration sono applicate con:
+    
+    pnpm db:migrate
+    
+    ## Drizzle Studio
+    
+    Per ispezionare il database è disponibile Drizzle Studio:
+    
+    pnpm db:studio
+    
+    Studio permette di:
+    - visualizzare tabelle e colonne
+    - verificare vincoli e indici
+    - controllare lo stato del database
+    
+    Nota: Drizzle Studio è attualmente in Beta.
+    
+    ## Stato attuale
+    
+    - Schema applicato correttamente
+    - Tabelle create su Neon
+    - Migrazione iniziale versionata
+    - Studio operativo
+    
+    Il database è pronto per l’integrazione con l’API NestJS.
+    
+    ## Integrazione con NestJS 
+    
+    Ho centralizzato la connessione Postgres e il client Drizzle in una libreria Nx dedicata. L’API Nest consuma il client tramite un provider DI (token-based), così posso riusare la stessa configurazione ovunque, mantenere isolamento delle dipendenze per progetto e rendere la parte DB testabile e sostituibile.
+    Il provider è esposto da `DatabaseModule` tramite token `DB`
+    
+    ## Access logs (login audit)
+    
+    La tabella `access_logs` viene utilizzata per registrare gli accessi utente al login:
+    
+    - `user_id` (FK su `users`)
+    - `ip_address` (se disponibile)
+    - `user_agent` (se disponibile)
+    - `created_at`
+    
+    L’API espone un endpoint protetto per recuperare gli ultimi accessi:
+    
+    - `GET /me/access-history?limit=5`
+    
+    La query è ordinata per `created_at DESC` e limitata (default 5, max 50) per evitare letture eccessive.
+
+
+===== TESTING =====
+
+--- docs/it/TESTING.md ---
+    # Testing
+    
+    Questo documento descrive la strategia di testing adottata nel progetto,
+    le aree attualmente coperte dai test automatici e le parti volutamente
+    lasciate a verifica manuale.
+    
+    L’obiettivo non è massimizzare la coverage numerica, ma garantire
+    **affidabilità delle parti critiche** e **confidenza nelle evoluzioni future**.
+    
+    ---
+    
+    ## Tooling
+    
+    Il progetto utilizza:
+    
+    - **Jest** come test runner
+    - **@testing-library/react** per i test del frontend
+    - **Testing utilities NestJS** per i test del backend
+    - Target Nx dedicati (`nx test <project>`)
+    
+    Esecuzione completa dei test:
+    
+    ```bash
+    pnpm nx run-many -t test --all
+    ````
+    
+    ---
+    
+    ## Backend (NestJS)
+    
+    ### AuthService
+    
+    File:
+    
+    * `apps/api/src/app/auth/auth.service.spec.ts`
+    
+    Copertura:
+    
+    * **Register**
+    
+      * creazione utente con hashing password
+      * ritorno del DTO pubblico (assenza di `passwordHash`)
+      * gestione conflitto email (`ConflictException`)
+    
+    * **Login**
+    
+      * credenziali non valide (`UnauthorizedException`)
+      * password errata
+      * login valido con:
+    
+        * generazione JWT
+        * mapping corretto dell’utente
+        * inserimento del record in `access_logs`
+    
+    Approccio:
+    
+    * database completamente mockato
+    * `bcrypt` mockato per evitare hashing reale
+    * test focalizzati sulla **logica di dominio**, non sull’infrastruttura
+    
+    ---
+    
+    ### AvatarController
+    
+    File:
+    
+    * `apps/api/src/app/auth/avatar.controller.spec.ts`
+    
+    Copertura:
+    
+    * validazione input:
+    
+      * errore se il file non è presente
+    * comportamento corretto:
+    
+      * costruzione dell’`avatarUrl`
+      * delega ad `AuthService.updateAvatar`
+      * ritorno dell’utente aggiornato
+    
+    Il test verifica il **contratto tra controller e service** senza dipendere
+    dal filesystem o da Multer.
+    
+    ---
+    
+    ### AppController / AppService
+    
+    File:
+    
+    * `apps/api/src/app/app.controller.spec.ts`
+    * `apps/api/src/app/app.service.spec.ts`
+    
+    Copertura:
+    
+    * smoke test per verificare il corretto wiring dell’applicazione
+    * utile come guardia contro refactor accidentali o errori di bootstrap
+    
+    ---
+    
+    ## Frontend (React)
+    
+    ### App routing
+    
+    File:
+    
+    * `apps/web/src/app/app.spec.ts`
+    
+    Copertura:
+    
+    * rendering dell’applicazione senza crash
+    * rendering corretto della pagina di login sulla route `/login`
+    
+    Il test utilizza:
+    
+    * `MemoryRouter` per simulare la navigazione
+    * `AuthProvider` reale per rispettare il wiring dell’app
+    
+    Questo garantisce che:
+    
+    * il routing funzioni correttamente
+    * il contesto di autenticazione sia correttamente montato
+    
+    ---
+    
+    ### Librerie frontend
+    
+    #### Auth (logic)
+    
+    File:
+    
+    * `libs/web/auth/src/lib/auth.spec.tsx`
+    
+    Copertura:
+    
+    * smoke test di rendering
+    * verifica che la libreria sia correttamente buildabile e importabile
+    
+    #### Auth UI
+    
+    File:
+    
+    * `libs/web/auth-ui/src/lib/auth-ui.spec.tsx`
+    
+    Copertura:
+    
+    * smoke test di rendering dei componenti UI
+    * garantisce stabilità della libreria come modulo riusabile
+    
+    ---
+    
+    ## Cosa non è coperto (scelta consapevole)
+    
+    Attualmente **non sono coperti da test automatici**:
+    
+    * flusso completo di login/register lato UI
+    * gestione errori visuali nei form
+    * dashboard e visualizzazione access history
+    * test end-to-end (E2E)
+    
+    Queste parti sono:
+    
+    * verificate manualmente
+    * pianificate per fasi successive (UX polish / bonus)
+    
+    Questa scelta è intenzionale e coerente con lo scope dell’assignment,
+    privilegiando stabilità del core rispetto a coverage superficiale.
+    
+    ---
+    
+    ## Filosofia di testing
+    
+    * testare la **logica critica**
+    * evitare test fragili o puramente cosmetici
+    * mantenere i test come supporto al refactoring, non come vincolo
+    * aggiungere nuovi test solo quando introducono reale valore
+    
+
+
+===== BACKEND =====
+
+--- apps/api/src/app/auth/auth.controller.ts ---
+    import { Body, Controller, Post, Req } from '@nestjs/common';
+    import {
+      loginSchema,
+      registerSchema,
+      type LoginInput,
+      type RegisterInput,
+    } from '@assignment-ftechnology/contracts';
+    import { ZodValidationPipe } from '../common/pipes/zod-validation.pipe';
+    import { AuthService } from './auth.service';
+    import type { Request } from 'express';
+    
+    /**
+     * Auth endpoints for registration and login that issue an access token.
+     */
+    @Controller('auth')
+    export class AuthController {
+      constructor(private readonly authService: AuthService) {}
+    
+      @Post('register')
+      register(@Body(new ZodValidationPipe(registerSchema)) body: RegisterInput) {
+        return this.authService.register(body);
+      }
+    
+      @Post('login')
+      login(
+        @Body(new ZodValidationPipe(loginSchema)) body: LoginInput,
+        @Req() req: Request
+      ) {
+        const ipAddress =
+          (req.headers['x-forwarded-for'] as string | undefined)
+            ?.split(',')[0]
+            ?.trim() ??
+          req.socket?.remoteAddress ??
+          null;
+    
+        const userAgent = req.headers['user-agent'] ?? null;
+    
+        return this.authService.login(body, { ipAddress, userAgent });
+      }
+    }
+
+--- apps/api/src/app/auth/auth.module.ts ---
+    import { Module } from '@nestjs/common';
+    import { JwtModule } from '@nestjs/jwt';
+    import { ConfigService } from '@nestjs/config';
+    import type { StringValue } from 'ms';
+    
+    import { DatabaseModule } from '../database/database.module';
+    import { AuthController } from './auth.controller';
+    import { AuthService } from './auth.service';
+    import { MeController } from './me.controller';
+    import { JwtAuthGuard } from './jwt-auth.guard';
+    import { AvatarController } from './avatar.controller';
+    
+    /**
+     * Authentication module.
+     *
+     * This module is responsible for:
+     * - user registration and login
+     * - JWT configuration and token signing
+     * - protection of authenticated routes via JwtAuthGuard
+     *
+     * JWT configuration is resolved asynchronously in order to:
+     * - read secrets and expiration values from environment variables
+     * - keep the module easily configurable across environments
+     */
+    @Module({
+      imports: [
+        DatabaseModule,
+    
+        /**
+         * JWT module configuration.
+         *
+         * The configuration is resolved at runtime using ConfigService,
+         * allowing different secrets and expiration policies per environment.
+         */
+        JwtModule.registerAsync({
+          inject: [ConfigService],
+          useFactory: (config: ConfigService) => {
+            const secret = config.get<string>('JWT_SECRET') ?? 'dev_secret';
+    
+            // Default short-lived access token (overridden in AuthService when "remember me" is enabled)
+            const expiresIn = (config.get<string>('JWT_EXPIRES_IN') ??
+              '15m') as StringValue;
+    
+            return {
+              secret,
+              signOptions: { expiresIn },
+            };
+          },
+        }),
+      ],
+    
+      /**
+       * Controllers exposed by the authentication module.
+       * - AuthController: public auth endpoints (register, login)
+       * - MeController: JWT-protected endpoints for the authenticated user
+       */
+      controllers: [AuthController, MeController, AvatarController],
+    
+      /**
+       * Providers registered by this module.
+       * - AuthService: authentication business logic
+       * - JwtAuthGuard: route protection based on Bearer JWT tokens
+       */
+      providers: [AuthService, JwtAuthGuard],
+    })
+    export class AuthModule {}
+
+--- apps/api/src/app/auth/auth.service.ts ---
+    import {
+      UnauthorizedException,
+      ConflictException,
+      Inject,
+      Injectable,
+      NotFoundException,
+    } from '@nestjs/common';
+    import { desc, eq } from 'drizzle-orm';
+    import * as bcrypt from 'bcrypt';
+    
+    import { DB } from '../database/database.module';
+    import { users, accessLogs, type DbClient } from '@assignment-ftechnology/db';
+    import type {
+      RegisterInput,
+      UserPublicDto,
+      LoginInput,
+      PatchMeInput,
+    } from '@assignment-ftechnology/contracts';
+    
+    import { ConfigService } from '@nestjs/config';
+    import { JwtService } from '@nestjs/jwt';
+    import type { StringValue } from 'ms';
+    
+    /**
+     * Map DB user -> public DTO (never expose passwordHash).
+     * Keep it in one place so it’s consistent across register/login/me.
+     */
+    function toUserPublicDto(u: typeof users.$inferSelect): UserPublicDto {
+      return {
+        id: u.id,
+        firstName: u.firstName,
+        lastName: u.lastName,
+        email: u.email,
+        birthDate: u.birthDate, // PG date -> string YYYY-MM-DD (ok for DTO)
+        avatarUrl: u.avatarUrl ?? null,
+        createdAt: u.createdAt.toISOString(),
+        updatedAt: u.updatedAt.toISOString(),
+      };
+    }
+    
+    /**
+     * Metadata extracted from the incoming HTTP request.
+     * Used for access logging and audit purposes.
+     */
+    type LoginMeta = {
+      ipAddress: string | null;
+      userAgent: string | null;
+    };
+    
+    /**
+     * Auth domain service for access tokens, profile update, access history, and avatar upload.
+     */
+    @Injectable()
+    export class AuthService {
+      constructor(
+        @Inject(DB) private readonly db: DbClient,
+        private readonly jwt: JwtService,
+        private readonly config: ConfigService,
+      ) {}
+    
+      /**
+       * Register a new user:
+       * - validate happens in controller via ZodValidationPipe
+       * - ensure email is unique
+       * - hash the password (never store plain text)
+       * - insert into DB and return a safe public shape
+       */
+      async register(input: RegisterInput): Promise<{ user: UserPublicDto }> {
+        // 1) Check email duplicate (fast fail)
+        const existing = await this.db
+          .select({ id: users.id })
+          .from(users)
+          .where(eq(users.email, input.email))
+          .limit(1);
+    
+        if (existing.length > 0) {
+          throw new ConflictException({ message: 'Email already in use' });
+        }
+    
+        // 2) Hash password securely (10 salt rounds is a solid default)
+        const passwordHash = await bcrypt.hash(input.password, 10);
+    
+        // 3) Insert user
+        // NOTE: we do NOT persist confirmPassword (it’s only for FE validation)
+        const [created] = await this.db
+          .insert(users)
+          .values({
+            firstName: input.firstName,
+            lastName: input.lastName,
+            email: input.email,
+            passwordHash,
+            birthDate: input.birthDate, // expected YYYY-MM-DD from FE
+            avatarUrl: input.avatarUrl ?? null,
+          })
+          .returning();
+    
+        return { user: toUserPublicDto(created) };
+      }
+    
+      /**
+       * Authenticate a user and issue an access token.
+       *
+       * Step 1: lookup user by email
+       * Step 2: verify password with bcrypt.compare
+       */
+      async login(input: LoginInput, _meta: LoginMeta) {
+        const found = await this.db
+          .select()
+          .from(users)
+          .where(eq(users.email, input.email))
+          .limit(1);
+    
+        const user = found[0];
+    
+        // Do not leak whether the email exists or not.
+        // Always return the same error for invalid credentials.
+        if (!user) {
+          throw new UnauthorizedException({ message: 'Invalid credentials' });
+        }
+    
+        const passwordOk = await bcrypt.compare(input.password, user.passwordHash);
+    
+        if (!passwordOk) {
+          throw new UnauthorizedException({ message: 'Invalid credentials' });
+        }
+    
+        // Step 3: JWT signing.
+        const expiresIn = (
+          input.rememberMe
+            ? (this.config.get<string>('JWT_REMEMBER_EXPIRES_IN') ?? '30d')
+            : (this.config.get<string>('JWT_EXPIRES_IN') ?? '15m')
+        ) as StringValue;
+    
+        const accessToken = await this.jwt.signAsync(
+          {
+            sub: user.id,
+            email: user.email,
+          },
+          { expiresIn },
+        );
+    
+        // Step 4: persist access log for audit purposes
+        await this.db.insert(accessLogs).values({
+          userId: user.id,
+          ipAddress: _meta.ipAddress,
+          userAgent: _meta.userAgent,
+        });
+    
+        return {
+          accessToken,
+          user: toUserPublicDto(user),
+        };
+      }
+    
+      /**
+       * Retrieve the profile of the authenticated user.
+       *
+       * This method is called by JWT-protected routes (e.g. GET /me).
+       * It never exposes sensitive fields such as passwordHash.
+       */
+      async getMe(userId?: string): Promise<{ user: UserPublicDto }> {
+        if (!userId) {
+          throw new UnauthorizedException({ message: 'Invalid token' });
+        }
+    
+        const found = await this.db
+          .select()
+          .from(users)
+          .where(eq(users.id, userId))
+          .limit(1);
+    
+        const user = found[0];
+    
+        if (!user) {
+          throw new NotFoundException({ message: 'User not found' });
+        }
+    
+        return { user: toUserPublicDto(user) };
+      }
+    
+      /**
+       * Returns the last N access log entries for the authenticated user.
+       * Used by the dashboard to display the most recent logins.
+       */
+      async getAccessHistory(userId: string, limit = 5) {
+        const safeLimit = Math.min(Math.max(limit, 1), 50);
+    
+        const rows = await this.db
+          .select({
+            id: accessLogs.id,
+            ipAddress: accessLogs.ipAddress,
+            userAgent: accessLogs.userAgent,
+            createdAt: accessLogs.createdAt,
+          })
+          .from(accessLogs)
+          .where(eq(accessLogs.userId, userId))
+          .orderBy(desc(accessLogs.createdAt))
+          .limit(safeLimit);
+    
+        return {
+          items: rows.map((r) => ({
+            id: r.id,
+            ipAddress: r.ipAddress ?? null,
+            userAgent: r.userAgent ?? null,
+            createdAt: r.createdAt.toISOString(),
+          })),
+        };
+      }
+    
+      async updateAvatar(
+        userId: string,
+        avatarUrl: string,
+      ): Promise<UserPublicDto> {
+        const [updated] = await this.db
+          .update(users)
+          .set({ avatarUrl, updatedAt: new Date() })
+          .where(eq(users.id, userId))
+          .returning();
+    
+        if (!updated) {
+          throw new NotFoundException({ message: 'User not found' });
+        }
+    
+        return toUserPublicDto(updated);
+      }
+    
+    
+      /**
+       * Profile update (PATCH /me).
+       * Security: never allow email/password updates here.
+       */
+      async updateMe(
+        userId?: string,
+        input?: PatchMeInput,
+      ): Promise<{ user: UserPublicDto }> {
+        if (!userId) {
+          throw new UnauthorizedException({ message: 'Invalid token' });
+        }
+    
+        // Build a minimal update patch (only allowed fields)
+        const patch: Partial<typeof users.$inferInsert> = {
+          updatedAt: new Date(),
+        };
+    
+        if (input?.firstName !== undefined) patch.firstName = input.firstName;
+        if (input?.lastName !== undefined) patch.lastName = input.lastName;
+        if (input?.birthDate !== undefined) patch.birthDate = input.birthDate;
+    
+        // If only updatedAt would be applied, treat it as invalid input
+        const onlyUpdatedAt = Object.keys(patch).length === 1;
+        if (onlyUpdatedAt) {
+          throw new ConflictException({ message: 'No changes provided' });
+        }
+    
+        const [updated] = await this.db
+          .update(users)
+          .set(patch)
+          .where(eq(users.id, userId))
+          .returning();
+    
+        if (!updated) {
+          throw new NotFoundException({ message: 'User not found' });
+        }
+    
+        return { user: toUserPublicDto(updated) };
+      }
+    
+    }
+
+--- apps/api/src/app/auth/avatar.controller.ts ---
+    import {
+      Controller,
+      Post,
+      UseGuards,
+      UseInterceptors,
+      UploadedFile,
+      BadRequestException,
+      Req,
+    } from '@nestjs/common';
+    import { FileInterceptor } from '@nestjs/platform-express';
+    import { diskStorage } from 'multer';
+    import type { Request } from 'express';
+    
+    import { JwtAuthGuard } from './jwt-auth.guard';
+    import { AuthService } from './auth.service';
+    import { randomBytes } from 'crypto';
+    
+    function extFromMime(mime: string): '.jpg' | '.png' | '.webp' {
+      switch (mime) {
+        case 'image/jpeg':
+          return '.jpg';
+        case 'image/png':
+          return '.png';
+        case 'image/webp':
+          return '.webp';
+        default:
+          // Should never happen because fileFilter blocks other mimetypes
+          return '.jpg';
+      }
+    }
+    
+    function randomName(bytes = 16): string {
+      return randomBytes(bytes).toString('hex');
+    }
+    
+    /**
+     * Avatar upload endpoint for the authenticated user.
+     */
+    @Controller('me')
+    @UseGuards(JwtAuthGuard)
+    export class AvatarController {
+      constructor(private readonly auth: AuthService) {}
+    
+      /**
+       * Avatar upload for the authenticated user.
+       * Saves the file under /uploads/avatars and updates users.avatarUrl.
+       */
+      @Post('avatar')
+      @UseInterceptors(
+        FileInterceptor('file', {
+          storage: diskStorage({
+            destination: 'uploads/avatars',
+            filename: (_req, file, cb) => {
+              const ext = extFromMime(file.mimetype);
+              cb(null, `${randomName()}${ext}`);
+            },
+          }),
+          limits: {
+            fileSize: 2 * 1024 * 1024, // 2MB
+          },
+          fileFilter: (_req, file, cb) => {
+            const allowed = ['image/jpeg', 'image/png', 'image/webp'];
+            if (!allowed.includes(file.mimetype)) {
+              cb(new BadRequestException('Unsupported file type'), false);
+              return;
+            }
+            cb(null, true);
+          },
+        }),
+      )
+      async uploadAvatar(
+        @UploadedFile() file: Express.Multer.File | undefined,
+        @Req() req: Request,
+      ) {
+        if (!file) {
+          throw new BadRequestException('Missing file');
+        }
+    
+        // JwtAuthGuard should set req.user
+        const userId = (req.user as { sub?: string } | undefined)?.sub;
+        if (!userId) {
+          throw new BadRequestException('Invalid token payload');
+        }
+    
+        const avatarUrl = `/uploads/avatars/${file.filename}`;
+    
+        const user = await this.auth.updateAvatar(userId, avatarUrl);
+    
+        return { user };
+      }
+    }
+
+--- apps/api/src/app/auth/me.controller.ts ---
+    import {
+      BadRequestException,
+      Body,
+      Controller,
+      Get,
+      Patch,
+      Query,
+      Req,
+      UseGuards,
+    } from '@nestjs/common';
+    import type { Request } from 'express';
+    import { AuthService } from './auth.service';
+    import { JwtAuthGuard } from './jwt-auth.guard';
+    import { patchMeSchema, type PatchMeInput } from '@assignment-ftechnology/contracts';
+    /**
+     * Request enriched by JwtAuthGuard.
+     * The guard attaches the authenticated user payload to `req.user`.
+     */
+    type AuthenticatedRequest = Request & {
+      user?: {
+        sub: string;
+        email: string;
+      };
+    };
+    
+    /**
+     * Controller responsible for authenticated user endpoints.
+     *
+     * All routes in this controller:
+     * - require a valid JWT access token
+     * - operate on the currently authenticated user ("me")
+     */
+    @Controller('me')
+    @UseGuards(JwtAuthGuard)
+    export class MeController {
+      constructor(private readonly authService: AuthService) {}
+    
+      /**
+       * Returns the profile of the currently authenticated user.
+       */
+      @Get()
+      async me(@Req() req: AuthenticatedRequest) {
+        return this.authService.getMe(req.user?.sub);
+      }
+    
+      /**
+       * Updates editable profile fields for the current user.
+       * Profile update only; no email/password changes.
+       */
+      @Patch()
+      async patchMe(@Req() req: AuthenticatedRequest, @Body() body: unknown) {
+        // Validate input with shared contract
+        const parsed = patchMeSchema.safeParse(body);
+        if (!parsed.success) {
+          const firstIssue = parsed.error.issues[0]?.message ?? 'Invalid input';
+          throw new BadRequestException({ message: firstIssue });
+        }
+    
+        const userId = req.user?.sub;
+        const input: PatchMeInput = parsed.data;
+    
+        return this.authService.updateMe(userId, input);
+      }
+    
+      /**
+       * Returns the most recent access history entries for the current user.
+       * Default limit is 5 (as required by the assignment).
+       */
+      @Get('access-history')
+      async accessHistory(
+        @Req() req: AuthenticatedRequest,
+        @Query('limit') limit?: string,
+      ) {
+        const parsed = limit ? Number.parseInt(limit, 10) : 5;
+        const safeLimit = Number.isFinite(parsed) ? parsed : 5;
+    
+        return this.authService.getAccessHistory(req.user?.sub ?? '', safeLimit);
+      }
+    }
+
+--- apps/api/src/app/auth/jwt-auth.guard.ts ---
+    import {
+      CanActivate,
+      ExecutionContext,
+      Injectable,
+      UnauthorizedException,
+    } from '@nestjs/common';
+    import { JwtService } from '@nestjs/jwt';
+    import type { Request } from 'express';
+    
+    /**
+     * JWT payload we put inside access tokens.
+     * - `sub` is the user id (standard JWT subject claim)
+     * - `email` is convenient for debugging and UI needs
+     */
+    export type JwtPayload = {
+      sub: string;
+      email: string;
+      iat: number;
+      exp: number;
+    };
+    
+    /**
+     * Express request extended with an authenticated `user` payload.
+     * We attach this during authentication so controllers can read `req.user.sub`.
+     */
+    export type AuthenticatedRequest = Request & {
+      user?: JwtPayload;
+    };
+    
+    /**
+     * Guard that protects routes by validating a Bearer JWT access token.
+     *
+     * Expected header:
+     *   Authorization: Bearer <token>
+     *
+     * On success:
+     * - the token is verified using JwtService (uses JWT_SECRET)
+     * - the decoded payload is attached to `req.user`
+     */
+    @Injectable()
+    export class JwtAuthGuard implements CanActivate {
+      constructor(private readonly jwt: JwtService) {}
+    
+      async canActivate(context: ExecutionContext): Promise<boolean> {
+        const req = context.switchToHttp().getRequest<AuthenticatedRequest>();
+    
+        const authHeader = req.get('authorization');
+        if (!authHeader) {
+          throw new UnauthorizedException({
+            message: 'Missing Authorization header',
+          });
+        }
+    
+        const [scheme, token] = authHeader.split(' ');
+        if (scheme !== 'Bearer' || !token) {
+          throw new UnauthorizedException({
+            message: 'Invalid Authorization header',
+          });
+        }
+    
+        try {
+          const payload = (await this.jwt.verifyAsync(token)) as JwtPayload;
+          req.user = payload;
+          return true;
+        } catch {
+          throw new UnauthorizedException({ message: 'Invalid token' });
+        }
+      }
+    }
+
+
+===== ZOD =====
+
+--- apps/api/src/app/common/pipes/index.ts ---
+    export * from './zod-validation.pipe';
+--- apps/api/src/app/common/pipes/zod-validation.pipe.ts ---
+    import {
+      BadRequestException,
+      Injectable,
+      PipeTransform,
+    } from '@nestjs/common';
+    import { ZodError, type ZodTypeAny } from 'zod';
+    
+    type ZodValidationError = {
+      path: string;
+      message: string;
+    };
+    
+    function formatZodError(error: ZodError): ZodValidationError[] {
+      return error.issues.map((issue) => ({
+        path: issue.path.join('.'),
+        message: issue.message,
+      }));
+    }
+    
+    /**
+     * Validates request payloads with Zod and surfaces readable errors.
+     */
+    @Injectable()
+    export class ZodValidationPipe implements PipeTransform {
+      constructor(private readonly schema: ZodTypeAny) {}
+    
+      transform(value: unknown) {
+        const result = this.schema.safeParse(value);
+    
+        if (!result.success) {
+          throw new BadRequestException({
+            message: 'Validation failed',
+            errors: formatZodError(result.error),
+          });
+        }
+    
+        return result.data;
+      }
+    }
+
+
+===== DATABASE_BACKEND =====
+
+--- apps/api/src/app/database/database.module.ts ---
+    // apps/api/src/app/database/database.module.ts
+    import { Module } from '@nestjs/common';
+    import { db } from '@assignment-ftechnology/db';
+    
+    export const DB = Symbol('DB');
+    
+    @Module({
+      providers: [
+        {
+          provide: DB,
+          useValue: db,
+        },
+      ],
+      exports: [DB],
+    })
+    export class DatabaseModule {}
+
+
+===== APP =====
+
+--- apps/api/src/app/app.module.ts ---
+    import { Module } from '@nestjs/common';
+    import { ServeStaticModule } from '@nestjs/serve-static';
+    import { ConfigModule } from '@nestjs/config';
+    import { join } from 'path';
+    
+    import { AppController } from './app.controller';
+    import { AppService } from './app.service';
+    import { DatabaseModule } from './database/database.module';
+    import { AuthModule } from './auth/auth.module';
+    
+    @Module({
+      imports: [
+        // Loads .env and makes ConfigService available app-wide
+        ConfigModule.forRoot({ isGlobal: true }),
+    
+        // Expose uploaded files under: http://localhost:3000/uploads/<path>
+        ServeStaticModule.forRoot({
+          rootPath: join(process.cwd(), 'uploads'),
+          serveRoot: '/uploads',
+        }),
+    
+        DatabaseModule,
+        AuthModule,
+      ],
+      controllers: [AppController],
+      providers: [AppService],
+    })
+    export class AppModule {}
+
+--- apps/api/src/app/app.controller.ts ---
+    import { Controller, Get } from '@nestjs/common';
+    import { AppService } from './app.service';
+    
+    @Controller()
+    export class AppController {
+      constructor(private readonly appService: AppService) {}
+    
+      @Get()
+      getData() {
+        return this.appService.getData();
+      }
+    }
+
+--- apps/api/src/app/app.service.ts ---
+    import { Injectable } from '@nestjs/common';
+    
+    @Injectable()
+    export class AppService {
+      getData(): { message: string } {
+        return { message: 'Hello API' };
+      }
+    }
+
+
+===== WEB_APP =====
+
+--- apps/web/src/main.tsx ---
+    import { StrictMode } from 'react';
+    import * as ReactDOM from 'react-dom/client';
+    import { BrowserRouter } from 'react-router-dom';
+    import './styles.css';
+    
+    import App from './app/app';
+    import { AuthProvider, setApiBaseUrl } from '@assignment-ftechnology/auth';
+    import { ErrorBoundary } from './app/components/ErrorBoundary';
+    import { applyTheme, getTheme } from './app/theme/theme';
+    import 'react-toastify/dist/ReactToastify.css';
+    
+    applyTheme(getTheme());
+    
+    setApiBaseUrl('/api');
+    
+    const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+    
+    root.render(
+      <StrictMode>
+        <BrowserRouter>
+          <ErrorBoundary>
+            <AuthProvider>
+              <App />
+            </AuthProvider>
+          </ErrorBoundary>
+        </BrowserRouter>
+      </StrictMode>,
+    );
+
+--- apps/web/src/app/app.tsx ---
+    import { ToastContainer } from 'react-toastify';
+    import { AppRouter } from './routes/AppRouter';
+    
+    /**
+     * Root app shell plus global toast host.
+     */
+    export function App() {
+      return (
+        <div className="min-h-screen bg-base-200 text-base-content">
+          <AppRouter />
+    
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            pauseOnHover
+            theme="colored"
+          />
+        </div>
+      );
+    }
+    
+    export default App;
+
+--- apps/web/src/app/routes/AppRouter.tsx ---
+    // apps/web/src/app/routes/AppRouter.tsx
+    import { Routes, Route, Navigate } from 'react-router-dom';
+    
+    import { LoginPage } from '../pages/LoginPage';
+    import { RegisterPage } from '../pages/RegisterPage';
+    import { DashboardPage } from '../pages/DashboardPage';
+    import { NotFoundPage } from '../pages/NotFoundPage';
+    import { ProtectedRoute } from '../auth/ProtectedRoute';
+    import { ForgotPasswordPage } from '../pages/ForgotPasswordPage';
+    
+    /**
+     * Application router.
+     *
+     * Defines all public and protected routes of the application.
+     */
+    export function AppRouter() {
+      return (
+          <Routes>
+            {/* Public routes */}
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+    
+            {/* Protected routes */}
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <DashboardPage />
+                </ProtectedRoute>
+              }
+            />
+    
+            {/* Redirect root to login */}
+            <Route path="/" element={<Navigate to="/login" replace />} />
+    
+            {/* Fallback */}
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+      );
+    }
+
+
+===== AUTH_PAGES =====
+
+--- apps/web/src/app/pages/LoginPage.tsx ---
+    import React from 'react';
+    import { Link, useLocation, useNavigate } from 'react-router-dom';
+    import { AuthShell, LoginFormBase } from '@assignment-ftechnology/auth-ui';
+    import { useAuth } from '@assignment-ftechnology/auth';
+    import type { LoginFormValues } from '@assignment-ftechnology/auth-ui';
+    import { loginSchema } from '@assignment-ftechnology/contracts';
+    import { STRINGS } from '../ui-tokens/strings';
+    import { zodToFieldErrors } from '../shared/zod-field-errors';
+    import { toast } from 'react-toastify';
+    
+    type LocationState = { from?: { pathname: string } };
+    
+    type LoginField = 'email' | 'password';
+    
+    /**
+     * Login page that creates a session from an access token.
+     */
+    export function LoginPage() {
+      const { login, status } = useAuth();
+      const navigate = useNavigate();
+      const location = useLocation();
+    
+      const [error, setError] = React.useState<string | null>(null);
+      const [fieldErrors, setFieldErrors] = React.useState<
+        Partial<Record<LoginField, string>>
+      >({});
+    
+      const state = location.state as LocationState | null;
+      const redirectTo = state?.from?.pathname ?? '/dashboard';
+    
+      const clearErrors = () => {
+        setError(null);
+        setFieldErrors({});
+      };
+    
+      const onSubmit = async (values: LoginFormValues) => {
+        clearErrors();
+    
+        // Client-side validation (keeps UI field errors stable + testable)
+        const parsed = loginSchema.safeParse({
+          email: values.email,
+          password: values.password,
+          rememberMe: Boolean(values.rememberMe),
+        });
+    
+        if (!parsed.success) {
+          setFieldErrors(zodToFieldErrors<LoginField>(parsed.error));
+          return;
+        }
+    
+        try {
+          await login({
+            email: parsed.data.email,
+            password: parsed.data.password,
+            rememberMe: Boolean(parsed.data.rememberMe),
+          });
+          toast.success('Login successful');
+          navigate(redirectTo, { replace: true });
+        } catch (e) {
+          const rawMessage = e instanceof Error ? e.message : '';
+    
+          // Technical -> user-friendly mapping
+          const friendly =
+            rawMessage.toLowerCase().includes('invalid credentials') ||
+            rawMessage.toLowerCase().includes('401')
+              ? STRINGS.login.invalidCredentials
+              : STRINGS.login.genericLoginError;
+    
+          setError(friendly);
+          toast.error(friendly);
+        }
+      };
+    
+      const disabled = status === 'loading';
+    
+      return (
+        <AuthShell
+          title={STRINGS.login.loginTitle}
+          subtitle={STRINGS.login.loginSubtitle}
+        >
+          <LoginFormBase
+            onSubmit={onSubmit}
+            disabled={disabled}
+            error={error}
+            fieldErrors={fieldErrors}
+            submitLabel={STRINGS.login.loginSubmit}
+            onChange={clearErrors}
+            forgotPasswordHref="/forgot-password"
+            forgotPasswordLabel={STRINGS.login.forgotPassword}
+          />
+    
+          <div className="mt-4 flex items-center justify-center gap-2 text-sm">
+            <span className="opacity-80">{STRINGS.login.registerCtaText}</span>
+            <Link className="link link-primary" to="/register">
+              {STRINGS.login.registerCtaLink}
+            </Link>
+          </div>
+        </AuthShell>
+      );
+    }
+
+--- apps/web/src/app/pages/RegisterPage.tsx ---
+    // apps/web/src/app/pages/RegisterPage.tsx
+    import React from 'react';
+    import { Link, useNavigate } from 'react-router-dom';
+    
+    import { AuthShell, RegisterFormBase } from '@assignment-ftechnology/auth-ui';
+    import type { RegisterFieldErrors } from '@assignment-ftechnology/auth-ui';
+    
+    import { apiRegister } from '@assignment-ftechnology/auth';
+    import { registerSchema } from '@assignment-ftechnology/contracts';
+    
+    import { STRINGS } from '../ui-tokens/strings';
+    import { z } from 'zod';
+    import { toast } from 'react-toastify';
+    
+    /**
+     * Utility: maps Zod issues to fieldErrors for the form.
+     * Zod paths are PropertyKey[] (string | number | symbol), so we normalize safely.
+     */
+    function mapZodIssuesToFieldErrors(issues: z.ZodIssue[]): RegisterFieldErrors {
+      const errors: RegisterFieldErrors = {};
+    
+      for (const issue of issues) {
+        const rawKey = issue.path[0];
+    
+        // Normalize PropertyKey -> string (ignore symbols)
+        const key = typeof rawKey === 'symbol' ? '' : String(rawKey);
+    
+        if (
+          key === 'firstName' ||
+          key === 'lastName' ||
+          key === 'email' ||
+          key === 'birthDate' ||
+          key === 'password' ||
+          key === 'confirmPassword'
+        ) {
+          // Keep first error per field
+          if (!errors[key]) {
+            errors[key] = issue.message;
+          }
+        }
+      }
+    
+      return errors;
+    }
+    
+    /**
+     * Registration page for creating a new user account.
+     */
+    export function RegisterPage() {
+      const navigate = useNavigate();
+    
+      const [status, setStatus] = React.useState<'idle' | 'loading'>('idle');
+      const [error, setError] = React.useState<string | null>(null);
+      const [fieldErrors, setFieldErrors] = React.useState<RegisterFieldErrors>({});
+    
+      const disabled = status === 'loading';
+    
+      const clearErrors = React.useCallback(() => {
+        if (error) setError(null);
+        if (Object.keys(fieldErrors).length > 0) setFieldErrors({});
+      }, [error, fieldErrors]);
+    
+      const onSubmit = async (values: {
+        firstName: string;
+        lastName: string;
+        email: string;
+        birthDate: string;
+        password: string;
+        confirmPassword: string;
+      }) => {
+        setError(null);
+        setFieldErrors({});
+    
+        // Client-side validation using the shared contract schema
+        const parsed = registerSchema.safeParse(values);
+    
+        if (!parsed.success) {
+          setFieldErrors(mapZodIssuesToFieldErrors(parsed.error.issues));
+          return;
+        }
+    
+        setStatus('loading');
+    
+        try {
+          await apiRegister(parsed.data);
+          toast.success('Account created successfully. You can now login.');
+          // Register completed -> redirect to login
+          navigate('/login', { replace: true, state: { registered: true } });
+        } catch (err) {
+          const message = err instanceof Error ? err.message : '';
+    
+          // Optional: map common API errors to user-friendly copy
+          const friendly =
+            message.toLowerCase().includes('409') ||
+            message.toLowerCase().includes('conflict')
+              ? STRINGS.register.emailAlreadyExists
+              : STRINGS.register.genericRegisterError;
+          toast.error('Registration failed. Some error has occurred, please try again.');
+          setError(friendly);
+        } finally {
+          setStatus('idle');
+        }
+      };
+    
+      return (
+        <AuthShell title={STRINGS.register.title} subtitle={STRINGS.register.subtitle}>
+          <RegisterFormBase
+            onSubmit={onSubmit}
+            disabled={disabled}
+            error={error}
+            fieldErrors={fieldErrors}
+            onChange={clearErrors}
+            submitLabel={disabled ? STRINGS.register.submitting : STRINGS.register.submit}
+          />
+    
+          <div style={{ marginTop: 16, display: 'flex', gap: 8, alignItems: 'center' }}>
+            <span style={{ opacity: 0.85 }}>{STRINGS.register.loginCtaText}</span>
+            <Link to="/login">{STRINGS.register.loginCtaLink}</Link>
+          </div>
+        </AuthShell>
+      );
+    }
+
+--- apps/web/src/app/pages/DashboardPage.tsx ---
+    import React from 'react';
+    import { useNavigate } from 'react-router-dom';
+    
+    import {
+      apiUploadAvatar,
+      resolveAssetUrl,
+      useAuth,
+    } from '@assignment-ftechnology/auth';
+    import { apiAccessHistory, apiPatchMe } from '@assignment-ftechnology/auth';
+    import type {
+      AccessHistoryItem,
+      PatchMePayload,
+    } from '@assignment-ftechnology/auth';
+    
+    import { STRINGS } from '../ui-tokens/strings';
+    import { toast } from 'react-toastify';
+    
+    /**
+     * Dashboard page:
+     * - Protected route (requires auth)
+     * - Shows profile summary
+     * - Allows profile update via PATCH /me
+     * - Shows last 5 access history entries via GET /me/access-history
+     * - Supports avatar upload
+     */
+    export function DashboardPage() {
+      const { user, accessToken, logout, refreshMe, status } = useAuth();
+      const navigate = useNavigate();
+    
+      // Local edit form state (initialized from user when available)
+      const [firstName, setFirstName] = React.useState('');
+      const [lastName, setLastName] = React.useState('');
+      const [birthDate, setBirthDate] = React.useState(''); // YYYY-MM-DD
+    
+      // UI state
+      const [saveStatus, setSaveStatus] = React.useState<'idle' | 'saving'>('idle');
+      const [saveError, setSaveError] = React.useState<string | null>(null);
+      const [saveSuccess, setSaveSuccess] = React.useState<string | null>(null);
+    
+      const [historyStatus, setHistoryStatus] = React.useState<
+        'idle' | 'loading' | 'error'
+      >('idle');
+      const [historyError, setHistoryError] = React.useState<string | null>(null);
+      const [history, setHistory] = React.useState<AccessHistoryItem[]>([]);
+    
+      const isSaving = saveStatus === 'saving';
+      const avatarSrc = (() => {
+        const base = resolveAssetUrl(user?.avatarUrl);
+        if (!base) return null;
+        // bust cache using updatedAt if available, otherwise Date.now()
+        const v = user?.updatedAt
+          ? encodeURIComponent(user.updatedAt)
+          : String(Date.now());
+        return `${base}?v=${v}`;
+      })();
+    
+      const [avatarFile, setAvatarFile] = React.useState<File | null>(null);
+      const [avatarStatus, setAvatarStatus] = React.useState<'idle' | 'uploading'>(
+        'idle',
+      );
+      const [avatarError, setAvatarError] = React.useState<string | null>(null);
+    
+      const onUploadAvatar = async () => {
+        if (!accessToken || !avatarFile) return;
+    
+        setAvatarStatus('uploading');
+        setAvatarError(null);
+    
+        try {
+          await apiUploadAvatar(accessToken, avatarFile);
+          await refreshMe();
+          toast.success('Avatar uploaded successfully');
+        } catch (e) {
+          toast.error('Failed to upload avatar');
+          setAvatarError(e instanceof Error ? e.message : 'Upload failed');
+        } finally {
+          setAvatarStatus('idle');
+        }
+      };
+    
+      const onLogout = React.useCallback(() => {
+        logout();
+        navigate('/login', { replace: true });
+      }, [logout, navigate]);
+    
+      const onGoDashboard = React.useCallback(() => {
+        navigate('/dashboard', { replace: false });
+      }, [navigate]);
+    
+      const onGoProfile = React.useCallback(() => {
+        // Simple in-page navigation: no extra route needed
+        document
+          .getElementById('profile-edit')
+          ?.scrollIntoView({ behavior: 'smooth' });
+      }, []);
+    
+      const [theme, setTheme] = React.useState<'light' | 'dark'>(() => 'light');
+    
+      React.useEffect(() => {
+        setTheme(
+          document.documentElement.getAttribute('data-theme') === 'dark'
+            ? 'dark'
+            : 'light',
+        );
+      }, []);
+    
+      // Keep local form in sync with current user (on first load + refreshMe)
+      React.useEffect(() => {
+        if (!user) return;
+        setFirstName(user.firstName ?? '');
+        setLastName(user.lastName ?? '');
+        setBirthDate(user.birthDate ?? '');
+      }, [user]);
+    
+      const loadHistory = React.useCallback(async () => {
+        if (!accessToken) return;
+    
+        setHistoryStatus('loading');
+        setHistoryError(null);
+    
+        try {
+          const res = await apiAccessHistory(accessToken, 5);
+          setHistory(res.items);
+          setHistoryStatus('idle');
+        } catch (e) {
+          const message = e instanceof Error ? e.message : 'Failed to load history';
+          setHistoryError(message);
+          setHistoryStatus('error');
+        }
+      }, [accessToken]);
+    
+      // Load access history when authenticated
+      React.useEffect(() => {
+        if (status !== 'authenticated' || !accessToken) return;
+        void loadHistory();
+      }, [status, accessToken, loadHistory]);
+    
+      const onSaveProfile = async (e: React.FormEvent) => {
+        e.preventDefault();
+    
+        setSaveError(null);
+        setSaveSuccess(null);
+    
+        if (!accessToken) {
+          setSaveError(STRINGS.dashboard.notAuthenticated);
+          return;
+        }
+    
+        // Build a minimal patch (send only changed fields)
+        const patch: PatchMePayload = {};
+        if (user?.firstName !== firstName) patch.firstName = firstName;
+        if (user?.lastName !== lastName) patch.lastName = lastName;
+        if (user?.birthDate !== birthDate) patch.birthDate = birthDate;
+    
+        if (Object.keys(patch).length === 0) {
+          setSaveSuccess(STRINGS.dashboard.noChanges);
+          return;
+        }
+    
+        setSaveStatus('saving');
+    
+        try {
+          await apiPatchMe(accessToken, patch);
+    
+          // Refresh global auth state from /me (source of truth)
+          await refreshMe();
+    
+          // Optionally refresh history too (not required, but nice)
+          await loadHistory();
+          toast.success('Profile updated successfully');
+          setSaveSuccess(STRINGS.dashboard.profileUpdated);
+        } catch (err) {
+          const raw = err instanceof Error ? err.message : '';
+    
+          // Friendly mapping for common cases
+          const friendly =
+            raw.toLowerCase().includes('at least one field') ||
+            raw.toLowerCase().includes('no changes')
+              ? STRINGS.dashboard.noChanges
+              : STRINGS.dashboard.updateFailed;
+          toast.error('Failed to update profile');
+          setSaveError(friendly);
+        } finally {
+          setSaveStatus('idle');
+        }
+      };
+    
+      if (status === 'loading') {
+        return <div style={{ padding: 24 }}>{STRINGS.common.loading}</div>;
+      }
+    
+      return (
+        <div className="min-h-screen bg-base-200 text-base-content">
+          {/* Topbar */}
+          <header className="sticky top-0 z-10 border-b border-base-300 bg-base-100/90 backdrop-blur">
+            <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
+              {/* Brand */}
+              <button
+                type="button"
+                onClick={onGoDashboard}
+                className="flex items-center gap-3"
+                aria-label={STRINGS.brand.name}
+              >
+                <div className="avatar placeholder">
+                  <div className="w-9 rounded-xl bg-primary text-primary-content">
+                    <span className="font-bold">F</span>
+                  </div>
+                </div>
+    
+                <div className="leading-tight text-left">
+                  <div className="font-semibold">{STRINGS.brand.name}</div>
+                  <div className="text-xs opacity-70">
+                    {user ? `${user.firstName} ${user.lastName}` : ''}
+                  </div>
+                </div>
+              </button>
+    
+              {/* Menu */}
+              <nav className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={onGoDashboard}
+                  className="btn btn-ghost btn-sm"
+                >
+                  {STRINGS.dashboard.navDashboard}
+                </button>
+    
+                <button
+                  type="button"
+                  onClick={onGoProfile}
+                  className="btn btn-ghost btn-sm"
+                >
+                  {STRINGS.dashboard.navProfile}
+                </button>
+    
+                <button
+                  type="button"
+                  onClick={onLogout}
+                  className="btn btn-outline btn-sm"
+                >
+                  {STRINGS.dashboard.logout}
+                </button>
+    
+                <label className="swap swap-rotate btn btn-ghost btn-sm">
+                  <input
+                    type="checkbox"
+                    checked={theme === 'dark'}
+                    onChange={() => {
+                      const next = theme === 'dark' ? 'light' : 'dark';
+                      document.documentElement.setAttribute('data-theme', next);
+                      localStorage.setItem('theme', next);
+                      setTheme(next);
+                    }}
+                    aria-label="Toggle theme"
+                  />
+                  {/* sun */}
+                  <svg
+                    className="swap-off h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12Z" />
+                  </svg>
+                  {/* moon */}
+                  <svg
+                    className="swap-on h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M21 12.8A8.5 8.5 0 0 1 11.2 3 7 7 0 1 0 21 12.8Z" />
+                  </svg>
+                </label>
+              </nav>
+            </div>
+          </header>
+    
+          {/* Page container */}
+          <main className="mx-auto grid max-w-5xl gap-6 px-4 py-6">
+            {/* Profile summary */}
+            <section className="card bg-base-100 shadow">
+              <div className="card-body gap-4">
+                <h2 className="card-title">{STRINGS.dashboard.profileTitle}</h2>
+    
+                <div className="flex items-start gap-4">
+                  {avatarSrc ? (
+                    <div className="avatar">
+                      <div className="w-16 rounded-full ring ring-base-300 ring-offset-2 ring-offset-base-100">
+                        <img src={avatarSrc} alt={STRINGS.dashboard.avatarAlt} />
+                      </div>
+                    </div>
+                  ) : null}
+    
+                  <div className="grid gap-2">
+                    <div>
+                      <span className="font-semibold">
+                        {STRINGS.dashboard.nameLabel}
+                      </span>{' '}
+                      {user ? `${user.firstName} ${user.lastName}` : '-'}
+                    </div>
+                    <div>
+                      <span className="font-semibold">
+                        {STRINGS.dashboard.emailLabel}
+                      </span>{' '}
+                      {user?.email ?? '-'}
+                    </div>
+                    <div>
+                      <span className="font-semibold">
+                        {STRINGS.dashboard.birthDateLabel}
+                      </span>{' '}
+                      {user?.birthDate ?? '-'}
+                    </div>
+                  </div>
+                </div>
+    
+                <div className="divider my-0" />
+    
+                <div className="grid gap-3 max-w-md">
+                  <input
+                    type="file"
+                    accept="image/png,image/jpeg,image/webp"
+                    className="file-input file-input-bordered w-full"
+                    onChange={(e) => {
+                      const f = e.target.files?.[0] ?? null;
+                      setAvatarFile(f);
+                      setAvatarError(null);
+                    }}
+                    disabled={avatarStatus === 'uploading'}
+                  />
+    
+                  <button
+                    type="button"
+                    onClick={onUploadAvatar}
+                    disabled={!avatarFile || avatarStatus === 'uploading'}
+                    className="btn btn-primary"
+                  >
+                    {avatarStatus === 'uploading'
+                      ? STRINGS.dashboard.avatarUploading
+                      : STRINGS.dashboard.avatarUpload}
+                  </button>
+    
+                  {avatarError ? (
+                    <div role="alert" className="alert alert-error">
+                      <span>{avatarError}</span>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            </section>
+    
+            {/* Edit profile */}
+            <section id="profile-edit" className="card bg-base-100 shadow">
+              <div className="card-body gap-4">
+                <h2 className="card-title">{STRINGS.dashboard.editTitle}</h2>
+    
+                <form onSubmit={onSaveProfile} className="grid gap-4 max-w-md">
+                  <label className="form-control">
+                    <div className="label">
+                      <span className="label-text">
+                        {STRINGS.dashboard.firstNameLabel}
+                      </span>
+                    </div>
+                    <input
+                      className="input input-bordered"
+                      value={firstName}
+                      onChange={(e) => {
+                        setFirstName(e.target.value);
+                        setSaveError(null);
+                        setSaveSuccess(null);
+                      }}
+                      disabled={isSaving}
+                    />
+                  </label>
+    
+                  <label className="form-control">
+                    <div className="label">
+                      <span className="label-text">
+                        {STRINGS.dashboard.lastNameLabel}
+                      </span>
+                    </div>
+                    <input
+                      className="input input-bordered"
+                      value={lastName}
+                      onChange={(e) => {
+                        setLastName(e.target.value);
+                        setSaveError(null);
+                        setSaveSuccess(null);
+                      }}
+                      disabled={isSaving}
+                    />
+                  </label>
+    
+                  <label className="form-control">
+                    <div className="label">
+                      <span className="label-text">
+                        {STRINGS.dashboard.birthDateLabel}
+                      </span>
+                    </div>
+                    <input
+                      type="date"
+                      className="input input-bordered"
+                      value={birthDate}
+                      onChange={(e) => {
+                        setBirthDate(e.target.value);
+                        setSaveError(null);
+                        setSaveSuccess(null);
+                      }}
+                      disabled={isSaving}
+                    />
+                  </label>
+    
+                  {saveError ? (
+                    <div role="alert" className="alert alert-error">
+                      <span>{saveError}</span>
+                    </div>
+                  ) : null}
+    
+                  {saveSuccess ? (
+                    <div role="status" className="alert alert-success">
+                      <span>{saveSuccess}</span>
+                    </div>
+                  ) : null}
+    
+                  <button
+                    type="submit"
+                    disabled={isSaving}
+                    className="btn btn-primary"
+                  >
+                    {isSaving ? STRINGS.dashboard.saving : STRINGS.dashboard.save}
+                  </button>
+                </form>
+              </div>
+            </section>
+    
+            {/* Access history */}
+            <section className="card bg-base-100 shadow">
+              <div className="card-body gap-4">
+                <h2 className="card-title">{STRINGS.dashboard.historyTitle}</h2>
+    
+                {historyStatus === 'loading' ? (
+                  <div className="loading loading-spinner" />
+                ) : null}
+    
+                {historyStatus === 'error' && historyError ? (
+                  <div role="alert" className="alert alert-error">
+                    <span>{STRINGS.dashboard.historyFailed}</span>
+                  </div>
+                ) : null}
+    
+                {historyStatus !== 'loading' && history.length === 0 ? (
+                  <div className="opacity-80">{STRINGS.dashboard.historyEmpty}</div>
+                ) : null}
+    
+                {history.length > 0 ? (
+                  <ul className="timeline timeline-vertical">
+                    {history.map((h) => (
+                      <li key={h.id}>
+                        <div className="timeline-start text-xs opacity-70">
+                          {new Date(h.createdAt).toLocaleString()}
+                        </div>
+                        <div className="timeline-middle">
+                          <div className="badge badge-neutral badge-sm" />
+                        </div>
+                        <div className="timeline-end">
+                          <div className="text-sm">
+                            {h.ipAddress ?? STRINGS.dashboard.historyUnknownIp} ·{' '}
+                            {h.userAgent ?? STRINGS.dashboard.historyUnknownAgent}
+                          </div>
+                        </div>
+                        <hr />
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </div>
+            </section>
+          </main>
+        </div>
+      );
+    }
+
+
+===== COMPONENTS =====
+
+--- apps/web/src/app/components/ErrorBoundary.tsx ---
+    // apps/web/src/app/components/ErrorBoundary.tsx
+    import { Component, ReactNode } from 'react';
+    
+    type Props = { children: ReactNode };
+    type State = { hasError: boolean; error?: Error };
+    
+    /**
+     * Catches render errors and displays a safe fallback UI.
+     */
+    export class ErrorBoundary extends Component<Props, State> {
+      state: State = { hasError: false };
+    
+      static getDerivedStateFromError(error: Error): State {
+        return { hasError: true, error };
+      }
+    
+      render() {
+        if (this.state.hasError) {
+          return (
+            <div style={{ padding: 24 }}>
+              <h1>Something went wrong</h1>
+              <pre>{this.state.error?.message}</pre>
+            </div>
+          );
+        }
+    
+        return this.props.children;
+      }
+    }
+
+--- apps/web/src/app/app.tsx ---
+    import { ToastContainer } from 'react-toastify';
+    import { AppRouter } from './routes/AppRouter';
+    
+    /**
+     * Root app shell plus global toast host.
+     */
+    export function App() {
+      return (
+        <div className="min-h-screen bg-base-200 text-base-content">
+          <AppRouter />
+    
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            pauseOnHover
+            theme="colored"
+          />
+        </div>
+      );
+    }
+    
+    export default App;
+
+
+===== THEME =====
+
+--- apps/web/src/app/theme/theme.ts ---
+    export type ThemeName = 'light' | 'dark';
+    
+    const STORAGE_KEY = 'theme';
+    
+    export function getTheme(): ThemeName {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved === 'light' || saved === 'dark') return saved;
+    
+      const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+      return prefersDark ? 'dark' : 'light';
+    }
+    
+    export function applyTheme(theme: ThemeName) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem(STORAGE_KEY, theme);
+    }
+    
+    export function toggleTheme(): ThemeName {
+      const next: ThemeName = getTheme() === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      return next;
+    }
+
+
+===== BACKEND_API =====
+
+--- libs/api/db/src/index.ts ---
+    // libs/api/db/src/index.ts
+    export * from './schema';
+    export * from './lib/db';
+
+--- libs/api/db/src/schema.ts ---
+    import {
+      pgTable,
+      uuid,
+      varchar,
+      date,
+      timestamp,
+      index,
+    } from 'drizzle-orm/pg-core';
+    
+    export const users = pgTable(
+      'users',
+      {
+        id: uuid('id').defaultRandom().primaryKey(),
+    
+        firstName: varchar('first_name', { length: 100 }).notNull(),
+        lastName: varchar('last_name', { length: 100 }).notNull(),
+    
+        email: varchar('email', { length: 255 }).notNull().unique(),
+        passwordHash: varchar('password_hash', { length: 255 }).notNull(),
+    
+        birthDate: date('birth_date').notNull(),
+        avatarUrl: varchar('avatar_url', { length: 2048 }),
+    
+        createdAt: timestamp('created_at', { withTimezone: true })
+          .notNull()
+          .defaultNow(),
+        updatedAt: timestamp('updated_at', { withTimezone: true })
+          .notNull()
+          .defaultNow(),
+      },
+      (t) => ({
+        emailIdx: index('users_email_idx').on(t.email),
+      })
+    );
+    
+    
+    export const accessLogs = pgTable(
+      'access_logs',
+      {
+        id: uuid('id').defaultRandom().primaryKey(),
+    
+        userId: uuid('user_id')
+          .notNull()
+          .references(() => users.id, { onDelete: 'cascade' }),
+    
+        ipAddress: varchar('ip_address', { length: 64 }),
+        userAgent: varchar('user_agent', { length: 512 }),
+    
+        createdAt: timestamp('created_at', { withTimezone: true })
+          .notNull()
+          .defaultNow(),
+      },
+      (t) => ({
+        userIdIdx: index('access_logs_user_id_idx').on(t.userId),
+      })
+    );
+
+--- libs/api/db/src/lib/db.ts ---
+    // libs/api/db/src/lib/db.ts
+    import { drizzle } from 'drizzle-orm/node-postgres';
+    import { Pool } from 'pg';
+    
+    import * as schema from '../schema';
+    
+    /**
+     * Creates a singleton Postgres pool and Drizzle client for the whole monorepo.
+     * The DATABASE_URL must be provided via environment variables.
+     */
+    const DATABASE_URL = process.env['DATABASE_URL'];
+    
+    if (!DATABASE_URL) {
+      throw new Error('Missing DATABASE_URL environment variable');
+    }
+    
+    const pool = new Pool({
+      connectionString: DATABASE_URL,
+      // Neon requires SSL; pg will negotiate correctly with the connection string.
+      // If you want to be explicit, you can also set: ssl: true
+    });
+    
+    export const db = drizzle(pool, { schema });
+    
+    export type DbClient = typeof db;
+
+--- libs/api/db/drizzle/0000_concerned_gertrude_yorkes.sql ---
+    CREATE TABLE "access_logs" (
+    	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+    	"user_id" uuid NOT NULL,
+    	"ip_address" varchar(64),
+    	"user_agent" varchar(512),
+    	"created_at" timestamp with time zone DEFAULT now() NOT NULL
+    );
+    --> statement-breakpoint
+    CREATE TABLE "users" (
+    	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+    	"first_name" varchar(100) NOT NULL,
+    	"last_name" varchar(100) NOT NULL,
+    	"email" varchar(255) NOT NULL,
+    	"password_hash" varchar(255) NOT NULL,
+    	"birth_date" date NOT NULL,
+    	"avatar_url" varchar(2048),
+    	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+    	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+    	CONSTRAINT "users_email_unique" UNIQUE("email")
+    );
+    --> statement-breakpoint
+    ALTER TABLE "access_logs" ADD CONSTRAINT "access_logs_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+    CREATE INDEX "access_logs_user_id_idx" ON "access_logs" USING btree ("user_id");--> statement-breakpoint
+    CREATE INDEX "users_email_idx" ON "users" USING btree ("email");
+
+===== SHARED_CONTRACTS =====
+
+--- libs/shared/contracts/src/index.ts ---
+    export * from './lib/contracts';
+    export * from './auth.contracts';
+
+--- libs/shared/contracts/src/auth.contracts.ts ---
+    import { z } from 'zod';
+    
+    export const registerSchema = z
+      .object({
+        firstName: z
+          .string()
+          .min(1, 'First name is required')
+          .max(100, 'First name is too long'),
+    
+        lastName: z
+          .string()
+          .min(1, 'Last name is required')
+          .max(100, 'Last name is too long'),
+    
+        email: z
+          .string()
+          .min(1, 'Email is required')
+          .email('Email is not valid')
+          .max(255, 'Email is too long'),
+    
+        password: z
+          .string()
+          .min(8, 'Password must be at least 8 characters')
+          .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+          .regex(/[0-9]/, 'Password must contain at least one number'),
+    
+        confirmPassword: z
+          .string()
+          .min(1, 'Confirm password is required')
+          .min(8, 'Confirm password must be at least 8 characters'),
+    
+        birthDate: z
+          .string()
+          .min(1, 'Birth date is required'), // ISO date string from FE
+    
+        avatarUrl: z.string().url('Avatar URL is not valid').optional(),
+      })
+      .refine((data) => data.password === data.confirmPassword, {
+        message: 'Passwords do not match',
+        path: ['confirmPassword'],
+      });
+    
+    export const loginSchema = z.object({
+      email: z
+        .string()
+        .min(1, 'Email is required')
+        .email('Email is not valid')
+        .max(255, 'Email is too long'),
+    
+      password: z.string().min(1, 'Password is required'),
+    
+      rememberMe: z.boolean().optional(),
+    });
+    
+    export type RegisterInput = z.infer<typeof registerSchema>;
+    export type LoginInput = z.infer<typeof loginSchema>;
+    
+    export type UserPublicDto = {
+      id: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+      birthDate: string;
+      avatarUrl?: string | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    
+    /**
+     * Profile update payload (PATCH /me).
+     * All fields are optional because this is a partial update.
+     */
+    export const updateMeSchema = z.object({
+      firstName: z.string().min(1).max(100).optional(),
+      lastName: z.string().min(1).max(100).optional(),
+      birthDate: z.string().min(1).optional(), // keep ISO date string for now
+      avatarUrl: z.string().url().optional(),
+    });
+    
+    /**
+     * Profile update payload (PATCH /me):
+     * - Only editable profile fields (no email, no password, no avatarUrl).
+     * - All fields are optional, but at least one must be provided.
+     */
+    export const patchMeSchema = z
+      .object({
+        firstName: z
+          .string()
+          .min(1, 'First name is required')
+          .max(100, 'First name is too long')
+          .optional(),
+    
+        lastName: z
+          .string()
+          .min(1, 'Last name is required')
+          .max(100, 'Last name is too long')
+          .optional(),
+    
+        birthDate: z
+          .string()
+          .min(1, 'Birth date is required')
+          // ISO date from FE: "YYYY-MM-DD"
+          .regex(/^\d{4}-\d{2}-\d{2}$/, 'Birth date must be in YYYY-MM-DD format')
+          .optional(),
+      })
+      .refine((data) => Object.keys(data).length > 0, {
+        message: 'At least one field must be provided',
+        path: [],
+      });
+    
+    export type PatchMeInput = z.infer<typeof patchMeSchema>;
+
+--- libs/shared/contracts/src/lib/contracts.ts ---
+    export function contracts(): string {
+      return 'contracts';
+    }
+
+
+===== AUTH_UI =====
+
+--- libs/web/auth-ui/src/lib/components/LoginFormBase.tsx ---
+    import { useId, useState } from 'react';
+    import type { LoginFormValues } from '../types/auth-ui.types';
+    
+    type LoginField = 'email' | 'password' | 'rememberMe';
+    
+    type Props = {
+      onSubmit: (values: LoginFormValues) => void | Promise<void>;
+      submitLabel?: string;
+      disabled?: boolean;
+    
+      /**
+       * General (form-level) error message (e.g. server says "Invalid credentials").
+       */
+      error?: string | null;
+    
+      /**
+       * Field-level errors (client validation or mapped server validation).
+       * Keys MUST match the form fields to keep tests stable.
+       */
+      fieldErrors?: Partial<Record<LoginField, string>>;
+    
+      /**
+       * Called whenever the user edits any field.
+       * Useful to clear server errors as soon as the user retries.
+       */
+      onChange?: () => void;
+    
+      /**
+       * Optional "Forgot password?" link (UI-only).
+       */
+      forgotPasswordHref?: string;
+      forgotPasswordLabel?: string;
+    };
+    
+    /**
+     * Reusable login form UI.
+     */
+    export function LoginFormBase({
+      onSubmit,
+      submitLabel = 'Login',
+      disabled = false,
+      error = null,
+      fieldErrors,
+      onChange,
+      forgotPasswordHref,
+      forgotPasswordLabel = 'Forgot password?',
+    }: Props) {
+      const [email, setEmail] = useState('');
+      const [password, setPassword] = useState('');
+      const [rememberMe, setRememberMe] = useState(false);
+    
+      // Stable ids for aria-describedby, safe for multiple forms on same page
+      const emailId = useId();
+      const passwordId = useId();
+    
+      const emailError = fieldErrors?.email;
+      const passwordError = fieldErrors?.password;
+    
+      return (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            void onSubmit({ email, password, rememberMe });
+          }}
+          className="grid gap-4"
+        >
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text">Email</span>
+            </div>
+    
+            <input
+              id={emailId}
+              name="email"
+              autoComplete="email"
+              className={`input input-bordered w-full ${emailError ? 'input-error' : ''}`}
+              value={email}
+              disabled={disabled}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                onChange?.();
+              }}
+              aria-invalid={Boolean(emailError)}
+              aria-describedby={emailError ? `${emailId}-error` : undefined}
+            />
+    
+            {emailError ? (
+              <div className="label">
+                <span
+                  id={`${emailId}-error`}
+                  role="alert"
+                  className="label-text-alt text-error"
+                >
+                  {emailError}
+                </span>
+              </div>
+            ) : null}
+          </label>
+    
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text">Password</span>
+            </div>
+    
+            <input
+              id={passwordId}
+              name="password"
+              autoComplete="current-password"
+              type="password"
+              className={`input input-bordered w-full ${passwordError ? 'input-error' : ''}`}
+              value={password}
+              disabled={disabled}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                onChange?.();
+              }}
+              aria-invalid={Boolean(passwordError)}
+              aria-describedby={passwordError ? `${passwordId}-error` : undefined}
+            />
+    
+            {passwordError ? (
+              <div className="label">
+                <span
+                  id={`${passwordId}-error`}
+                  role="alert"
+                  className="label-text-alt text-error"
+                >
+                  {passwordError}
+                </span>
+              </div>
+            ) : null}
+          </label>
+    
+          <div className="flex items-center justify-between gap-4">
+            <label className="label cursor-pointer gap-2 p-0">
+              <input
+                id="rememberMe"
+                name="rememberMe"
+                type="checkbox"
+                className="checkbox checkbox-sm"
+                checked={rememberMe}
+                disabled={disabled}
+                onChange={(e) => {
+                  setRememberMe(e.target.checked);
+                  onChange?.();
+                }}
+              />
+    
+              <span className="label-text">Remember me</span>
+            </label>
+    
+            {forgotPasswordHref ? (
+              <a className="link link-hover text-sm" href={forgotPasswordHref}>
+                {forgotPasswordLabel}
+              </a>
+            ) : null}
+          </div>
+    
+          {error ? (
+            <div role="alert" className="alert alert-error">
+              <span>{error}</span>
+            </div>
+          ) : null}
+    
+          <button
+            type="submit"
+            disabled={disabled}
+            className="btn btn-primary w-full"
+          >
+            {submitLabel}
+          </button>
+        </form>
+      );
+    }
+
+--- libs/web/auth-ui/src/lib/components/RegisterFormBase.tsx ---
+    // libs/web/auth-ui/src/lib/components/RegisterFormBase.tsx
+    import { useState } from 'react';
+    import type { RegisterFormValues } from '../types/auth-ui.types';
+    
+    /**
+     * Field-level errors supported by this form.
+     * Keep this aligned with the actual inputs rendered here.
+     */
+    export type RegisterFieldErrors = Partial<
+      Record<
+        | 'firstName'
+        | 'lastName'
+        | 'email'
+        | 'birthDate'
+        | 'password'
+        | 'confirmPassword',
+        string
+      >
+    >;
+    
+    type Props = {
+      onSubmit: (values: RegisterFormValues) => void | Promise<void>;
+      submitLabel?: string;
+      disabled?: boolean;
+    
+      /**
+       * Global/server error (e.g. "Email already exists", "Something went wrong").
+       * Rendered above the submit button.
+       */
+      error?: string | null;
+    
+      /**
+       * Field-level errors (mapped by the page/controller).
+       */
+      fieldErrors?: RegisterFieldErrors;
+    
+      /**
+       * Called whenever the user edits any field.
+       * Useful to clear server errors as soon as the user retries.
+       */
+      onChange?: () => void;
+    };
+    
+    /**
+     * Reusable registration form UI.
+     */
+    export function RegisterFormBase({
+      onSubmit,
+      submitLabel = 'Create account',
+      disabled = false,
+      error = null,
+      fieldErrors,
+      onChange,
+    }: Props) {
+      const [firstName, setFirstName] = useState('');
+      const [lastName, setLastName] = useState('');
+      const [email, setEmail] = useState('');
+      const [birthDate, setBirthDate] = useState(''); // ISO date string from <input type="date">
+      const [password, setPassword] = useState('');
+      const [confirmPassword, setConfirmPassword] = useState('');
+    
+      // Shared style for field error messages
+      const fieldErrorStyle: React.CSSProperties = {
+        margin: 0,
+        color: 'crimson',
+        fontSize: 13,
+      };
+    
+      // Stable ids for aria-describedby
+      const ids = {
+        firstName: 'register-firstName-error',
+        lastName: 'register-lastName-error',
+        email: 'register-email-error',
+        birthDate: 'register-birthDate-error',
+        password: 'register-password-error',
+        confirmPassword: 'register-confirmPassword-error',
+      } as const;
+    
+      return (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+    
+            void onSubmit({
+              firstName,
+              lastName,
+              email,
+              birthDate,
+              password,
+              confirmPassword,
+            });
+          }}
+          style={{ display: 'grid', gap: 12 }}
+        >
+          <label style={{ display: 'grid', gap: 6 }}>
+            <span>First name</span>
+            <input
+              value={firstName}
+              onChange={(e) => {
+                setFirstName(e.target.value);
+                onChange?.();
+              }}
+              disabled={disabled}
+              aria-invalid={Boolean(fieldErrors?.firstName)}
+              aria-describedby={fieldErrors?.firstName ? ids.firstName : undefined}
+            />
+            {fieldErrors?.firstName ? (
+              <p id={ids.firstName} role="alert" style={fieldErrorStyle}>
+                {fieldErrors.firstName}
+              </p>
+            ) : null}
+          </label>
+    
+          <label style={{ display: 'grid', gap: 6 }}>
+            <span>Last name</span>
+            <input
+              value={lastName}
+              onChange={(e) => {
+                setLastName(e.target.value);
+                onChange?.();
+              }}
+              disabled={disabled}
+              aria-invalid={Boolean(fieldErrors?.lastName)}
+              aria-describedby={fieldErrors?.lastName ? ids.lastName : undefined}
+            />
+            {fieldErrors?.lastName ? (
+              <p id={ids.lastName} role="alert" style={fieldErrorStyle}>
+                {fieldErrors.lastName}
+              </p>
+            ) : null}
+          </label>
+    
+          <label style={{ display: 'grid', gap: 6 }}>
+            <span>Email</span>
+            <input
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                onChange?.();
+              }}
+              disabled={disabled}
+              aria-invalid={Boolean(fieldErrors?.email)}
+              aria-describedby={fieldErrors?.email ? ids.email : undefined}
+            />
+            {fieldErrors?.email ? (
+              <p id={ids.email} role="alert" style={fieldErrorStyle}>
+                {fieldErrors.email}
+              </p>
+            ) : null}
+          </label>
+    
+          <label style={{ display: 'grid', gap: 6 }}>
+            <span>Birth date</span>
+            <input
+              type="date"
+              value={birthDate}
+              onChange={(e) => {
+                setBirthDate(e.target.value);
+                onChange?.();
+              }}
+              disabled={disabled}
+              aria-invalid={Boolean(fieldErrors?.birthDate)}
+              aria-describedby={fieldErrors?.birthDate ? ids.birthDate : undefined}
+            />
+            {fieldErrors?.birthDate ? (
+              <p id={ids.birthDate} role="alert" style={fieldErrorStyle}>
+                {fieldErrors.birthDate}
+              </p>
+            ) : null}
+          </label>
+    
+          <label style={{ display: 'grid', gap: 6 }}>
+            <span>Password</span>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                onChange?.();
+              }}
+              disabled={disabled}
+              aria-invalid={Boolean(fieldErrors?.password)}
+              aria-describedby={fieldErrors?.password ? ids.password : undefined}
+            />
+            {fieldErrors?.password ? (
+              <p id={ids.password} role="alert" style={fieldErrorStyle}>
+                {fieldErrors.password}
+              </p>
+            ) : null}
+          </label>
+    
+          <label style={{ display: 'grid', gap: 6 }}>
+            <span>Confirm password</span>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+                onChange?.();
+              }}
+              disabled={disabled}
+              aria-invalid={Boolean(fieldErrors?.confirmPassword)}
+              aria-describedby={
+                fieldErrors?.confirmPassword ? ids.confirmPassword : undefined
+              }
+            />
+            {fieldErrors?.confirmPassword ? (
+              <p id={ids.confirmPassword} role="alert" style={fieldErrorStyle}>
+                {fieldErrors.confirmPassword}
+              </p>
+            ) : null}
+          </label>
+    
+          {error ? (
+            <div role="alert" style={{ color: 'crimson' }}>
+              {error}
+            </div>
+          ) : null}
+    
+          <button type="submit" disabled={disabled}>
+            {submitLabel}
+          </button>
+        </form>
+      );
+    }
+
+--- libs/web/auth-ui/src/lib/components/AuthShell.tsx ---
+    import type { AuthShellProps } from '../types/auth-ui.types';
+    
+    /**
+     * Shared auth page shell (card + branding).
+     */
+    export function AuthShell({ title, subtitle, logo, children }: AuthShellProps) {
+      return (
+        <div className="min-h-screen w-full bg-base-200 text-base-content flex items-center justify-center p-6">
+          <div className="w-full max-w-md">
+            <div className="card bg-base-100 shadow-xl">
+              <div className="card-body gap-4">
+                {logo ? <div className="mb-1">{logo}</div> : null}
+    
+                <div className="space-y-1">
+                  <h1 className="text-2xl font-semibold">{title}</h1>
+                  {subtitle ? <p className="text-sm opacity-80">{subtitle}</p> : null}
+                </div>
+    
+                {/* IMPORTANT: give children full width */}
+                <div className="w-full">{children}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+
+===== AUTH_LOGIC =====
+
+--- libs/web/auth/src/lib/AuthProvider.tsx ---
+    import React from 'react';
+    import type { AuthContextValue, AuthState, LoginPayload } from './auth.types';
+    import { apiLogin, apiMe } from './auth.api';
+    import {
+      clearAccessToken,
+      readAccessToken,
+      writeAccessToken,
+    } from './token.storage';
+    
+    const AuthContext = React.createContext<AuthContextValue | null>(null);
+    
+    /**
+     * Builds the initial auth state synchronously.
+     * This prevents route-guards from redirecting to /login before we had a chance
+     * to restore the session from localStorage.
+     */
+    function buildInitialState(): AuthState {
+      const token = readAccessToken();
+    
+      return {
+        accessToken: token,
+        user: null,
+        // If we already have an access token, validate it by calling /me.
+        // During that time the app should show a loading UI, not redirect.
+        status: token ? 'loading' : 'anonymous',
+      };
+    }
+    
+    /**
+     * Provides auth session state and actions to the app.
+     */
+    export function AuthProvider({ children }: { children: React.ReactNode }) {
+      const [state, setState] = React.useState<AuthState>(() =>
+        buildInitialState(),
+      );
+    
+      /**
+       * Refreshes the current user ("me") using either the in-memory token
+       * or the one stored in localStorage.
+       */
+      const refreshMe = React.useCallback(async () => {
+        const token = state.accessToken ?? readAccessToken();
+    
+        if (!token) {
+          setState(buildInitialState());
+          return;
+        }
+    
+        setState((s) => ({ ...s, status: 'loading', accessToken: token }));
+    
+        try {
+          const me = await apiMe(token);
+    
+          setState({
+            accessToken: token,
+            user: me.user,
+            status: 'authenticated',
+          });
+        } catch {
+          // Access token invalid/expired -> clean up and go back to anonymous.
+          clearAccessToken();
+          setState(buildInitialState());
+        }
+      }, [state.accessToken]);
+    
+      /**
+       * Perform login against the API.
+       *
+       * Notes:
+       * - Returns void (as required by AuthContextValue typing).
+       * - Pages can still await it to know when it's done.
+       */
+      const login = React.useCallback(
+        async (payload: LoginPayload): Promise<void> => {
+          setState((s) => ({ ...s, status: 'loading' }));
+    
+          try {
+            const res = await apiLogin(payload);
+    
+            writeAccessToken(res.accessToken, Boolean(payload.rememberMe));
+    
+            setState({
+              accessToken: res.accessToken,
+              user: res.user,
+              status: 'authenticated',
+            });
+    
+            // Do NOT return res -> keep the contract Promise<void>
+          } catch (err) {
+            clearAccessToken();
+            setState(buildInitialState());
+            throw err;
+          }
+        },
+        [],
+      );
+    
+      /**
+       * Clears the session locally.
+       */
+      const logout = React.useCallback(() => {
+        clearAccessToken();
+        setState(buildInitialState());
+      }, []);
+    
+      /**
+       * Bootstrap: validate any existing access token on app start.
+       */
+      React.useEffect(() => {
+        void refreshMe();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
+    
+      const value: AuthContextValue = {
+        ...state,
+        login,
+        logout,
+        refreshMe,
+      };
+    
+      return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+    }
+    
+    /**
+     * Access the auth session context.
+     */
+    export function useAuthContext(): AuthContextValue {
+      const ctx = React.useContext(AuthContext);
+      if (!ctx) {
+        throw new Error('useAuthContext must be used within AuthProvider');
+      }
+      return ctx;
+    }
+    
+    export const useAuth = useAuthContext;
+
+--- libs/web/auth/src/lib/auth.api.ts ---
+    // libs/web/auth/src/lib/auth.api.ts
+    import type {
+      LoginPayload,
+      LoginResponse,
+      AuthUser,
+      RegisterPayload,
+      RegisterResponse,
+      AccessHistoryResponse,
+      PatchMePayload,
+    } from './auth.types';
+    
+    const DEFAULT_API_URL = 'http://localhost:3000/api';
+    
+    let API_URL = DEFAULT_API_URL;
+    
+    /**
+     * Configure the API base URL at runtime (from the host app).
+     * Call this once at app bootstrap.
+     */
+    export function setApiBaseUrl(url?: string) {
+      const trimmed = (url ?? '').trim();
+      if (trimmed.length > 0) {
+        API_URL = trimmed;
+      }
+    }
+    
+    /**
+     * Small HTTP wrapper used by the auth client.
+     *
+     * Key points:
+     * - `cache: 'no-store'` prevents 304 responses on auth endpoints (e.g. /me).
+     * - We also set Cache-Control headers to avoid browser/proxy caching.
+     * - We parse error payloads when possible for better messages.
+     */
+    async function http<T>(input: string, init?: RequestInit): Promise<T> {
+      const res = await fetch(`${API_URL}${input}`, {
+        ...init,
+        // Prevent any caching for auth-sensitive endpoints.
+        cache: 'no-store',
+    
+        headers: {
+          'Content-Type': 'application/json',
+    
+          // Extra safety: tell intermediaries/browsers not to cache responses.
+          'Cache-Control': 'no-store',
+          Pragma: 'no-cache',
+    
+          ...(init?.headers ?? {}),
+        },
+      });
+    
+      // Only 2xx responses are considered ok by Fetch.
+      if (!res.ok) {
+        const data = (await res.json().catch(() => null)) as { message?: string } | null;
+        throw new Error(data?.message ?? `HTTP ${res.status}`);
+      }
+    
+      return (await res.json()) as T;
+    }
+    
+    /**
+     * Login and receive an access token plus user profile.
+     */
+    export function apiLogin(payload: LoginPayload): Promise<LoginResponse> {
+      return http<LoginResponse>('/auth/login', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+    }
+    
+    /**
+     * Fetch the current session user via the access token.
+     */
+    export function apiMe(accessToken: string): Promise<{ user: AuthUser }> {
+      return http<{ user: AuthUser }>('/me', {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+    }
+    
+    /**
+     * Register a new user account.
+     */
+    export function apiRegister(payload: RegisterPayload): Promise<RegisterResponse> {
+      return http<RegisterResponse>('/auth/register', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+    }
+    
+    /**
+     * Profile update for the current user.
+     */
+    export function apiPatchMe(
+      accessToken: string,
+      payload: PatchMePayload,
+    ): Promise<{ user: AuthUser }> {
+      return http<{ user: AuthUser }>('/me', {
+        method: 'PATCH',
+        headers: { Authorization: `Bearer ${accessToken}` },
+        body: JSON.stringify(payload),
+      });
+    }
+    
+    /**
+     * Fetch access history entries for the current user.
+     */
+    export function apiAccessHistory(
+      accessToken: string,
+      limit = 5,
+    ): Promise<AccessHistoryResponse> {
+      return http<AccessHistoryResponse>(`/me/access-history?limit=${limit}`, {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+    }
+    
+    /**
+     * Resolve API-relative asset paths (e.g. avatar URLs) to absolute URLs.
+     */
+    export function resolveAssetUrl(path?: string | null): string | null {
+      if (!path) return null;
+    
+      // Already absolute
+      if (path.startsWith('http://') || path.startsWith('https://')) {
+        return path;
+      }
+    
+      // If API_URL is relative ("/api"), assets live on the same origin as the API server
+      if (API_URL.startsWith('/')) {
+        return `${window.location.origin.replace(/:\d+$/, ':3000')}${path}`;
+      }
+    
+      // Absolute API URL (e.g. http://localhost:3000/api)
+      const origin = API_URL.replace(/\/api\/?$/, '');
+      return `${origin}${path}`;
+    }
+    
+    /**
+     * Avatar upload for the current user.
+     */
+    export async function apiUploadAvatar(accessToken: string, file: File) {
+      const form = new FormData();
+      form.append('file', file);
+    
+      const res = await fetch(`${API_URL}/me/avatar`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          // IMPORTANT: do NOT set Content-Type with FormData
+        },
+        body: form,
+      });
+    
+      if (!res.ok) {
+        const data = (await res.json().catch(() => null)) as { message?: string } | null;
+        throw new Error(data?.message ?? `HTTP ${res.status}`);
+      }
+    
+      return (await res.json()) as { user: AuthUser };
+    }
+
+--- libs/web/auth/src/lib/auth.types.ts ---
+    import type {
+      RegisterInput,
+      UserPublicDto,
+    } from '@assignment-ftechnology/contracts';
+    
+    export type AuthUser = UserPublicDto;
+    
+    export type AuthState = {
+      accessToken: string | null;
+      user: AuthUser | null;
+      status: 'anonymous' | 'loading' | 'authenticated';
+    };
+    
+    export type LoginPayload = {
+      email: string;
+      password: string;
+      rememberMe?: boolean;
+    };
+    
+    export type LoginResponse = {
+      accessToken: string;
+      user: AuthUser;
+    };
+    
+    /**
+     * Profile update payload (frontend side).
+     * Keep aligned with contracts patchMeSchema.
+     */
+    export type PatchMePayload = Partial<{
+      firstName: string;
+      lastName: string;
+      birthDate: string; // YYYY-MM-DD
+    }>;
+    
+    /**
+     * Access history item returned by GET /me/access-history.
+     */
+    export type AccessHistoryItem = {
+      id: string;
+      ipAddress: string | null;
+      userAgent: string | null;
+      createdAt: string; // ISO datetime
+    };
+    
+    export type AccessHistoryResponse = {
+      items: AccessHistoryItem[];
+    };
+    
+    /**
+     * Register payload is shared with the backend contract (Zod schema).
+     * We intentionally keep avatarUrl optional and we do NOT send it for now.
+     */
+    export type RegisterPayload = RegisterInput;
+    
+    export type RegisterResponse = {
+      user: AuthUser;
+    };
+    
+    export type AuthContextValue = AuthState & {
+      login: (payload: LoginPayload) => Promise<void>;
+      logout: () => void;
+      refreshMe: () => Promise<void>;
+    };
+
+--- libs/web/auth/src/lib/token.storage.ts ---
+    const KEY = 'auth.accessToken';
+    
+    /**
+     * Read the access token from storage:
+     * - Prefer localStorage (persistent)
+     * - Fallback to sessionStorage (tab-lifetime)
+     */
+    export function readAccessToken(): string | null {
+      try {
+        return localStorage.getItem(KEY) ?? sessionStorage.getItem(KEY);
+      } catch {
+        return null;
+      }
+    }
+    
+    /**
+     * Store the access token depending on rememberMe:
+     * - rememberMe = true  -> localStorage (persists across browser restarts)
+     * - rememberMe = false -> sessionStorage (cleared when tab/window closes)
+     */
+    export function writeAccessToken(token: string, rememberMe: boolean): void {
+      clearAccessToken();
+    
+      if (rememberMe) {
+        localStorage.setItem(KEY, token);
+      } else {
+        sessionStorage.setItem(KEY, token);
+      }
+    }
+    
+    /**
+     * Clear the access token from storage.
+     */
+    export function clearAccessToken(): void {
+      try {
+        localStorage.removeItem(KEY);
+        sessionStorage.removeItem(KEY);
+      } catch {
+        // no-op (storage might be blocked)
+      }
+    }
+
+--- libs/web/auth/src/lib/useAuth.ts ---
+    /**
+     * Hook to access the current auth session and actions.
+     */
+    export { useAuthContext as useAuth } from './AuthProvider';
+
+===== END =====

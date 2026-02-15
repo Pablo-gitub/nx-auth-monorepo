@@ -49,3 +49,6 @@ Thumbs.db
 # file uploads
 uploads/
 vite.config.*.timestamp*
+
+# scripts
+scripts/
