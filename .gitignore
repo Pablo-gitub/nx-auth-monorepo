@@ -52,3 +52,5 @@ vite.config.*.timestamp*
 
 # scripts
 scripts/
+scripts/*.sh
+scripts/*.txt
